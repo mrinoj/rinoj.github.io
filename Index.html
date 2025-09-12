@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rinoj. | UX Designer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolio of Mohamed Rinoj Hashim, a Senior UX Designer with 4+ years of experience in India, UAE, and US markets, specializing in B2B platforms.">
+    <meta property="og:title" content="Mohamed Rinoj Hashim | Senior UX Designer Portfolio" />
+    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results.">
+    <meta property="og:image" content="https://placehold.co/1200x630/111111/EAEAEA?text=MRH" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            /* Color Palette */
+            --bg-gradient-start: #000833;
+            --bg-gradient-end: #000000;
+            --text-primary: #EAEAEA;
+            --text-secondary: #A0A0A0;
+            --border-color: #333333;
+            --animation-easing: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        html, body {
+            overflow-x: hidden;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { 
+            display: none; /* Safari and Chrome */
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end) 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            cursor: none;
+        }
+
+        #scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background-color: #fff;
+            width: 0%;
+            z-index: 10000;
+        }
+        
+        #hero-gradient-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        header {
+            background-color: transparent;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background-color 0.4s var(--animation-easing);
+        }
+        
+        #page-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cursor {
+            width: 24px;
+            height: 24px;
+            border: 1px solid white;
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10003; /* Ensure cursor is on top of everything */
+            mix-blend-mode: difference;
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+        }
+        .cursor.hovered {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+        }
+        .cursor.project-hover {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border: none;
+        }
+        .cursor-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .reveal, .about-col {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
+        .tagline-wrapper {
+            overflow: hidden;
+        }
+        
+        .marquee-content { animation: marquee 40s linear infinite; }
+        @keyframes marquee {
+            from { transform: translateX(0); } to { transform: translateX(-50%); }
+        }
+        
+        .star-separator {
+            animation: rotate-star 10s linear infinite;
+        }
+        @keyframes rotate-star {
+            from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+        }
+        
+        .about-word {
+            display: inline-block;
+        }
+
+        .project-item {
+            border-bottom: 1px solid var(--border-color);
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        .project-item:nth-child(even) {
+             transform: translateX(100%);
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+        .project-image-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.8);
+            z-index: 1;
+        }
+
+        #project-detail-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 10001;
+            display: none;
+            overflow-y: auto;
+            opacity: 0;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        #project-detail-page::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+
+        .project-content-reveal, .project-image-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        .project-stat-card {
+             background-color: rgba(255, 255, 255, 0.05);
+             border: 1px solid var(--border-color);
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+          .reveal, .project-item .project-image-container, .marquee-content, .cursor, .preloader, .star-separator {
+            transition: none !important; 
+            animation: none !important;
+          }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="scroll-progress-bar"></div>
+    <canvas id="hero-gradient-background"></canvas>
+    <div class="preloader">
+        <div class="preloader-logo text-3xl font-bold" style="color: #FFFFFF;">Rinoj<span class="text-cyan-400">.</span></div>
+    </div>
+    <div class="cursor"><div class="cursor-text"></div></div>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-6 left-6 right-6 z-50 rounded-full">
+        <div class="pl-6 pr-4 py-1 flex justify-between items-center">
+            <div class="flex-1 flex justify-start">
+                 <a href="#" class="text-2xl font-bold whitespace-nowrap" style="color: #FFFFFF;">Rinoj<span class="text-cyan-400">.</span></a>
+            </div>
+            
+            <div class="flex-1 hidden md:flex justify-end items-center space-x-8">
+                <nav class="flex items-center space-x-4" aria-label="Primary Navigation">
+                    <a href="#about" class="text-base font-medium px-3 py-1" style="color: var(--text-primary);">About</a>
+                    <a href="#work" class="text-base font-medium px-3 py-1" style="color: var(--text-primary);">Projects</a>
+                    <a href="#" class="text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
+                </nav>
+                <a href="#contact" class="bg-white font-semibold px-5 py-[6px] rounded-full hover:bg-opacity-80 transition-all duration-300 shadow whitespace-nowrap" style="color: var(--bg-gradient-start);">Contact me</a>
+            </div>
+
+            <div class="md:hidden flex-1 flex justify-end">
+                <button id="mobile-menu-button" class="p-2 rounded-full" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section id="home" class="h-[90vh] flex flex-col items-center justify-center text-center p-6 md:p-12 relative overflow-hidden">
+
+            <div id="hero-tagline" class="absolute bottom-[28vh] right-6 md:right-12 text-right z-20 text-lg md:text-xl font-medium text-white max-w-lg">
+                <div class="tagline-wrapper">
+                    <p class="tagline-line">Built across Fintech, E‑Commerce, Travel Tech, &</p>
+                </div>
+                <div class="tagline-wrapper">
+                    <p class="tagline-line">Healthcare — eager for the next challenge.</p>
+                </div>
+            </div>
+
+             <div class="absolute inset-0 flex items-end z-10">
+                <div class="name-marquee-container flex whitespace-nowrap items-center">
+                    <span class="text-[12vw] md:text-[10vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
+                    <span class="px-4 inline-flex items-center justify-center">
+                        <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                    </span>
+                    <span class="text-[12vw] md:text-[10vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
+                     <span class="px-4 inline-flex items-center justify-center">
+                        <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                    </span>
+                    <span class="text-[12vw] md:text-[10vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
+                    <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
+                       <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                    </span>
+                    <span class="text-[12vw] md:text-[10vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
+                    <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
+                        <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                    </span>
+                </div>
+            </div>
+        </section>
+        
+        <div id="page-content">
+            <!-- About Section -->
+            <section id="about" class="pt-16 md:pt-24 pb-20 md:pb-32">
+                 <div class="container mx-auto px-6 relative">
+                    <div class="max-w-5xl mx-auto grid md:grid-cols-10 gap-8 md:gap-16 items-start">
+                        <div class="md:col-span-7">
+                             <p id="about-text-left" class="text-2xl md:text-4xl font-medium leading-tight" style="color: var(--text-primary);"></p>
+                        </div>
+                        <div class="md:col-span-3 text-right flex flex-col">
+                            <div id="about-star-container" class="w-full flex justify-end mb-8">
+                                <svg id="about-star" class="star-separator w-16 h-16 text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                            </div>
+                            <div class="flex-grow"></div>
+                            <p id="about-text-right" class="text-lg font-bold uppercase text-black"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="work" class="py-20">
+                <div class="container mx-auto px-6 md:px-12">
+                    <div class="mb-20 reveal text-center md:text-left">
+                        <h2 class="text-4xl md:text-5xl font-bold">Projects</h2>
+                        <p class="text-lg mt-2" style="color: var(--text-secondary);">A selection of projects that shaped my journey.</p>
+                    </div>
+                    <div id="projects-container">
+                        <!-- Projects will be dynamically inserted here -->
+                    </div>
+                    <div class="mt-20 text-center">
+                        <button class="text-white font-medium py-3 rounded-full hover:text-opacity-80 transition-all duration-300 relative inline-block group">
+                           <span class="group-hover:text-cyan-400 transition-colors">Show More Projects</span>
+                           <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marquee Skills Section -->
+            <section class="py-20 overflow-x-hidden">
+                <div class="relative flex">
+                     <div class="flex items-center space-x-12 whitespace-nowrap marquee-content">
+                        <span class="marquee-item">Figma</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">User Research</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">Prototyping</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">Design Systems</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">Usability Testing</span><span class="marquee-separator"></span>
+                     </div>
+                     <div class="flex items-center space-x-12 whitespace-nowrap marquee-content" aria-hidden="true">
+                         <span class="marquee-item">Figma</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">User Research</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">Prototyping</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">Design Systems</span><span class="marquee-separator"></span>
+                        <span class="marquee-item">Usability Testing</span><span class="marquee-separator"></span>
+                     </div>
+                </div>
+            </section>
+            
+            <!-- Contact / Footer Section -->
+            <section id="contact" class="py-20 md:py-40 text-center" style="background-color: #1C1C1C;">
+                <div class="container mx-auto px-6 reveal">
+                    <h2 class="text-4xl md:text-6xl font-bold">Have an idea?</h2>
+                    <a href="mailto:hello@mohamedrinoj.com" class="text-4xl md:text-6xl font-bold hover-link inline-block mt-2">Let's talk about it.</a>
+                    <p class="mt-8 text-lg max-w-xl mx-auto" style="color: var(--text-secondary);">
+                        I'm currently available for freelance projects and full-time roles. Let's connect and create something amazing together.
+                    </p>
+                    <div class="flex justify-center space-x-6 mt-12 text-lg" style="color: var(--text-secondary);">
+                         <a href="#" class="hover-link">LinkedIn</a>
+                         <a href="#" class="hover-link">Dribbble</a>
+                         <a href="#" class="hover-link">Behance</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Project Detail Page -->
+    <div id="project-detail-page">
+        <!-- Content will be injected by JS -->
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-[9990] hidden" role="dialog" aria-modal="true">
+        <div id="mobile-menu-panel" class="absolute top-0 right-0 h-full w-2/3 max-w-sm bg-black/80 backdrop-blur-lg shadow-2xl p-8 transform translate-x-full transition-transform duration-300 ease-in-out">
+            <button id="mobile-close-button" class="absolute top-6 right-6 p-2" aria-label="Close menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <nav class="flex flex-col space-y-8 mt-16 text-2xl font-bold text-right" aria-label="Mobile Navigation">
+                <a href="#about" class="mobile-nav-link">About</a>
+                <a href="#work" class="mobile-nav-link">Projects</a>
+                <a href="#" class="mobile-nav-link">Resume</a>
+                <a href="#contact" class="mobile-nav-link">Contact</a>
+            </nav>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let projectScrollTriggers = []; // To store project-specific scroll triggers
+
+            // --- 0. GENERAL SETUP ---
+            window.onbeforeunload = function () {
+                window.scrollTo(0, 0);
+            };
+
+            document.querySelectorAll('header a[href^="#"], .mobile-nav-link[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    let target = document.querySelector(this.getAttribute('href'));
+                    if(target) {
+                        gsap.to(window, {
+                            scrollTo: { y: target, offsetY: 70 }, // offset for fixed header
+                            duration: 1.5,
+                            ease: 'power3.inOut'
+                        });
+                    }
+                });
+            });
+
+            gsap.to("#scroll-progress-bar", {
+                width: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0.2
+                }
+            });
+
+
+            // --- 1. PRELOADER & INITIAL PAGE REVEAL ---
+            const preloader = document.querySelector('.preloader');
+            const preloaderLogo = document.querySelector('.preloader-logo');
+            const header = document.getElementById('header');
+            const tagline = document.getElementById('hero-tagline');
+            const marqueeContainer = document.querySelector('.name-marquee-container');
+            const taglineLines = gsap.utils.toArray('.tagline-line');
+            
+            gsap.set([header, marqueeContainer, tagline], { autoAlpha: 0 });
+            gsap.set([header, marqueeContainer], { y: 80 });
+            gsap.set(taglineLines, { yPercent: 100 });
+
+            gsap.to(preloaderLogo, {
+                scale: 1.05,
+                duration: 1,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power1.inOut'
+            });
+
+            window.addEventListener('load', () => {
+                const tl = gsap.timeline();
+                
+                tl.to(preloader, {
+                    yPercent: -100,
+                    duration: 1.2,
+                    ease: 'power3.inOut',
+                    delay: 0.8
+                });
+
+                tl.to([header, marqueeContainer, tagline], {
+                    autoAlpha: 1,
+                    duration: 0.1
+                }, "-=1.0");
+
+                tl.to([header, marqueeContainer], {
+                    y: 0,
+                    duration: 1.5,
+                    ease: 'power3.out',
+                    stagger: 0.1
+                }, "-=1.0");
+
+                tl.to(taglineLines, {
+                    yPercent: 0,
+                    duration: 1.2,
+                    stagger: 0.2,
+                    ease: 'power3.out'
+                }, "<0.2");
+
+                tl.call(() => {
+                    document.body.classList.remove('antialiased');
+                    preloader.remove();
+                });
+            });
+
+            // --- 2. CUSTOM CURSOR ---
+            const cursor = document.querySelector('.cursor');
+            const cursorText = document.querySelector('.cursor-text');
+            const interactiveElements = document.querySelectorAll('a, button, .hover-link, #about-star');
+            
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
+                el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
+            });
+
+            // --- 3. SCROLL & HOVER ANIMATIONS ---
+            if (!prefersReducedMotion.matches) {
+
+                // a) Marquee Scroll Speed Animation
+                if (marqueeContainer) {
+                    const marqueeAnimation = gsap.to(marqueeContainer, { xPercent: -50, repeat: -1, duration: 60, ease: "linear" }).totalProgress(0.5);
+                    ScrollTrigger.create({
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom bottom",
+                        onUpdate: self => {
+                            let direction = self.direction === 1 ? 1 : -1;
+                            let velocity = self.getVelocity();
+                            const sensitivity = direction === 1 ? 150 : 300;
+                            let timeScale = 1 + (Math.abs(velocity) / sensitivity) * direction;
+                            timeScale = gsap.utils.clamp(-3, 5, timeScale);
+                            gsap.to(marqueeAnimation, { timeScale: timeScale, duration: 0.5, ease: "power2.out" });
+                        }
+                    });
+                }
+                
+                // b) General Reveal Animations for sections on scroll
+                gsap.utils.toArray('.reveal').forEach(el => {
+                    gsap.fromTo(el, { opacity: 0, y: 60 }, { 
+                        opacity: 1, y: 0, duration: 1, ease: 'power2.out',
+                        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                    });
+                });
+                
+                 // d) About Section Reveal Sequence
+                const aboutTextLeft = document.getElementById('about-text-left');
+                const aboutTextRight = document.getElementById('about-text-right');
+                const aboutStarContainer = document.getElementById('about-star-container');
+
+                if (aboutTextLeft && aboutTextRight && aboutStarContainer) {
+                    
+                    const originalTextLeft = "Design from the Human outwards: <br>Research to hear what data can’t, <br>Psychology to guide what data won’t & <br>AI to work faster with efficiency.";
+                    aboutTextLeft.innerHTML = originalTextLeft.split(/(\s+|<br>)/).filter(p => p.trim() !== '' || p.includes('<br>')).map(part => {
+                        if (part === '<br>') return part;
+                        return `<span class="about-word inline-block">${part}</span>`;
+                    }).join(' ');
+                    const wordsLeft = aboutTextLeft.querySelectorAll('.about-word');
+                    
+                    const originalTextRight = "Shipped with clients across <br>India, Dubai, and US <br>in the past five years.";
+                    aboutTextRight.innerHTML = originalTextRight.split(/(\s+|<br>)/).filter(p => p.trim() !== '' || p.includes('<br>')).map(part => {
+                        if (part === '<br>') return part;
+                        return `<span class="about-word inline-block">${part}</span>`;
+                    }).join(' ');
+                    const wordsRight = aboutTextRight.querySelectorAll('.about-word');
+
+                    const aboutTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: '#about',
+                            start: 'top 70%',
+                            end: 'bottom bottom',
+                            scrub: 1.5,
+                        }
+                    });
+                    
+                    gsap.set([wordsLeft, wordsRight, aboutStarContainer], { opacity: 0, y: 30 });
+
+                    aboutTl.to(wordsLeft, {
+                        opacity: 1,
+                        y: 0,
+                        stagger: 0.05,
+                        ease: 'power3.out'
+                    });
+                    aboutTl.to(wordsRight, {
+                        opacity: 1,
+                        y: 0,
+                        stagger: 0.05,
+                        ease: 'power3.out'
+                    });
+                    aboutTl.fromTo(aboutStarContainer, 
+                        { scale: 0.5 },
+                        { opacity: 1, scale: 1, y: 0, ease: 'power3.out' }, 
+                    "-=0.5");
+                }
+
+
+                // e) Interactive Star in About Section
+                const aboutStar = document.getElementById('about-star');
+                if (aboutStar) {
+                    aboutStar.addEventListener('mouseenter', () => {
+                        gsap.to(aboutStar, { scale: 1.2, duration: 0.3, ease: 'power2.out' });
+                    });
+                    aboutStar.addEventListener('mouseleave', () => {
+                        gsap.to(aboutStar, { scale: 1, duration: 0.3, ease: 'power2.out' });
+                    });
+                }
+
+            } else { // Fallback for reduced motion
+                 gsap.utils.toArray('.reveal, .about-col').forEach(el => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'none';
+                });
+            }
+            
+            // --- 4. PROJECT PAGE LOGIC ---
+            const projectDetailPage = document.getElementById('project-detail-page');
+            const mainContent = document.getElementById('main-content');
+            
+            function openProject(projectData, projectElement) {
+                const rect = projectElement.getBoundingClientRect();
+                const originX = rect.left + rect.width / 2;
+                const originY = rect.top + rect.height / 2;
+                
+                populateAndShowProjectPage(projectData);
+
+                const tl = gsap.timeline();
+                tl.set(projectDetailPage, { 
+                    display: 'block',
+                    clipPath: `circle(0% at ${originX}px ${originY}px)`
+                });
+
+                tl.to([mainContent, header], {
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power2.in'
+                })
+                .to(projectDetailPage, {
+                    clipPath: `circle(150% at ${originX}px ${originY}px)`,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: 'expo.inOut'
+                }, 0)
+                .call(animateProjectContent);
+            }
+
+            function animateProjectContent() {
+                // Animate hero image with parallax
+                projectScrollTriggers.push(
+                    gsap.to("#project-hero-image-inner", {
+                        yPercent: 20,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: "#project-detail-page",
+                            scroller: "#project-detail-page",
+                            start: "top top",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    })
+                );
+
+                // Animate content reveal on scroll
+                gsap.utils.toArray('.project-content-reveal').forEach(el => {
+                    projectScrollTriggers.push(
+                        gsap.to(el, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: 'power2.out',
+                            scrollTrigger: {
+                                trigger: el,
+                                scroller: "#project-detail-page",
+                                start: 'top 85%'
+                            }
+                        })
+                    );
+                });
+
+                 // Animate images on scroll
+                gsap.utils.toArray('.project-image-reveal').forEach(img => {
+                    projectScrollTriggers.push(
+                        gsap.fromTo(img, 
+                            { scale: 0.9, opacity: 0, y: 50 },
+                            {
+                                scale: 1,
+                                opacity: 1,
+                                y: 0,
+                                duration: 1,
+                                ease: 'power2.out',
+                                scrollTrigger: {
+                                    trigger: img,
+                                    scroller: "#project-detail-page",
+                                    start: "top 90%"
+                                }
+                            }
+                        )
+                    );
+                });
+
+                // Animate stats numbers
+                document.querySelectorAll('.stat-number').forEach(stat => {
+                    const endValue = parseInt(stat.dataset.value);
+                    let counter = { value: 0 };
+                    projectScrollTriggers.push(
+                        gsap.to(counter, {
+                            value: endValue,
+                            duration: 2,
+                            ease: 'power2.out',
+                            onUpdate: () => {
+                                stat.textContent = Math.ceil(counter.value);
+                            },
+                            scrollTrigger: {
+                                trigger: stat,
+                                scroller: "#project-detail-page",
+                                start: "top 85%",
+                                toggleActions: "play none none none"
+                            }
+                        })
+                    );
+                });
+            }
+
+            function populateAndShowProjectPage(projectData) {
+                 projectDetailPage.innerHTML = `
+                    <div class="relative">
+                         <button id="close-project-btn" class="fixed top-6 left-6 z-20 text-white flex items-center space-x-2 group">
+                            <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            <span class="font-medium">Back</span>
+                        </button>
+
+                        <div style="height: 65vh; width: 100%; overflow: hidden;">
+                            <img id="project-hero-image-inner" src="${projectData.image}" alt="${projectData.title}" class="w-full h-full object-cover scale-110">
+                        </div>
+
+                        <div class="container mx-auto px-6 py-12 md:py-20">
+                            <div class="max-w-4xl mx-auto">
+                                <h1 class="text-4xl md:text-6xl font-bold project-content-reveal">${projectData.title}</h1>
+                                <div class="mt-4 flex flex-wrap gap-3 project-content-reveal">
+                                    ${projectData.tags.map(tag => `<span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">${tag}</span>`).join('')}
+                                </div>
+                                
+                                <div class="mt-16 md:mt-24 text-lg max-w-3xl space-y-12 text-gray-300">
+                                     ${projectData.description}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.style.overflow = 'hidden';
+
+                const closeBtn = document.getElementById('close-project-btn');
+                closeBtn.addEventListener('click', () => closeProject());
+            }
+            
+            function closeProject(){
+                 // Kill all project-specific ScrollTriggers to prevent memory leaks
+                projectScrollTriggers.forEach(st => st.kill());
+                projectScrollTriggers = [];
+
+                const tl = gsap.timeline();
+
+                tl.to(projectDetailPage, {
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: 'power2.out'
+                })
+                .set(projectDetailPage, { display: 'none' })
+                .to([mainContent, header], { 
+                    opacity: 1, 
+                    duration: 0.6, 
+                    ease: 'power3.inOut'
+                }, ">-0.3");
+
+                document.body.style.overflow = '';
+            }
+
+            // --- 5. MOBILE MENU LOGIC ---
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+            const openButton = document.getElementById('mobile-menu-button');
+            const closeButton = document.getElementById('mobile-close-button');
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+            function openMobileMenu() {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenuPanel.classList.remove('translate-x-full'), 10);
+            }
+            function closeMobileMenu() {
+                mobileMenuPanel.classList.add('translate-x-full');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+            }
+
+            openButton.addEventListener('click', openMobileMenu);
+            closeButton.addEventListener('click', closeMobileMenu);
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target === mobileMenu) closeMobileMenu();
+            });
+            mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+
+            // --- 6. THREE.JS INTERACTIVE GRADIENT BACKGROUND ---
+            let scene, camera, renderer, material;
+            const canvas = document.getElementById('hero-gradient-background');
+
+            function initGradientBackground() {
+                scene = new THREE.Scene();
+                camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+                
+                const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        u_time: { value: 0 },
+                        u_resolution: { value: new THREE.Vector2() },
+                        u_color1: { value: new THREE.Color(0x0047AB) },
+                        u_color2: { value: new THREE.Color(0x00008B) },
+                    },
+                    vertexShader: `
+                        varying vec2 vUv;
+                        void main() {
+                            vUv = uv;
+                            gl_Position = vec4(position, 1.0);
+                        }
+                    `,
+                    fragmentShader: `
+                        varying vec2 vUv;
+                        uniform float u_time;
+                        uniform vec3 u_color1;
+                        uniform vec3 u_color2;
+                        vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                        vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                        vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+                        vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+                        float snoise(vec3 v) {
+                            const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+                            const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+                            vec3 i  = floor(v + dot(v, C.yyy));
+                            vec3 x0 = v - i + dot(i, C.xxx);
+                            vec3 g = step(x0.yzx, x0.xyz);
+                            vec3 l = 1.0 - g;
+                            vec3 i1 = min( g.xyz, l.zxy );
+                            vec3 i2 = max( g.xyz, l.zxy );
+                            vec3 x1 = x0 - i1 + C.xxx;
+                            vec3 x2 = x0 - i2 + C.yyy;
+                            vec3 x3 = x0 - D.yyy;
+                            i = mod289(i);
+                            vec4 p = permute( permute( permute(
+                                i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                                + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+                                + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+                            float n_ = 0.142857142857;
+                            vec3 ns = n_ * D.wyz - D.xzx;
+                            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+                            vec4 x_ = floor(j * ns.z);
+                            vec4 y_ = floor(j - 7.0 * x_);
+                            vec4 x = x_ * ns.x + ns.yyyy;
+                            vec4 y = y_ * ns.x + ns.yyyy;
+                            vec4 h = 1.0 - abs(x) - abs(y);
+                            vec4 b0 = vec4( x.xy, y.xy );
+                            vec4 b1 = vec4( x.zw, y.zw );
+                            vec4 s0 = floor(b0)*2.0 + 1.0;
+                            vec4 s1 = floor(b1)*2.0 + 1.0;
+                            vec4 sh = -step(h, vec4(0.0));
+                            vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+                            vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+                            vec3 p0 = vec3(a0.xy,h.x);
+                            vec3 p1 = vec3(a0.zw,h.y);
+                            vec3 p2 = vec3(a1.xy,h.z);
+                            vec3 p3 = vec3(a1.zw,h.w);
+                            vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+                            p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+                            vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                            m = m * m;
+                            return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+                        }
+                        void main() {
+                            vec2 p = vUv;
+                            float noise = snoise(vec3(p * 2.0, u_time * 0.1));
+                            vec3 color = mix(u_color1, u_color2, p.y + noise * 0.1);
+                            float grain = (snoise(vec3(p * 800.0, u_time)) * 0.5 + 0.5) * 0.08;
+                            gl_FragColor = vec4(color + grain, 1.0);
+                        }
+                    `,
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+                
+                onWindowResize();
+                window.addEventListener('resize', onWindowResize);
+                animateGradient();
+            }
+
+            function animateGradient() {
+                material.uniforms.u_time.value += 0.01;
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateGradient);
+            }
+
+            function onWindowResize() {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+            }
+            
+            initGradientBackground();
+
+            // --- 7. DYNAMIC STYLESHEET & PROJECT INJECTION ---
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = `
+                .marquee-item { @apply text-5xl font-bold; color: var(--text-secondary); }
+                .marquee-separator { @apply w-3 h-3 mx-6 rounded-full; background-color: var(--border-color); }
+            `;
+            document.head.appendChild(styleSheet);
+            
+            const projects = [
+                 { 
+                    id: 'p1', 
+                    title: 'B2B Travel Platform Redesign', 
+                    tags: ['UX Research', 'UI Design', 'Prototyping'], 
+                    image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', 
+                    description: `
+                        <div class="project-content-reveal">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Challenge: A Sinking Ship</h3>
+                            <p>The Travacations B2B platform was facing a critical downturn. User engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned. The culprit? A convoluted, 12-step booking process that left travel agents frustrated and inefficient. The interface was dated, the workflow was counter-intuitive, and the business was paying the price.</p>
+                        </div>
+
+                        <div class="project-content-reveal mt-12 md:mt-16 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                            <div class="order-2 md:order-1">
+                                <h3 class="text-3xl font-bold mb-4 text-white">My Approach: From Data to Design</h3>
+                                <p>As the Lead UX Designer, I dove headfirst into understanding the user's world. I initiated a comprehensive research phase, conducting in-depth interviews with agents and performing a rigorous competitor analysis. The data pointed to a crucial insight: agents weren't just booking for one client at a time; they were juggling multiple itineraries simultaneously. The existing linear system was fundamentally broken for their needs.</p>
+                            </div>
+                            <div class="order-1 md:order-2">
+                                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1769&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="Workshop with sticky notes">
+                            </div>
+                        </div>
+
+                        <div class="project-content-reveal mt-12 md:mt-16">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Impact: A Resounding Success</h3>
+                            <p class="max-w-3xl">The redesigned platform was a game-changer. We streamlined the booking process from 12 steps to just 4, resulting in a 70% reduction in booking time. Agent satisfaction soared, and more importantly, the booking abandonment rate dropped by over 80%. The platform wasn't just usable anymore; it was a powerful tool that empowered its users, directly boosting the company's bottom line.</p>
+                            <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
+                                <div class="project-stat-card p-6 rounded-lg">
+                                    <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="70">0</span>%</p>
+                                    <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                                </div>
+                                <div class="project-stat-card p-6 rounded-lg">
+                                    <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="80">0</span>%</p>
+                                    <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
+                                </div>
+                                <div class="project-stat-card p-6 rounded-lg col-span-2 md:col-span-1">
+                                    <p class="text-4xl font-bold text-cyan-400">12 &rarr; 4</p>
+                                    <p class="text-sm text-gray-400 mt-1">Steps Reduced</p>
+                                </div>
+                            </div>
+                        </div>
+                    ` 
+                },
+                { 
+                    id: 'p2', 
+                    title: 'Fintech Super-App', 
+                    tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], 
+                    image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', 
+                    description: `
+                        <div class="project-content-reveal">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Vision: Finance Reimagined</h3>
+                            <p>The goal was ambitious: create a revolutionary fintech "super-app" that would serve as a single touchpoint for all of a user's financial needs. The core challenge was to integrate AI-powered financial advice, budgeting tools, and investment platforms into a single, cohesive, and utterly seamless user experience. How could we make something so complex feel simple and empowering?</p>
+                        </div>
+                        <div class="project-content-reveal mt-12 md:mt-16">
+                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Fintech app UI screenshot">
+                        </div>
+                        <div class="project-content-reveal mt-12 md:mt-16">
+                            <h3 class="text-3xl font-bold mb-4 text-white">My Role: Architecting Simplicity</h3>
+                            <p>My role was to architect the user's journey. I began by developing a comprehensive design system to ensure visual and interactive consistency across every feature. I then led extensive user journey mapping sessions, charting out dozens of potential pathways and identifying key moments of friction and opportunity. We prototyped and tested relentlessly, refining every interaction to be as intuitive as possible. The AI integration was key. I worked closely with the data science team to design an interface that could present complex financial advice in a way that was digestible, trustworthy, and actionable for the average user.</p>
+                        </div>
+                         <div class="project-content-reveal mt-12 md:mt-16">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Outcome: Award-Winning Innovation</h3>
+                            <p>The result was a highly intuitive platform that increased user retention by 35% within six months of launch. The app was featured on several major tech blogs for its innovative approach to personal finance and, most importantly, user feedback was overwhelmingly positive. We had successfully demystified personal finance for thousands of users.</p>
+                        </div>
+                    `
+                },
+                { 
+                    id: 'p3', 
+                    title: 'Patient Management Platform', 
+                    tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], 
+                    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', 
+                    description: `
+                         <div class="project-content-reveal">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Need: Care Over Clicks</h3>
+                            <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
+                        </div>
+                        <div class="project-content-reveal mt-12 md:mt-16">
+                            <h3 class="text-3xl font-bold mb-4 text-white">My Process: Empathy-Driven Design</h3>
+                            <p>This project required deep empathy. I spent weeks shadowing nurses and doctors, observing their workflows, and understanding their pain points. This firsthand research was invaluable. I designed a streamlined, task-based interface that prioritized clarity and speed. Every color, font size, and layout choice was made with accessibility at the forefront. Through rigorous, iterative usability testing with medical professionals, we refined high-fidelity prototypes, ensuring the final design was not just compliant, but genuinely helpful and intuitive for its users in high-pressure situations.</p>
+                        </div>
+                        <div class="project-content-reveal mt-12 md:mt-16">
+                            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Doctor using a tablet">
+                        </div>
+                         <div class="project-content-reveal mt-12 md:mt-16">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Result: More Time for Patients</h3>
+                            <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
+                        </div>
+                    `
+                },
+                { 
+                    id: 'p4', 
+                    title: 'E-Commerce Experience', 
+                    tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], 
+                    image: 'https://images.unsplash.com/photo-1555529771-835f59fc5efe?q=80&w=1887&auto=format&fit=crop', 
+                    description: `
+                        <div class="project-content-reveal">
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Problem: The Leaky Funnel</h3>
+                            <p>An established e-commerce brand was facing a classic challenge: high traffic, but low conversions. Users were abandoning their carts at an alarming rate, and the checkout process was identified as the primary culprit. My mission was to overhaul the user experience, plug the leaks in the conversion funnel, and ultimately drive revenue.</p>
+                        </div>
+                        <div class="project-content-reveal mt-12 md:mt-16">
+                             <h3 class="text-3xl font-bold mb-4 text-white">My Strategy: Data-Driven Redesign</h3>
+                            <p>This project was a deep dive into data. I led the UI design and A/B testing efforts, analyzing user behavior data, heatmaps, and session recordings to identify specific points of friction. I redesigned the product pages to be more visually appealing and informative, and completely streamlined the checkout process into a single, frictionless page. Every major design change was proposed as a hypothesis and rigorously A/B tested against the original. This data-driven approach allowed us to make confident decisions based on user behavior, not assumptions.</p>
+                        </div>
+                        <div class="project-content-reveal mt-12 md:mt-16 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                            <div>
+                               <img src="https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="People shopping on a website">
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-bold mb-4 text-white">The Numbers: A Clear Victory</h3>
+                                <p>The results spoke for themselves. By implementing the winning design variations, we achieved a 25% increase in the overall conversion rate and a significant 15% uplift in the average order value within the first quarter. The project demonstrated a clear return on investment and set a new standard for the company's design process.</p>
+                            </div>
+                        </div>
+                    `
+                }
+            ];
+
+            const projectsContainer = document.getElementById('projects-container');
+            projects.forEach((p) => {
+                const projectEl = document.createElement('div');
+                projectEl.className = 'project-item relative cursor-pointer';
+                projectEl.innerHTML = `
+                    <div class="py-12 flex justify-between items-center relative z-10">
+                        <h3 class="text-2xl md:text-4xl font-bold">${p.title}</h3>
+                        <span class="text-sm font-medium text-secondary hidden md:block">${p.tags.join(' / ')}</span>
+                    </div>
+                    <img src="${p.image}" class="project-image-preview">
+                `;
+                projectsContainer.appendChild(projectEl);
+
+                const previewImage = projectEl.querySelector('.project-image-preview');
+
+                projectEl.addEventListener('mouseenter', () => {
+                    cursorText.textContent = "View";
+                    gsap.to(cursor, { 
+                        width: '80px', 
+                        height: '80px',
+                        backgroundColor: 'white',
+                        borderWidth: 0,
+                        duration: 0.3 
+                    });
+                    gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+                });
+
+                projectEl.addEventListener('mouseleave', () => {
+                     cursorText.textContent = "";
+                     gsap.to(cursor, { 
+                        width: '24px', 
+                        height: '24px',
+                        backgroundColor: 'transparent',
+                        borderWidth: '1px',
+                        duration: 0.3 
+                    });
+                    gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
+                });
+
+                projectEl.addEventListener('mousemove', (e) => {
+                    const rect = projectEl.getBoundingClientRect();
+                    gsap.to(previewImage, {
+                        x: e.clientX - rect.left - (previewImage.width / 2),
+                        y: e.clientY - rect.top - previewImage.height - 20, // Move image above cursor
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+                });
+                
+                projectEl.addEventListener('click', () => openProject(p, projectEl));
+    
+            });
+
+            // This section is now moved after the projects are created
+            if (!prefersReducedMotion.matches) {
+                gsap.utils.toArray('.project-item').forEach(item => {
+                    gsap.to(item, {
+                        x: 0,
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 90%',
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+    
+    </body>
+    </html>
+
