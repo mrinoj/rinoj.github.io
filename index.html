@@ -55,7 +55,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 6px;
+            height: 4px;
             background-color: #fff;
             width: 0%;
             z-index: 10000;
@@ -472,19 +472,24 @@
                 });
             });
 
-            // --- 2. CUSTOM CURSOR ---
+            // --- 2. CUSTOM CURSOR & MOBILE INTERACTIONS ---
             const cursor = document.querySelector('.cursor');
             const cursorText = document.querySelector('.cursor-text');
             const interactiveElements = document.querySelectorAll('a, button, .hover-link, #about-star');
-            
-            window.addEventListener('mousemove', (e) => {
-                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
-            });
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
-                el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
-            });
+            if (isTouchDevice) {
+                cursor.style.display = 'none';
+            } else {
+                window.addEventListener('mousemove', (e) => {
+                    gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
+                });
+
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
+                    el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
+                });
+            }
 
             // --- 3. SCROLL & HOVER ANIMATIONS ---
             if (!prefersReducedMotion.matches) {
@@ -1012,44 +1017,71 @@
                 `;
                 projectsContainer.appendChild(projectEl);
 
-                const previewImage = projectEl.querySelector('.project-image-preview');
+                if (isTouchDevice) {
+                    let touchStartTime;
+                    let touchStartPos = { x: 0, y: 0 };
+                    
+                    projectEl.addEventListener('touchstart', (e) => {
+                        touchStartTime = Date.now();
+                        touchStartPos.x = e.touches[0].clientX;
+                        touchStartPos.y = e.touches[0].clientY;
+                        gsap.to(projectEl, { scale: 0.98, duration: 0.2, ease: 'power2.out' });
+                    }, { passive: true });
 
-                projectEl.addEventListener('mouseenter', () => {
-                    cursorText.textContent = "View";
-                    gsap.to(cursor, { 
-                        width: '80px', 
-                        height: '80px',
-                        backgroundColor: 'white',
-                        borderWidth: 0,
-                        duration: 0.3 
-                    });
-                    gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
-                });
+                    projectEl.addEventListener('touchend', (e) => {
+                        gsap.to(projectEl, { scale: 1, duration: 0.2, ease: 'power2.out' });
 
-                projectEl.addEventListener('mouseleave', () => {
-                     cursorText.textContent = "";
-                     gsap.to(cursor, { 
-                        width: '24px', 
-                        height: '24px',
-                        backgroundColor: 'transparent',
-                        borderWidth: '1px',
-                        duration: 0.3 
-                    });
-                    gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
-                });
+                        const touchDuration = Date.now() - touchStartTime;
+                        const touchEndPos = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+                        const distance = Math.sqrt(
+                            Math.pow(touchEndPos.x - touchStartPos.x, 2) +
+                            Math.pow(touchEndPos.y - touchStartPos.y, 2)
+                        );
 
-                projectEl.addEventListener('mousemove', (e) => {
-                    const rect = projectEl.getBoundingClientRect();
-                    gsap.to(previewImage, {
-                        x: e.clientX - rect.left - (previewImage.width / 2),
-                        y: e.clientY - rect.top - previewImage.height - 20, // Move image above cursor
-                        duration: 0.8,
-                        ease: 'power3.out'
+                        if (touchDuration < 250 && distance < 10) {
+                            openProject(p, projectEl);
+                        }
                     });
-                });
-                
-                projectEl.addEventListener('click', () => openProject(p, projectEl));
-    
+                } else {
+                    // MOUSE-BASED HOVER AND CLICK EVENTS
+                    const previewImage = projectEl.querySelector('.project-image-preview');
+
+                    projectEl.addEventListener('mouseenter', () => {
+                        cursorText.textContent = "View";
+                        gsap.to(cursor, { 
+                            width: '80px', 
+                            height: '80px',
+                            backgroundColor: 'white',
+                            borderWidth: 0,
+                            duration: 0.3 
+                        });
+                        gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+                    });
+
+                    projectEl.addEventListener('mouseleave', () => {
+                         cursorText.textContent = "";
+                         gsap.to(cursor, { 
+                            width: '24px', 
+                            height: '24px',
+                            backgroundColor: 'transparent',
+                            borderWidth: '1px',
+                            duration: 0.3 
+                        });
+                        gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
+                    });
+
+                    projectEl.addEventListener('mousemove', (e) => {
+                        const rect = projectEl.getBoundingClientRect();
+                        gsap.to(previewImage, {
+                            x: e.clientX - rect.left - (previewImage.width / 2),
+                            y: e.clientY - rect.top - previewImage.height - 20, // Move image above cursor
+                            duration: 0.8,
+                            ease: 'power3.out'
+                        });
+                    });
+                    
+                    projectEl.addEventListener('click', () => openProject(p, projectEl));
+                }
             });
 
             // This section is now moved after the projects are created
