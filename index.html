@@ -46,20 +46,9 @@
 
         body {
             font-family: 'Satoshi', sans-serif;
-            background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end) 50%);
-            background-attachment: fixed;
+            background-color: var(--bg-gradient-end);
             color: var(--text-primary);
             cursor: none;
-        }
-
-        #scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background-color: #fff;
-            width: 0%;
-            z-index: 10000;
         }
         
         #hero-gradient-background {
@@ -155,7 +144,7 @@
             opacity: 0;
         }
         .project-item:nth-child(even) {
-             transform: translateX(100%);
+            transform: translateX(100%);
         }
 
         .project-item:last-child {
@@ -229,6 +218,63 @@
             clip-path: inset(0 0 0 0);
         }
 
+        /* NEW: Styles for Story Section */
+        #story-track {
+            display: flex;
+            align-items: center;
+        }
+        .story-panel {
+            flex-shrink: 0;
+            width: 70vw;
+            max-width: 600px;
+        }
+        .story-panel img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            transition: filter 0.5s var(--animation-easing), transform 0.5s var(--animation-easing);
+            filter: grayscale(100%);
+            transform: scale(0.95);
+        }
+        .story-panel.is-active img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+        .story-text-item {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .story-text-item.is-active {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+
+        /* Microinteractions */
+        .nav-link-hover {
+            transition: transform 0.3s var(--animation-easing), color 0.3s var(--animation-easing);
+        }
+        .nav-link-hover:hover {
+            transform: translateY(-2px);
+            color: #67e8f9; /* Tailwind cyan-300 */
+        }
+        .button-hover-effect {
+            transition: transform 0.3s var(--animation-easing);
+        }
+        .button-hover-effect:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-card-hover {
+            transition: transform 0.3s var(--animation-easing), background-color 0.3s var(--animation-easing);
+        }
+        .stat-card-hover:hover {
+            transform: translateY(-4px);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
         @media (min-width: 768px) {
             .skill-item {
                 font-size: 3.64rem;
@@ -245,7 +291,6 @@
     </style>
 </head>
 <body class="antialiased">
-    <div id="scroll-progress-bar"></div>
     <canvas id="hero-gradient-background"></canvas>
     <div class="preloader">
         <div class="preloader-logo text-3xl font-bold" style="color: #FFFFFF;">Rinoj<span class="text-cyan-400">.</span></div>
@@ -261,11 +306,11 @@
             
             <div class="flex-1 hidden md:flex justify-end items-center space-x-8">
                 <nav class="flex items-center space-x-4" aria-label="Primary Navigation">
-                    <a href="#about" class="text-base font-medium px-3 py-1" style="color: var(--text-primary);">About</a>
-                    <a href="#work" class="text-base font-medium px-3 py-1" style="color: var(--text-primary);">Projects</a>
-                    <a href="#" class="text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
+                    <a href="#about" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">About</a>
+                    <a href="#work" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Projects</a>
+                    <a href="#" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
                 </nav>
-                <a href="#contact" class="bg-white font-semibold px-5 py-[6px] rounded-full hover:bg-opacity-80 transition-all duration-300 shadow whitespace-nowrap" style="color: #1e1f1f;">Contact me</a>
+                <a href="#contact" class="button-hover-effect bg-white font-semibold px-5 py-[6px] rounded-full hover:bg-opacity-80 transition-all duration-300 shadow whitespace-nowrap" style="color: #1e1f1f;">Contact me</a>
             </div>
 
             <div class="md:hidden flex-1 flex justify-end">
@@ -295,48 +340,110 @@
 
             <!-- Marquee moved down and text size reduced -->
              <div class="absolute inset-0 flex items-end pb-8 md:pb-4 z-10">
-                <div class="name-marquee-container flex whitespace-nowrap items-center">
-                    <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
-                    <span class="px-4 inline-flex items-center justify-center">
-                        <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                    </span>
-                    <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
+                 <div class="name-marquee-container flex whitespace-nowrap items-center">
+                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
                      <span class="px-4 inline-flex items-center justify-center">
+                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                     </span>
+                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
+                      <span class="px-4 inline-flex items-center justify-center">
+                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                     </span>
+                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
+                     <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                    </span>
-                    <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
-                    <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
-                       <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                    </span>
-                    <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
-                    <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
-                        <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                    </span>
-                </div>
-            </div>
+                     </span>
+                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
+                     <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
+                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                     </span>
+                 </div>
+             </div>
         </section>
         
         <div id="page-content">
             <!-- About Section -->
             <section id="about" class="py-12 md:py-16">
-                 <div class="container mx-auto px-6 relative">
-                    <div class="max-w-5xl mx-auto grid md:grid-cols-10 gap-8 md:gap-16 items-start">
-                        <div class="md:col-span-7">
-                             <p id="about-text-left" class="text-2xl md:text-4xl font-medium leading-tight" style="color: var(--text-primary);"></p>
-                        </div>
-                        <div class="md:col-span-3 text-right flex flex-col">
-                            <div id="about-star-container" class="w-full flex justify-end mb-8">
-                                <svg id="about-star" class="star-separator w-16 h-16 text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                 <div class="container mx-auto px-6 relative z-10">
+                     <div class="max-w-5xl mx-auto grid md:grid-cols-10 gap-8 md:gap-16 items-center">
+                         <div class="md:col-span-6">
+                              <p id="about-text-left" class="text-2xl md:text-4xl font-medium leading-tight" style="color: var(--text-primary);"></p>
+                         </div>
+                         <div class="md:col-span-4 flex flex-col items-center">
+                            <div class="relative w-48 h-48 md:w-56 md:h-56 mb-8" id="personal-photo-container">
+                                 <img id="personal-photo" src="https://placehold.co/300x300/4a5568/EAEAEA?text=Rinoj" alt="A professional headshot of Mohamed Rinoj Hashim" class="rounded-full w-full h-full object-cover shadow-2xl">
+                                <div id="about-star-container" class="absolute -bottom-4 -right-4">
+                                     <svg id="about-star" class="star-separator w-16 h-16 text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                                 </div>
                             </div>
-                            <div class="flex-grow"></div>
-                            <p id="about-text-right" class="text-lg font-bold uppercase text-white"></p>
+                            <p id="about-text-right" class="text-lg text-center font-bold uppercase text-white"></p>
+                         </div>
+                     </div>
+                 </div>
+            </section>
+
+            <!-- Story Section -->
+            <section id="story" class="relative">
+                <div id="story-pin-container" class="h-screen w-full overflow-hidden">
+                    <!-- Text content positioned at the top of the viewport -->
+                    <div class="absolute top-0 left-0 right-0 pt-32 md:pt-40 z-10 pointer-events-none">
+                        <div class="container mx-auto px-6 md:px-12">
+                            <div class="grid md:grid-cols-2 gap-8 items-start">
+                                <div>
+                                    <h3 id="story-subtitle" class="text-3xl md:text-5xl font-bold">The Spark</h3>
+                                </div>
+                                <div id="story-text-container" class="relative min-h-[10rem] md:min-h-0">
+                                    <div class="story-text-item">
+                                        <p class="text-xl text-white">It all starts with a single idea. A spark of curiosity that leads to sketching, planning, and laying the digital foundation.</p>
+                                    </div>
+                                    <div class="story-text-item">
+                                        <p class="text-xl text-white">Collaboration is at the heart of my process. I believe the best ideas are born from shared perspectives and open discussions.</p>
+                                    </div>
+                                    <div class="story-text-item">
+                                        <p class="text-xl text-white">From wireframes to high-fidelity prototypes, I focus on crafting clean, intuitive interfaces that are both beautiful and functional.</p>
+                                    </div>
+                                    <div class="story-text-item">
+                                        <p class="text-xl text-white">Dedication goes beyond the 9-to-5. I thrive on the challenge of solving complex problems and getting every detail just right.</p>
+                                    </div>
+                                    <div class="story-text-item">
+                                        <p class="text-xl text-white">Usability testing provides invaluable insights that data alone can't reveal, leading to more human-centered designs.</p>
+                                    </div>
+                                    <div class="story-text-item">
+                                        <p class="text-xl text-white">The end goal is to launch a product that not only looks great but performs flawlessly, creating a seamless bridge between technology and the user.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image track positioned at the bottom of the viewport -->
+                    <div class="absolute bottom-[-10%] left-0 w-full h-[60vh]">
+                        <div id="story-track" class="absolute top-0 h-full flex items-center space-x-8">
+                            <div class="story-panel" data-title="The Spark">
+                                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" class="rounded-lg" alt="A laptop on a desk displaying code.">
+                            </div>
+                            <div class="story-panel" data-title="Collaboration">
+                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="rounded-lg" alt="A team collaborating around a table with laptops.">
+                            </div>
+                            <div class="story-panel" data-title="Creation">
+                                <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=2070&auto=format&fit=crop" class="rounded-lg" alt="A clean and modern UI/UX design workspace.">
+                            </div>
+                            <div class="story-panel" data-title="Dedication">
+                                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" class="rounded-lg" alt="A team working late at night in a modern office.">
+                            </div>
+                            <div class="story-panel" data-title="Validation">
+                                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop" class="rounded-lg" alt="Multiple people working on laptops at a shared table.">
+                            </div>
+                            <div class="story-panel" data-title="Launch">
+                               <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop" class="rounded-lg" alt="An abstract image of light and technology.">
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Projects Section -->
-            <section id="work" class="py-12 md:py-16">
+            <section id="work" class="py-12 md:py-24">
                 <div class="container mx-auto px-6 md:px-12">
                     <div class="mb-16 reveal text-center md:text-left">
                         <h2 class="text-3xl md:text-4xl font-bold">Projects</h2>
@@ -346,7 +453,7 @@
                         <!-- Projects will be dynamically inserted here -->
                     </div>
                     <div class="mt-8 text-center">
-                        <button class="text-white font-medium py-3 rounded-full hover:text-opacity-80 transition-all duration-300 relative inline-block group">
+                        <button class="button-hover-effect text-white font-medium py-3 rounded-full hover:text-opacity-80 transition-all duration-300 relative inline-block group">
                            <span class="group-hover:text-cyan-400 transition-colors">Show More Projects</span>
                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
                         </button>
@@ -368,6 +475,7 @@
                     <h2 class="text-4xl md:text-6xl font-bold mt-2">
                         <a href="tel:+917012450190" class="hover-link relative inline-block group">
                             <span class="underline decoration-2 underline-offset-4">Let's talk</span>
+                            <span class="absolute bottom-[-2px] left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
                         </a>
                         <a href="mailto:hello@mohamedrinoj.com" class="hover-link"> about it.</a>
                     </h2>
@@ -442,18 +550,6 @@
                 });
             });
 
-            gsap.to("#scroll-progress-bar", {
-                width: "100%",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "body",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 0.2
-                }
-            });
-
-
             // --- 1. PRELOADER & INITIAL PAGE REVEAL ---
             const preloader = document.querySelector('.preloader');
             const preloaderLogo = document.querySelector('.preloader-logo');
@@ -475,13 +571,18 @@
             });
 
             window.addEventListener('load', () => {
-                const tl = gsap.timeline();
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        setupStorySectionAnimation();
+                        ScrollTrigger.refresh();
+                    }
+                });
                 
                 tl.to(preloader, {
                     yPercent: -100,
                     duration: 1.2,
                     ease: 'power3.inOut',
-                    delay: 0.8
+                    delay: 0.4
                 });
 
                 tl.to([header, marqueeContainer, tagline], {
@@ -555,16 +656,20 @@
                 gsap.utils.toArray('.reveal').forEach(el => {
                     gsap.fromTo(el, { opacity: 0, y: 60 }, { 
                         opacity: 1, y: 0, duration: 1, ease: 'power2.out',
-                        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play reverse restart reverse' }
+                        scrollTrigger: { 
+                            trigger: el, 
+                            start: 'top 90%', 
+                            toggleActions: 'play none none none'
+                        }
                     });
                 });
                 
                 // d) About Section Reveal Sequence
                 const aboutTextLeft = document.getElementById('about-text-left');
                 const aboutTextRight = document.getElementById('about-text-right');
-                const aboutStarContainer = document.getElementById('about-star-container');
+                const personalPhotoContainer = document.getElementById('personal-photo-container');
 
-                if (aboutTextLeft && aboutTextRight && aboutStarContainer) {
+                if (aboutTextLeft && aboutTextRight && personalPhotoContainer) {
                     
                     const originalTextLeft = "Design from the Human outwards: <br>Research to hear what data can’t, <br>Psychology to guide what data won’t & <br>AI to work faster with efficiency.";
                     aboutTextLeft.innerHTML = originalTextLeft.split(/(\s+|<br>)/).filter(p => p.trim() !== '' || p.includes('<br>')).map(part => {
@@ -580,12 +685,10 @@
                     }).join(' ');
                     const wordsRight = aboutTextRight.querySelectorAll('.about-word');
 
-                    // Set initial states
-                    gsap.set([wordsLeft, wordsRight, aboutStarContainer], { opacity: 0 });
+                    gsap.set([wordsLeft, wordsRight, personalPhotoContainer], { opacity: 0 });
                     gsap.set([wordsLeft, wordsRight], { y: 25 });
-                    gsap.set(aboutStarContainer, { y: 30, scale: 0.5 });
+                    gsap.set(personalPhotoContainer, { y: 30, scale: 0.9 });
                     
-                    // Create a single timeline for the entire section
                     const aboutSectionTl = gsap.timeline({
                         scrollTrigger: {
                             trigger: '#about',
@@ -594,7 +697,6 @@
                         }
                     });
 
-                    // 1. Animate left text
                     aboutSectionTl.to(wordsLeft, {
                         opacity: 1,
                         y: 0,
@@ -603,8 +705,7 @@
                         ease: 'power3.out'
                     });
 
-                    // 2. Animate star
-                    aboutSectionTl.to(aboutStarContainer, {
+                    aboutSectionTl.to(personalPhotoContainer, {
                         opacity: 1,
                         y: 0,
                         scale: 1,
@@ -612,7 +713,6 @@
                         ease: 'power3.out'
                     }, ">-0.4"); 
 
-                    // 3. Animate right text
                     aboutSectionTl.to(wordsRight, {
                         opacity: 1,
                         y: 0,
@@ -633,14 +733,80 @@
                         gsap.to(aboutStar, { scale: 1, duration: 0.3, ease: 'power2.out' });
                     });
                 }
-
+                
             } else { // Fallback for reduced motion
                  gsap.utils.toArray('.reveal, .about-col').forEach(el => {
-                    el.style.opacity = 1;
-                    el.style.transform = 'none';
-                });
+                     el.style.opacity = 1;
+                     el.style.transform = 'none';
+                 });
             }
             
+            function setupStorySectionAnimation() {
+                const storySection = document.getElementById('story');
+                const storyPinContainer = document.getElementById('story-pin-container');
+                const storyTrack = document.getElementById('story-track');
+                const storyPanels = gsap.utils.toArray(".story-panel");
+                const storyTexts = gsap.utils.toArray(".story-text-item");
+                const storySubtitle = document.getElementById("story-subtitle");
+
+                if (!storySection || !storyTrack || storyPanels.length === 0) return;
+
+                gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
+                
+                let activePanelIndex = -1;
+
+                // Set initial position to center the first panel
+                const xStart = (window.innerWidth - storyPanels[0].offsetWidth) / 2;
+                gsap.set(storyTrack, { x: xStart });
+
+                // Set initial active state
+                storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === 0));
+                storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === 0));
+                if (storyPanels[0]) {
+                    storySubtitle.innerText = storyPanels[0].dataset.title;
+                }
+
+                gsap.to(storyTrack, {
+                    x: () => {
+                        const lastPanel = storyPanels[storyPanels.length - 1];
+                        return -(lastPanel.offsetLeft - (window.innerWidth - lastPanel.offsetWidth) / 2);
+                    },
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: storySection,
+                        pin: storyPinContainer,
+                        scrub: 1,
+                        start: "top top",
+                        end: "bottom bottom",
+                        onUpdate: self => {
+                            let centerPoint = window.innerWidth / 2;
+                            let newActiveIndex = -1;
+                            let smallestDistance = Infinity;
+
+                            storyPanels.forEach((panel, index) => {
+                                let panelRect = panel.getBoundingClientRect();
+                                let panelCenter = panelRect.left + panelRect.width / 2;
+                                let distance = Math.abs(panelCenter - centerPoint);
+
+                                if (distance < panelRect.width / 2 && distance < smallestDistance) {
+                                    smallestDistance = distance;
+                                    newActiveIndex = index;
+                                }
+                            });
+
+                            if (newActiveIndex !== -1 && newActiveIndex !== activePanelIndex) {
+                                activePanelIndex = newActiveIndex;
+                                storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePanelIndex));
+                                storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === activePanelIndex));
+                                if(storyPanels[activePanelIndex]){
+                                    storySubtitle.innerText = storyPanels[activePanelIndex].dataset.title;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
             // --- 4. PROJECT PAGE LOGIC ---
             const projectDetailPage = document.getElementById('project-detail-page');
             const mainContent = document.getElementById('main-content');
@@ -753,34 +919,34 @@
 
             function populateAndShowProjectPage(projectData) {
                  projectDetailPage.innerHTML = `
-                    <div class="relative">
-                         <button id="close-project-btn" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
-                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                            <span class="font-medium text-sm">Back</span>
-                        </button>
+                     <div class="relative">
+                          <button id="close-project-btn" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
+                              <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                              <span class="font-medium text-sm">Back</span>
+                          </button>
 
-                        <div style="height: 65vh; width: 100%; overflow: hidden;">
-                            <img id="project-hero-image-inner" src="${projectData.image}" alt="${projectData.title}" class="w-full h-full object-cover scale-110">
-                        </div>
+                          <div style="height: 65vh; width: 100%; overflow: hidden;">
+                              <img id="project-hero-image-inner" src="${projectData.image}" alt="${projectData.title}" class="w-full h-full object-cover scale-110">
+                          </div>
 
-                        <div class="container mx-auto px-6 py-12 md:py-20">
-                            <div class="max-w-4xl mx-auto">
-                                <h1 class="text-4xl md:text-6xl font-bold project-content-reveal">${projectData.title}</h1>
-                                <div class="mt-4 flex flex-wrap gap-3 project-content-reveal">
-                                    ${projectData.tags.map(tag => `<span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">${tag}</span>`).join('')}
-                                </div>
-                                
-                                <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-10 text-gray-300">
-                                     ${projectData.description}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                document.body.style.overflow = 'hidden';
+                          <div class="container mx-auto px-6 py-12 md:py-20">
+                              <div class="max-w-4xl mx-auto">
+                                  <h1 class="text-4xl md:text-6xl font-bold project-content-reveal">${projectData.title}</h1>
+                                  <div class="mt-4 flex flex-wrap gap-3 project-content-reveal">
+                                      ${projectData.tags.map(tag => `<span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">${tag}</span>`).join('')}
+                                  </div>
+                                  
+                                  <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-10 text-gray-300">
+                                       ${projectData.description}
+                                  </div>
+                              </div>
+                          </div>
+                     </div>
+                 `;
+                 document.body.style.overflow = 'hidden';
 
-                const closeBtn = document.getElementById('close-project-btn');
-                closeBtn.addEventListener('click', () => closeProject());
+                 const closeBtn = document.getElementById('close-project-btn');
+                 closeBtn.addEventListener('click', () => closeProject());
             }
             
             function closeProject(){
@@ -887,9 +1053,9 @@
                             vec3 x3 = x0 - D.yyy;
                             i = mod289(i);
                             vec4 p = permute( permute( permute( 
-                                i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-                                + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
-                                + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+                                 i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                                 + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                                 + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
                             float n_ = 0.142857142857;
                             vec3 ns = n_ * D.wyz - D.xzx;
                             vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
@@ -950,117 +1116,117 @@
             // --- 7. DYNAMIC STYLESHEET & PROJECT INJECTION ---
             const projects = [
                  { 
-                    id: 'p1', 
-                    title: 'B2B Travel Platform Redesign', 
-                    tags: ['UX Research', 'UI Design', 'Prototyping'], 
-                    image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', 
-                    description: `
-                        <div class="project-content-reveal">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Challenge: A Sinking Ship</h3>
-                            <p>The Travacations B2B platform was facing a critical downturn. User engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned. The culprit? A convoluted, 12-step booking process that left travel agents frustrated and inefficient. The interface was dated, the workflow was counter-intuitive, and the business was paying the price.</p>
-                        </div>
-
-                        <div class="project-content-reveal mt-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                            <div class="order-2 md:order-1">
-                                <h3 class="text-3xl font-bold mb-4 text-white">My Approach: From Data to Design</h3>
-                                <p>As the Lead UX Designer, I dove headfirst into understanding the user's world. I initiated a comprehensive research phase, conducting in-depth interviews with agents and performing a rigorous competitor analysis. The data pointed to a crucial insight: agents weren't just booking for one client at a time; they were juggling multiple itineraries simultaneously. The existing linear system was fundamentally broken for their needs.</p>
-                            </div>
-                            <div class="order-1 md:order-2">
-                                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1769&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="Workshop with sticky notes">
-                            </div>
-                        </div>
-
-                        <div class="project-content-reveal mt-12">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Impact: A Resounding Success</h3>
-                            <p class="max-w-3xl">The redesigned platform was a game-changer. We streamlined the booking process from 12 steps to just 4, resulting in a 70% reduction in booking time. Agent satisfaction soared, and more importantly, the booking abandonment rate dropped by over 80%. The platform wasn't just usable anymore; it was a powerful tool that empowered its users, directly boosting the company's bottom line.</p>
-                            <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
-                                <div class="project-stat-card p-6 rounded-lg">
-                                    <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="70">0</span>%</p>
-                                    <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
-                                </div>
-                                <div class="project-stat-card p-6 rounded-lg">
-                                    <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="80">0</span>%</p>
-                                    <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
-                                </div>
-                                <div class="project-stat-card p-6 rounded-lg col-span-2 md:col-span-1">
-                                    <p class="text-4xl font-bold text-cyan-400">12 &rarr; 4</p>
-                                    <p class="text-sm text-gray-400 mt-1">Steps Reduced</p>
-                                </div>
-                            </div>
-                        </div>
-                    ` 
-                },
-                { 
-                    id: 'p2', 
-                    title: 'Fintech Super-App', 
-                    tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], 
-                    image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', 
-                    description: `
-                        <div class="project-content-reveal">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Vision: Finance Reimagined</h3>
-                            <p>The goal was ambitious: create a revolutionary fintech "super-app" that would serve as a single touchpoint for all of a user's financial needs. The core challenge was to integrate AI-powered financial advice, budgeting tools, and investment platforms into a single, cohesive, and utterly seamless user experience. How could we make something so complex feel simple and empowering?</p>
-                        </div>
-                        <div class="project-content-reveal mt-12">
-                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Fintech app UI screenshot">
-                        </div>
-                        <div class="project-content-reveal mt-12">
-                            <h3 class="text-3xl font-bold mb-4 text-white">My Role: Architecting Simplicity</h3>
-                            <p>My role was to architect the user's journey. I began by developing a comprehensive design system to ensure visual and interactive consistency across every feature. I then led extensive user journey mapping sessions, charting out dozens of potential pathways and identifying key moments of friction and opportunity. We prototyped and tested relentlessly, refining every interaction to be as intuitive as possible. The AI integration was key. I worked closely with the data science team to design an interface that could present complex financial advice in a way that was digestible, trustworthy, and actionable for the average user.</p>
-                        </div>
-                         <div class="project-content-reveal mt-12">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Outcome: Award-Winning Innovation</h3>
-                            <p>The result was a highly intuitive platform that increased user retention by 35% within six months of launch. The app was featured on several major tech blogs for its innovative approach to personal finance and, most importantly, user feedback was overwhelmingly positive. We had successfully demystified personal finance for thousands of users.</p>
-                        </div>
-                    `
-                },
-                { 
-                    id: 'p3', 
-                    title: 'Patient Management Platform', 
-                    tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], 
-                    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', 
-                    description: `
+                     id: 'p1', 
+                     title: 'B2B Travel Platform Redesign', 
+                     tags: ['UX Research', 'UI Design', 'Prototyping'], 
+                     image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', 
+                     description: `
                          <div class="project-content-reveal">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Need: Care Over Clicks</h3>
-                            <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
-                        </div>
-                        <div class="project-content-reveal mt-12">
-                            <h3 class="text-3xl font-bold mb-4 text-white">My Process: Empathy-Driven Design</h3>
-                            <p>This project required deep empathy. I spent weeks shadowing nurses and doctors, observing their workflows, and understanding their pain points. This firsthand research was invaluable. I designed a streamlined, task-based interface that prioritized clarity and speed. Every color, font size, and layout choice was made with accessibility at the forefront. Through rigorous, iterative usability testing with medical professionals, we refined high-fidelity prototypes, ensuring the final design was not just compliant, but genuinely helpful and intuitive for its users in high-pressure situations.</p>
-                        </div>
-                        <div class="project-content-reveal mt-12">
-                            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Doctor using a tablet">
-                        </div>
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Challenge: A Sinking Ship</h3>
+                             <p>The Travacations B2B platform was facing a critical downturn. User engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned. The culprit? A convoluted, 12-step booking process that left travel agents frustrated and inefficient. The interface was dated, the workflow was counter-intuitive, and the business was paying the price.</p>
+                         </div>
+
+                         <div class="project-content-reveal mt-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                             <div class="order-2 md:order-1">
+                                 <h3 class="text-3xl font-bold mb-4 text-white">My Approach: From Data to Design</h3>
+                                 <p>As the Lead UX Designer, I dove headfirst into understanding the user's world. I initiated a comprehensive research phase, conducting in-depth interviews with agents and performing a rigorous competitor analysis. The data pointed to a crucial insight: agents weren't just booking for one client at a time; they were juggling multiple itineraries simultaneously. The existing linear system was fundamentally broken for their needs.</p>
+                             </div>
+                             <div class="order-1 md:order-2">
+                                 <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1769&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="Workshop with sticky notes">
+                             </div>
+                         </div>
+
                          <div class="project-content-reveal mt-12">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Result: More Time for Patients</h3>
-                            <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
-                        </div>
-                    `
-                },
-                { 
-                    id: 'p4', 
-                    title: 'E-Commerce Experience', 
-                    tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], 
-                    image: 'https://images.unsplash.com/photo-1555529771-835f59fc5efe?q=80&w=1887&auto=format&fit=crop', 
-                    description: `
-                        <div class="project-content-reveal">
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Problem: The Leaky Funnel</h3>
-                            <p>An established e-commerce brand was facing a classic challenge: high traffic, but low conversions. Users were abandoning their carts at an alarming rate, and the checkout process was identified as the primary culprit. My mission was to overhaul the user experience, plug the leaks in the conversion funnel, and ultimately drive revenue.</p>
-                        </div>
-                        <div class="project-content-reveal mt-12">
-                             <h3 class="text-3xl font-bold mb-4 text-white">My Strategy: Data-Driven Redesign</h3>
-                            <p>This project was a deep dive into data. I led the UI design and A/B testing efforts, analyzing user behavior data, heatmaps, and session recordings to identify specific points of friction. I redesigned the product pages to be more visually appealing and informative, and completely streamlined the checkout process into a single, frictionless page. Every major design change was proposed as a hypothesis and rigorously A/B tested against the original. This data-driven approach allowed us to make confident decisions based on user behavior, not assumptions.</p>
-                        </div>
-                        <div class="project-content-reveal mt-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                            <div>
-                               <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="People shopping on a website">
-                            </div>
-                            <div>
-                                <h3 class="text-3xl font-bold mb-4 text-white">The Numbers: A Clear Victory</h3>
-                                <p>The results spoke for themselves. By implementing the winning design variations, we achieved a 25% increase in the overall conversion rate and a significant 15% uplift in the average order value within the first quarter. The project demonstrated a clear return on investment and set a new standard for the company's design process.</p>
-                            </div>
-                        </div>
-                    `
-                }
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Impact: A Resounding Success</h3>
+                             <p class="max-w-3xl">The redesigned platform was a game-changer. We streamlined the booking process from 12 steps to just 4, resulting in a 70% reduction in booking time. Agent satisfaction soared, and more importantly, the booking abandonment rate dropped by over 80%. The platform wasn't just usable anymore; it was a powerful tool that empowered its users, directly boosting the company's bottom line.</p>
+                             <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
+                                 <div class="project-stat-card stat-card-hover p-6 rounded-lg">
+                                     <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="70">0</span>%</p>
+                                     <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                                 </div>
+                                 <div class="project-stat-card stat-card-hover p-6 rounded-lg">
+                                     <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="80">0</span>%</p>
+                                     <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
+                                 </div>
+                                 <div class="project-stat-card stat-card-hover p-6 rounded-lg col-span-2 md:col-span-1">
+                                     <p class="text-4xl font-bold text-cyan-400">12 &rarr; 4</p>
+                                     <p class="text-sm text-gray-400 mt-1">Steps Reduced</p>
+                                 </div>
+                             </div>
+                         </div>
+                     ` 
+                 },
+                 { 
+                     id: 'p2', 
+                     title: 'Fintech Super-App', 
+                     tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], 
+                     image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format=fit=crop', 
+                     description: `
+                         <div class="project-content-reveal">
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Vision: Finance Reimagined</h3>
+                             <p>The goal was ambitious: create a revolutionary fintech "super-app" that would serve as a single touchpoint for all of a user's financial needs. The core challenge was to integrate AI-powered financial advice, budgeting tools, and investment platforms into a single, cohesive, and utterly seamless user experience. How could we make something so complex feel simple and empowering?</p>
+                         </div>
+                         <div class="project-content-reveal mt-12">
+                             <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format=fit=crop" class="rounded-lg project-image-reveal w-full" alt="Fintech app UI screenshot">
+                         </div>
+                         <div class="project-content-reveal mt-12">
+                             <h3 class="text-3xl font-bold mb-4 text-white">My Role: Architecting Simplicity</h3>
+                             <p>My role was to architect the user's journey. I began by developing a comprehensive design system to ensure visual and interactive consistency across every feature. I then led extensive user journey mapping sessions, charting out dozens of potential pathways and identifying key moments of friction and opportunity. We prototyped and tested relentlessly, refining every interaction to be as intuitive as possible. The AI integration was key. I worked closely with the data science team to design an interface that could present complex financial advice in a way that was digestible, trustworthy, and actionable for the average user.</p>
+                         </div>
+                          <div class="project-content-reveal mt-12">
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Outcome: Award-Winning Innovation</h3>
+                             <p>The result was a highly intuitive platform that increased user retention by 35% within six months of launch. The app was featured on several major tech blogs for its innovative approach to personal finance and, most importantly, user feedback was overwhelmingly positive. We had successfully demystified personal finance for thousands of users.</p>
+                         </div>
+                     `
+                 },
+                 { 
+                     id: 'p3', 
+                     title: 'Patient Management Platform', 
+                     tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], 
+                     image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format=fit=crop', 
+                     description: `
+                          <div class="project-content-reveal">
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Need: Care Over Clicks</h3>
+                             <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
+                         </div>
+                         <div class="project-content-reveal mt-12">
+                             <h3 class="text-3xl font-bold mb-4 text-white">My Process: Empathy-Driven Design</h3>
+                             <p>This project required deep empathy. I spent weeks shadowing nurses and doctors, observing their workflows, and understanding their pain points. This firsthand research was invaluable. I designed a streamlined, task-based interface that prioritized clarity and speed. Every color, font size, and layout choice was made with accessibility at the forefront. Through rigorous, iterative usability testing with medical professionals, we refined high-fidelity prototypes, ensuring the final design was not just compliant, but genuinely helpful and intuitive for its users in high-pressure situations.</p>
+                         </div>
+                         <div class="project-content-reveal mt-12">
+                             <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format=fit=crop" class="rounded-lg project-image-reveal w-full" alt="Doctor using a tablet">
+                         </div>
+                          <div class="project-content-reveal mt-12">
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Result: More Time for Patients</h3>
+                             <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
+                         </div>
+                     `
+                 },
+                 { 
+                     id: 'p4', 
+                     title: 'E-Commerce Experience', 
+                     tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], 
+                     image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format=fit=crop', 
+                     description: `
+                         <div class="project-content-reveal">
+                             <h3 class="text-3xl font-bold mb-4 text-white">The Problem: The Leaky Funnel</h3>
+                             <p>An established e-commerce brand was facing a classic challenge: high traffic, but low conversions. Users were abandoning their carts at an alarming rate, and the checkout process was identified as the primary culprit. My mission was to overhaul the user experience, plug the leaks in the conversion funnel, and ultimately drive revenue.</p>
+                         </div>
+                         <div class="project-content-reveal mt-12">
+                              <h3 class="text-3xl font-bold mb-4 text-white">My Strategy: Data-Driven Redesign</h3>
+                             <p>This project was a deep dive into data. I led the UI design and A/B testing efforts, analyzing user behavior data, heatmaps, and session recordings to identify specific points of friction. I redesigned the product pages to be more visually appealing and informative, and completely streamlined the checkout process into a single, frictionless page. Every major design change was proposed as a hypothesis and rigorously A/B tested against the original. This data-driven approach allowed us to make confident decisions based on user behavior, not assumptions.</p>
+                         </div>
+                         <div class="project-content-reveal mt-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                             <div>
+                                <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format=fit=crop" class="rounded-lg project-image-reveal" alt="People shopping on a website">
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Numbers: A Clear Victory</h3>
+                                 <p>The results spoke for themselves. By implementing the winning design variations, we achieved a 25% increase in the overall conversion rate and a significant 15% uplift in the average order value within the first quarter. The project demonstrated a clear return on investment and and set a new standard for the company's design process.</p>
+                             </div>
+                         </div>
+                     `
+                 }
             ];
 
             const projectsContainer = document.getElementById('projects-container');
@@ -1120,11 +1286,11 @@
                     projectEl.addEventListener('mouseleave', () => {
                          cursorText.textContent = "";
                          gsap.to(cursor, { 
-                            width: '24px', 
-                            height: '24px',
-                            backgroundColor: 'transparent',
-                            borderWidth: '1px',
-                            duration: 0.3 
+                             width: '24px', 
+                             height: '24px',
+                             backgroundColor: 'transparent',
+                             borderWidth: '1px',
+                             duration: 0.3 
                         });
                         gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
                     });
@@ -1183,7 +1349,7 @@
                         scrollTrigger: {
                             trigger: item,
                             start: 'top 90%',
-							toggleActions: 'play reverse restart reverse'
+							toggleActions: 'play none none none'
 }
 });
 });
