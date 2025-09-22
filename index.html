@@ -189,10 +189,10 @@
             padding: 0 2rem;
         }
         .tool-logo-item img {
-            height: 80px;
+            height: 60px;
             width: auto;
             object-fit: contain;
-            transition: filter 0.3s var(--animation-easing);
+            transition: transform 0.3s var(--animation-easing);
         }
         .tool-logo-item:hover img {
             transform: scale(1.1);
@@ -339,15 +339,10 @@
             to { transform: rotate(360deg); }
         }
 
-        .word-wrapper {
-            display: inline-block;
-            overflow: hidden;
+        .footer-heading-word {
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+            transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.2, 1);
         }
-
-        .word-wrapper > span {
-            display: inline-block;
-        }
-
 
         @media (prefers-reduced-motion: reduce) {
           .reveal, .project-item .project-image-container, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
@@ -462,22 +457,22 @@
                     <div class="absolute bottom-[-10%] left-0 w-full h-[60vh]">
                         <div id="story-track" class="absolute top-0 h-full flex items-center space-x-8">
                             <div class="story-panel" data-title="The Graduation">
-                                <img src="assets/graduation.webp" class="rounded-lg" alt="A graduate celebrating by throwing his cap in the air.">
+                                <img src="https://placehold.co/600x450/334155/EAEAEA?text=Graduation" class="rounded-lg" alt="A graduate celebrating by throwing his cap in the air.">
                             </div>
                             <div class="story-panel" data-title="My First Work">
-                                <img src="assets/firstwork.webp" class="rounded-lg" alt="Overnight conference call with US Client.">
+                                <img src="https://placehold.co/600x450/334155/EAEAEA?text=First+Work" class="rounded-lg" alt="Overnight conference call with US Client.">
                             </div>
                             <div class="story-panel" data-title="In Dubai">
-                                <img src="assets/dubai.webp" class="rounded-lg" alt="Looking out window from My Office in Dubai.">
+                                <img src="https://placehold.co/600x450/334155/EAEAEA?text=Dubai" class="rounded-lg" alt="Looking out window from My Office in Dubai.">
                             </div>
                             <div class="story-panel" data-title="Hybrid">
-                                <img src="assets/hybrid.webp" class="rounded-lg" alt="Working in Laptop from Airport with Cold Coffee in hand.">
+                                <img src="https://placehold.co/600x450/334155/EAEAEA?text=Hybrid+Work" class="rounded-lg" alt="Working in Laptop from Airport with Cold Coffee in hand.">
                             </div>
                             <div class="story-panel" data-title="Brainstorming">
-                                <img src="assets/brainstorming.webp" class="rounded-lg" alt="Brainstorming about a B2B login with laptop in desk.">
+                                <img src="https://placehold.co/600x450/334155/EAEAEA?text=Brainstorming" class="rounded-lg" alt="Brainstorming about a B2B login with laptop in desk.">
                             </div>
                             <div class="story-panel" data-title="What is Next?">
-                               <img src="assets/thenext.webp" class="rounded-lg" alt="In Flight looking sideways with confidence.">
+                               <img src="https://placehold.co/600x450/334155/EAEAEA?text=What's+Next?" class="rounded-lg" alt="In Flight looking sideways with confidence.">
                             </div>
                         </div>
                     </div>
@@ -550,7 +545,7 @@
             <g class="rotating-text-g">
                 <text class="scroll-to-top-text">
                     <textPath xlink:href="#circlePath">
-                    Scroll to top • Scroll to top •
+                        Scroll to top • Scroll to top •
                     </textPath>
                 </text>
             </g>
@@ -1308,7 +1303,7 @@
                              </div>
                              <div>
                                  <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                                 <p>As the lead UI/UX designer, I aimed to plug the leaks and drive revenue. I was responsible for analyzing user behavior, forming data-driven hypotheses, and designing and running A/B tests to validate solutions.</p>
+                                 <p>As the lead UI/UX designer, my goal was to plug the leaks and drive revenue. I was responsible for analyzing user behavior, forming data-driven hypotheses, and designing and running A/B tests to validate solutions.</p>
                              </div>
                              <div>
                                  <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
@@ -1412,18 +1407,18 @@
             
             // --- 8. TOOLS MARQUEE ---
             const tools = [
-                { name: 'Figma', logo: 'assets/tools/figma.png' },
-                { name: 'Adobe CC', logo: 'assets/tools/adobe.png' },
-                { name: 'Notion', logo: 'assets/tools/notion.png' },
-                { name: 'Miro', logo: 'assets/tools/miro.png' },
-                { name: 'Hotjar', logo: 'assets/tools/hotjar.png' },
-                { name: 'Github', logo: 'assets/tools/github.png' },
-                { name: 'Canva', logo: 'assets/tools/canva.png' },
-                { name: 'HTML5', logo: 'assets/tools/html5.png' },
-                { name: 'Gemini', logo: 'assets/tools/gemini.png' },
-                { name: 'ChatGPT', logo: 'assets/tools/chatgpt.png' },
-                { name: 'Webflow', logo: 'assets/tools/webflow.png' },
-                { name: 'Sheets', logo: 'assets/tools/sheets.png' }
+                { name: 'Figma', logo: 'https://logowik.com/content/uploads/images/figma-2022-new-logo4869.jpg' },
+                { name: 'Adobe XD', logo: 'https://logowik.com/content/uploads/images/adobe-xd-icon-20212459.jpg' },
+                { name: 'Notion', logo: 'https://logowik.com/content/uploads/images/notion-logo-2022-4312.jpg' },
+                { name: 'Miro', logo: 'https://logowik.com/content/uploads/images/miro-2022-new-logo7069.jpg' },
+                { name: 'Hotjar', logo: 'https://logowik.com/content/uploads/images/hotjar8179.jpg' },
+                { name: 'Adobe', logo: 'https://logowik.com/content/uploads/images/adobe-cc3598.jpg' },
+                { name: 'Canva', logo: 'https://logowik.com/content/uploads/images/canva-2023-new-logo9815.jpg' },
+                { name: 'HTML', logo: 'https://logowik.com/content/uploads/images/html5-logo7578.jpg' },
+                { name: 'Gemini', logo: 'https://logowik.com/content/uploads/images/google-gemini-icon9505.jpg' },
+                { name: 'ChatGPT', logo: 'https://logowik.com/content/uploads/images/chatgpt-logo-black-and-white1013.jpg' },
+                { name: 'UX Pilot', logo: 'https://placehold.co/150x40/1e1f1f/ffffff?text=UX+Pilot' },
+                { name: 'Github', logo: 'https://logowik.com/content/uploads/images/github-icon8868.jpg' }
             ];
             const toolsMarqueeContainer = document.getElementById('tools-marquee-container');
 
@@ -1476,17 +1471,14 @@
                     footerHeading.innerHTML = '';
                     words.forEach(word => {
                         const wordSpan = document.createElement('span');
-                        wordSpan.className = 'word-wrapper';
-                        const innerSpan = document.createElement('span');
-                        innerSpan.className = 'inline-block';
-                        innerSpan.innerText = word;
-                        wordSpan.appendChild(innerSpan);
+                        wordSpan.className = 'footer-heading-word inline-block';
+                        wordSpan.innerText = word;
                         footerHeading.appendChild(wordSpan);
                         footerHeading.appendChild(document.createTextNode(' '));
                     });
                     
-                    footerTimeline.from(footerHeading.querySelectorAll('.word-wrapper > span'), {
-                        yPercent: 120,
+                    footerTimeline.to(footerHeading.querySelectorAll('.footer-heading-word'), {
+                        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
                         duration: 0.8,
                         stagger: 0.05,
                         ease: 'power3.out'
@@ -1574,8 +1566,4 @@
     
 </body>
 </html>
-
-
-
-
 
