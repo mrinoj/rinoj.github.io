@@ -189,13 +189,13 @@
             padding: 0 2rem;
         }
         .tool-logo-item img {
-            height: 60px;
+            height: 80px;
             width: auto;
             object-fit: contain;
             transition: transform 0.3s var(--animation-easing);
         }
         .tool-logo-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1);
         }
 
         /* Styles for Story Section */
@@ -759,7 +759,7 @@
                         const marqueeAnimation = gsap.to(marqueeParts, {
                             xPercent: -100,
                             repeat: -1,
-                            duration: 50,
+                            duration: 100,
                             ease: "linear",
                             modifiers: {
                                 xPercent: gsap.utils.wrap(-100, 0)
@@ -1566,6 +1566,7 @@
     
 </body>
 </html>
+
 
 
 
