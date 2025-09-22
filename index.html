@@ -315,7 +315,11 @@
 
 
         #go-to-top-btn {
-            transition: opacity 0.3s, transform 0.3s;
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        #go-to-top-btn.is-active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         #go-to-top-btn:hover {
@@ -1467,20 +1471,10 @@
 
                 const footerHeading = footer.querySelector('h2');
                 if (footerHeading) {
-                    const words = footerHeading.innerText.split(' ');
-                    footerHeading.innerHTML = '';
-                    words.forEach(word => {
-                        const wordSpan = document.createElement('span');
-                        wordSpan.className = 'footer-heading-word inline-block';
-                        wordSpan.innerText = word;
-                        footerHeading.appendChild(wordSpan);
-                        footerHeading.appendChild(document.createTextNode(' '));
-                    });
-                    
-                    footerTimeline.to(footerHeading.querySelectorAll('.footer-heading-word'), {
-                        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
-                        duration: 0.8,
-                        stagger: 0.05,
+                    footerTimeline.from(footerHeading, {
+                        opacity: 0,
+                        y: 30,
+                        duration: 1,
                         ease: 'power3.out'
                     });
                 }
@@ -1492,18 +1486,20 @@
                     stagger: 0.15,
                     ease: 'power3.out'
                 }, "-=0.5");
-                 const goToTopBtn = document.getElementById('go-to-top-btn');
-                if (goToTopBtn) {
-                     footerTimeline.to(goToTopBtn, {
-                        opacity: 1,
-                        pointerEvents: 'auto',
-                        duration: 0.5,
-                    }, ">-0.4"); 
-                }
             }
 
             const goToTopBtn = document.getElementById('go-to-top-btn');
             if (goToTopBtn) {
+                ScrollTrigger.create({
+                    trigger: footer,
+                    start: "top 80%",
+                    end: "bottom top",
+                    toggleClass: {
+                        targets: goToTopBtn,
+                        className: "is-active"
+                    }
+                });
+
                 goToTopBtn.addEventListener('click', () => {
                     gsap.to(window, {
                         scrollTo: 0,
@@ -1566,6 +1562,7 @@
     
 </body>
 </html>
+
 
 
 
