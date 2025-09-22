@@ -62,8 +62,8 @@
 
         header {
             background-color: transparent;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             transition: background-color 0.4s var(--animation-easing);
         }
         
@@ -118,7 +118,7 @@
             font-weight: 500;
         }
 
-        .reveal, .about-col {
+        .reveal {
             opacity: 0;
             transform: translateY(60px);
         }
@@ -134,10 +134,6 @@
             from { transform: rotate(0deg); } to { transform: rotate(360deg); }
         }
         
-        .about-word {
-            display: inline-block;
-        }
-
         .project-item {
             border-bottom: 1px solid var(--border-color);
             transform: translateX(-100%);
@@ -175,13 +171,8 @@
             display: none;
             overflow-y: auto;
             opacity: 0;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
         }
-        #project-detail-page::-webkit-scrollbar {
-            display: none; /* Safari and Chrome */
-        }
-
+        
         .project-content-reveal, .project-image-reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -191,34 +182,25 @@
              background-color: rgba(255, 255, 255, 0.05);
              border: 1px solid var(--border-color);
         }
-
-        .skill-item {
-            position: relative;
-            font-weight: 800;
-            font-size: 2.18rem;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--text-primary);
-            white-space: nowrap;
-            padding: 0 1rem;
+        
+        /* Styles for Tool Logos */
+        .tool-logo-item {
+            flex-shrink: 0;
+            padding: 0 2rem;
         }
-        .skill-item::before {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 0 1rem;
-            color: var(--text-primary);
-            -webkit-text-stroke: 0px;
-            clip-path: inset(100% 0 0 0);
-            transition: clip-path 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        .tool-logo-item img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(1.5);
+            transition: filter 0.3s var(--animation-easing), transform 0.3s var(--animation-easing);
         }
-        .skill-item:hover::before {
-            clip-path: inset(0 0 0 0);
+        .tool-logo-item:hover img {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.1);
         }
 
-        /* NEW: Styles for Story Section */
+        /* Styles for Story Section */
         #story-track {
             display: flex;
             align-items: center;
@@ -260,12 +242,56 @@
             transform: translateY(-2px);
             color: #67e8f9; /* Tailwind cyan-300 */
         }
-        .button-hover-effect {
-            transition: transform 0.3s var(--animation-easing);
+        
+        /* Clean CTA Styles */
+        .clean-cta {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s var(--animation-easing), background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
-        .button-hover-effect:hover {
+
+        .clean-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(110deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 60%);
+            transform: skewX(-25deg);
+            transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .clean-cta:hover::before {
+            left: 125%;
+        }
+
+        .cta-primary::before {
+             /* Increased opacity and width of the shimmer */
+            background: linear-gradient(110deg, rgba(103, 232, 249, 0) 30%, rgba(103, 232, 249, 0.5), rgba(103, 232, 249, 0) 70%);
+        }
+
+        .cta-primary {
+            background-color: white;
+            color: #1e1f1f;
+        }
+
+        .cta-primary:hover {
             transform: scale(1.05);
         }
+
+        .cta-secondary {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: var(--text-primary);
+        }
+
+        .cta-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: scale(1.05);
+        }
+
 
         .stat-card-hover {
             transition: transform 0.3s var(--animation-easing), background-color 0.3s var(--animation-easing);
@@ -274,16 +300,59 @@
             transform: translateY(-4px);
             background-color: rgba(255, 255, 255, 0.08);
         }
+        
+        .underline-link {
+            background: linear-gradient(to right, var(--text-primary), var(--text-primary));
+            background-size: 0% 1px;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            transition: background-size 0.4s ease, color 0.3s ease;
+            padding-bottom: 4px;
+            color: var(--text-primary);
+        }
+        
+        .underline-link:hover {
+            background-size: 100% 1px;
+        }
 
-        @media (min-width: 768px) {
-            .skill-item {
-                font-size: 3.64rem;
-            }
+
+        #go-to-top-btn {
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        #go-to-top-btn:hover {
+            transform: scale(1.1);
+        }
+        #go-to-top-btn .scroll-to-top-text {
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            fill: white;
+        }
+
+        #go-to-top-btn .rotating-text-g {
+            transform-origin: center;
+            animation: rotate-text 20s linear infinite;
+        }
+        
+        @keyframes rotate-text {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .word-wrapper {
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .word-wrapper > span {
+            display: inline-block;
         }
 
 
         @media (prefers-reduced-motion: reduce) {
-          .reveal, .project-item .project-image-container, .marquee-content, .cursor, .preloader, .star-separator {
+          .reveal, .project-item .project-image-container, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
             transition: none !important; 
             animation: none !important;
           }
@@ -291,6 +360,7 @@
     </style>
 </head>
 <body class="antialiased">
+    <div id="scrollbar-progress" class="fixed top-0 left-0 h-1 bg-cyan-400 z-[60]" style="width: 0%;"></div>
     <canvas id="hero-gradient-background"></canvas>
     <div class="preloader">
         <div class="preloader-logo text-3xl font-bold" style="color: #FFFFFF;">Rinoj<span class="text-cyan-400">.</span></div>
@@ -306,11 +376,11 @@
             
             <div class="flex-1 hidden md:flex justify-end items-center space-x-8">
                 <nav class="flex items-center space-x-4" aria-label="Primary Navigation">
-                    <a href="#about" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">About</a>
+                    <a href="#story" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">My Story</a>
                     <a href="#work" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Projects</a>
                     <a href="#" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
                 </nav>
-                <a href="#contact" class="button-hover-effect bg-white font-semibold px-5 py-[6px] rounded-full hover:bg-opacity-80 transition-all duration-300 shadow whitespace-nowrap" style="color: #1e1f1f;">Contact me</a>
+                <a href="#contact" class="clean-cta cta-primary font-semibold px-5 py-[6px] rounded-full transition-all duration-300 whitespace-nowrap">Contact me</a>
             </div>
 
             <div class="md:hidden flex-1 flex justify-end">
@@ -323,65 +393,39 @@
 
     <main id="main-content" role="main">
         <!-- Hero Section -->
-        <section id="home" class="h-[90vh] flex flex-col items-center justify-center text-center p-6 md:p-12 relative overflow-hidden">
+        <section id="home" class="h-screen flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
 
-            <!-- Tagline moved up and constrained on mobile -->
-            <div id="hero-tagline" class="absolute inset-x-0 top-[25%] z-20 text-white px-6 pointer-events-none">
-                <div class="max-w-sm mx-auto md:max-w-none">
-                    <h2 class="text-lg md:text-2xl font-medium leading-tight">
-                        <span class="tagline-word inline-block">Built</span> <span class="tagline-word inline-block">across</span> <span class="tagline-word inline-block">Fintech,</span> <span class="tagline-word inline-block">E‑Commerce,</span><br class="hidden md:block"> <span class="tagline-word inline-block">Travel</span> <span class="tagline-word inline-block">Tech,</span> <span class="tagline-word inline-block">&</span> <span class="tagline-word inline-block">Healthcare.</span><br>
-                        <span class="tagline-word inline-block">Hungry</span> <span class="tagline-word inline-block">for</span> <span class="tagline-word inline-block">what</span> <span class="tagline-word inline-block">is</span> <span class="tagline-word inline-block">next.</span>
-                    </h2>
-                    <p class="text-base md:text-lg font-medium mt-6 text-white">
-                        <span class="tagline-word inline-block">Supercharged</span> <span class="tagline-word inline-block">with</span> <span class="tagline-word inline-block">AI</span> <span class="tagline-word inline-block">for</span> <span class="tagline-word inline-block">smarter,</span> <span class="tagline-word inline-block">faster</span> <span class="tagline-word inline-block">workflow.</span>
+            <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-28 md:pt-32">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-lg md:text-2xl font-medium leading-tight">
+                        <span class="tagline-word">Let's</span> <span class="tagline-word">design</span> <span class="tagline-word">intuitive</span> <span class="tagline-word">workflows</span> <span class="tagline-word">that</span> <span class="tagline-word">turn</span><br> <span class="tagline-word">complex</span> <span class="tagline-word">products</span> <span class="tagline-word">into</span> <span class="tagline-word">simple,</span><br> <span class="tagline-word">Human-centred</span> <span class="tagline-word">experiences.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl font-medium mt-6 max-w-2xl mx-auto" style="color: var(--text-primary);">
+                        <span class="tagline-word">Blending</span> <span class="tagline-word">Design,</span> <span class="tagline-word">Research</span> <span class="tagline-word">and</span> <span class="tagline-word">AI</span> <span class="tagline-word">to</span> <span class="tagline-word">craft</span> <span class="tagline-word">user-friendly</span> <span class="tagline-word">digital</span> <span class="tagline-word">products.</span>
                     </p>
+                    <div id="hero-ctas" class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-10 pointer-events-auto">
+                        <a href="#contact" class="clean-cta cta-primary font-semibold px-8 py-3 rounded-full w-full sm:w-auto">Let's Talk</a>
+                        <a href="#" class="clean-cta cta-secondary font-semibold px-8 py-3 rounded-full w-full sm:w-auto">Resume</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Marquee moved down and text size reduced -->
-             <div class="absolute inset-0 flex items-end pb-8 md:pb-4 z-10">
+             <div class="absolute bottom-0 left-0 right-0 z-10 pb-2">
                  <div class="name-marquee-container flex whitespace-nowrap items-center">
-                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
-                     <span class="px-4 inline-flex items-center justify-center">
-                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                     </span>
-                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4">Mohamed Rinoj Hashim</span>
-                      <span class="px-4 inline-flex items-center justify-center">
-                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                     </span>
-                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
-                     <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
-                        <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                     </span>
-                     <span class="text-[9.5vw] md:text-[8vw] font-black text-white select-none px-4" aria-hidden="true">Mohamed Rinoj Hashim</span>
-                     <span class="px-4 inline-flex items-center justify-center" aria-hidden="true">
-                         <svg class="star-separator w-[5vw] h-[5vw] md:w-[3.5vw] md:h-[3.5vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                     </span>
+                     <div class="marquee-content-wrapper flex-shrink-0 flex items-center">
+                         <span class="text-[8vw] md:text-[6.5vw] text-white select-none px-4">
+                             <span class="font-black">Rinoj Hashim</span>
+                             <span class="font-semibold"> | UX / Product Designer | Ex-Fintech & E-Commerce</span>
+                         </span>
+                         <span class="px-4 inline-flex items-center justify-center">
+                             <svg class="star-separator w-[6vw] md:w-[4vw] h-[6vw] md:h-[4vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                         </span>
+                     </div>
                  </div>
              </div>
         </section>
         
         <div id="page-content">
-            <!-- About Section -->
-            <section id="about" class="py-12 md:py-16">
-                 <div class="container mx-auto px-6 relative z-10">
-                     <div class="max-w-5xl mx-auto grid md:grid-cols-10 gap-8 md:gap-16 items-center">
-                         <div class="md:col-span-6">
-                              <p id="about-text-left" class="text-2xl md:text-4xl font-medium leading-tight" style="color: var(--text-primary);"></p>
-                         </div>
-                         <div class="md:col-span-4 flex flex-col items-center">
-                            <div class="relative w-48 h-48 md:w-56 md:h-56 mb-8" id="personal-photo-container">
-                                 <img id="personal-photo" src="https://placehold.co/300x300/4a5568/EAEAEA?text=Rinoj" alt="A professional headshot of Mohamed Rinoj Hashim" class="rounded-full w-full h-full object-cover shadow-2xl">
-                                <div id="about-star-container" class="absolute -bottom-4 -right-4">
-                                     <svg id="about-star" class="star-separator w-16 h-16 text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                                 </div>
-                            </div>
-                            <p id="about-text-right" class="text-lg text-center font-bold uppercase text-white"></p>
-                         </div>
-                     </div>
-                 </div>
-            </section>
-
             <!-- Story Section -->
             <section id="story" class="relative">
                 <div id="story-pin-container" class="h-screen w-full overflow-hidden">
@@ -461,45 +505,60 @@
                 </div>
             </section>
 
-            <!-- Skills Section -->
-            <section id="skills" class="py-12 md:py-16 overflow-hidden">
-                <div id="skills-marquee" class="flex items-center">
-                    <!-- Skills will be injected here -->
+            <!-- Tools Section -->
+            <section id="skills" class="py-10 md:py-16 bg-black/20">
+                <div id="tools-marquee-container" class="w-full flex flex-nowrap overflow-hidden [mask-image:_linear_gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
+                    <!-- Tool logos will be injected by JS -->
                 </div>
             </section>
             
-            <!-- Contact / Footer Section -->
-            <section id="contact" class="py-20 md:py-40 text-center" style="background-color: #1C1C1C;">
-                <div class="container mx-auto px-6 reveal">
-                    <h2 class="text-4xl md:text-6xl font-bold">Have an idea<span class="text-cyan-400">?</span></h2>
-                    <h2 class="text-4xl md:text-6xl font-bold mt-2">
-                        <a href="tel:+917012450190" class="hover-link relative inline-block group">
-                            <span class="underline decoration-2 underline-offset-4">Let's talk</span>
-                            <span class="absolute bottom-[-2px] left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                        <a href="mailto:hello@mohamedrinoj.com" class="hover-link"> about it.</a>
-                    </h2>
-                    <p class="mt-8 text-lg max-w-xl mx-auto" style="color: var(--text-secondary);">
-                        I'm currently available for freelance projects and full-time roles. Let's connect and create something amazing together.
-                    </p>
-                    <div class="flex justify-center space-x-6 mt-12 text-lg" style="color: var(--text-secondary);">
-                        <a href="mailto:hello@mohamedrinoj.com" class="hover-link relative inline-block group">
-                            <span class="group-hover:text-white transition-colors">Mail</span>
-                            <span class="absolute bottom-[-2px] left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                        <a href="#" class="hover-link relative inline-block group">
-                            <span class="group-hover:text-white transition-colors">LinkedIn</span>
-                            <span class="absolute bottom-[-2px] left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                        <a href="#" class="hover-link relative inline-block group">
-                            <span class="group-hover:text-white transition-colors">Behance</span>
-                            <span class="absolute bottom-[-2px] left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
+             <!-- Footer Section -->
+            <footer id="contact" class="min-h-[70vh] bg-[#1C1C1C] text-white flex items-center justify-center py-12 md:py-16">
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div class="text-left">
+                            <h2 class="text-5xl md:text-7xl font-bold leading-tight">
+                                Let's create something great together.
+                            </h2>
+                            <a href="mailto:hello@mohamedrinoj.com" class="underline-link footer-magnetic-link mt-8 text-2xl md:text-3xl font-medium inline-block">
+                                <span>hello@mohamedrinoj.com</span>
+                            </a>
+                        </div>
+                        <div class="text-left md:text-right flex flex-col justify-between">
+                             <div class="footer-anim">
+                                <h3 class="text-lg font-semibold text-cyan-400 mb-4">Social</h3>
+                                <ul class="space-y-2">
+                                    <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block">LinkedIn</a></li>
+                                    <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block">Behance</a></li>
+                                </ul>
+                                <div class="mt-8">
+                                    <h3 class="text-lg font-semibold text-cyan-400 mb-2">Contact</h3>
+                                    <a href="tel:+917012450190" class="underline-link footer-magnetic-link text-lg inline-block">+91 7012 450 190</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </footer>
         </div>
     </main>
+    
+    <!-- Go To Top Button -->
+    <button id="go-to-top-btn" class="fixed bottom-8 right-8 z-50 w-24 h-24 opacity-0 pointer-events-none">
+        <svg viewBox="0 0 100 100">
+            <defs>
+                <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"/>
+            </defs>
+            <g class="rotating-text-g">
+                <text class="scroll-to-top-text">
+                    <textPath xlink:href="#circlePath">
+                        Scroll to top • Scroll to top •
+                    </textPath>
+                </text>
+            </g>
+            <path class="scroll-to-top-arrow" d="M50 58 V42 M44 48 l6 -6 l6 6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 
     <!-- Project Detail Page -->
     <div id="project-detail-page">
@@ -513,10 +572,10 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             <nav class="flex flex-col items-end space-y-4 mt-20 text-2xl font-bold text-right" aria-label="Mobile Navigation">
-                <a href="#about" class="mobile-nav-link opacity-0">About</a>
+                <a href="#story" class="mobile-nav-link opacity-0">My Story</a>
                 <a href="#work" class="mobile-nav-link opacity-0">Projects</a>
                 <a href="#" class="mobile-nav-link opacity-0">Resume</a>
-                <a href="#contact" class="mobile-nav-link-cta mt-8 bg-white text-[#1e1f1f] px-5 py-2 rounded-full text-xl font-bold opacity-0">Contact Me</a>
+                <a href="#contact" class="mobile-nav-link-cta clean-cta cta-primary mt-8 px-5 py-2 rounded-full text-xl font-bold opacity-0">Contact Me</a>
             </nav>
         </div>
     </div>
@@ -527,25 +586,41 @@
             gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             let projectScrollTriggers = []; // To store project-specific scroll triggers
+            let visitedProjects = []; // To track visited projects
 
             // --- 0. GENERAL SETUP ---
+            const progressBar = document.getElementById('scrollbar-progress');
+            gsap.to(progressBar, {
+                width: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: document.body,
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0.3
+                }
+            });
+
             window.onbeforeunload = function () {
                 window.scrollTo(0, 0);
             };
 
-            document.querySelectorAll('header a[href^="#"], .mobile-nav-link, .mobile-nav-link-cta').forEach(anchor => {
+            document.querySelectorAll('header a[href^="#"], .mobile-nav-link, .mobile-nav-link-cta, #hero-ctas a').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    let target = document.querySelector(this.getAttribute('href'));
-                    if(target) {
-                        if (document.getElementById('mobile-menu').classList.contains('hidden') === false) {
-                            closeMobileMenu();
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        let target = document.querySelector(href);
+                        if(target) {
+                            if (document.getElementById('mobile-menu').classList.contains('hidden') === false) {
+                                closeMobileMenu();
+                            }
+                            gsap.to(window, {
+                                scrollTo: { y: target, offsetY: 70 }, // offset for fixed header
+                                duration: 1.5,
+                                ease: 'power3.inOut'
+                            });
                         }
-                        gsap.to(window, {
-                            scrollTo: { y: target, offsetY: 70 }, // offset for fixed header
-                            duration: 1.5,
-                            ease: 'power3.inOut'
-                        });
                     }
                 });
             });
@@ -555,12 +630,16 @@
             const preloaderLogo = document.querySelector('.preloader-logo');
             const header = document.getElementById('header');
             const tagline = document.getElementById('hero-tagline');
+            const heroCTAs = document.getElementById('hero-ctas');
             const marqueeContainer = document.querySelector('.name-marquee-container');
             const taglineWords = gsap.utils.toArray('.tagline-word');
+            const ctaButtons = gsap.utils.toArray('#hero-ctas a');
             
-            gsap.set([header, marqueeContainer, tagline], { autoAlpha: 0 });
+            gsap.set([header, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
             gsap.set([header, marqueeContainer], { y: 80 });
             gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
+            gsap.set(ctaButtons, { opacity: 0, y: 20 });
+
 
             gsap.to(preloaderLogo, {
                 scale: 1.05,
@@ -585,14 +664,13 @@
                     delay: 0.4
                 });
 
-                tl.to([header, marqueeContainer, tagline], {
+                tl.to([header, marqueeContainer, tagline, heroCTAs], {
                     autoAlpha: 1,
-                    duration: 0.1
                 }, "-=1.0");
 
                 tl.to([header, marqueeContainer], {
                     y: 0,
-                    duration: 1.5,
+                    duration: 1.2,
                     ease: 'power3.out',
                     stagger: 0.1
                 }, "-=1.0");
@@ -602,9 +680,17 @@
                     y: 0,
                     rotationX: 0,
                     duration: 0.8,
-                    stagger: 0.05,
+                    stagger: 0.04,
                     ease: 'power3.out'
-                }, "<0.2");
+                }, "-=0.8");
+
+                tl.to(ctaButtons, {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                }, "-=0.6");
 
                 tl.call(() => {
                     document.body.classList.remove('antialiased');
@@ -615,8 +701,12 @@
             // --- 2. CUSTOM CURSOR & MOBILE INTERACTIONS ---
             const cursor = document.querySelector('.cursor');
             const cursorText = document.querySelector('.cursor-text');
-            const interactiveElements = document.querySelectorAll('a, button, .hover-link, #about-star');
+            const interactiveElements = document.querySelectorAll('a, button, .hover-link');
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            let introAnimationCompleted = false;
+            
+            // Wait for intro animation to complete before enabling magnetic effect
+            gsap.delayedCall(2.5, () => introAnimationCompleted = true);
 
             if (isTouchDevice) {
                 cursor.style.display = 'none';
@@ -629,6 +719,38 @@
                     el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
                     el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
                 });
+
+                // Magnetic CTA Buttons
+                if (ctaButtons.length > 0) {
+                    const ctaMagnetStrength = 0.5;
+                    const ctaSnapStrength = 0.8;
+                    ctaButtons.forEach(button => {
+                        button.addEventListener('mousemove', (e) => {
+                            if (!introAnimationCompleted) return;
+                            const { clientX, clientY } = e;
+                            const { left, top, width, height } = button.getBoundingClientRect();
+                            const centerX = left + width / 2;
+                            const centerY = top + height / 2;
+                            
+                            gsap.to(button, {
+                                x: (clientX - centerX) * ctaMagnetStrength,
+                                y: (clientY - centerY) * ctaMagnetStrength,
+                                duration: ctaSnapStrength,
+                                ease: 'power3.out'
+                            });
+                        });
+
+                        button.addEventListener('mouseleave', () => {
+                            if (!introAnimationCompleted) return;
+                            gsap.to(button, {
+                                x: 0,
+                                y: 0,
+                                duration: ctaSnapStrength,
+                                ease: 'elastic.out(1, 0.3)'
+                            });
+                        });
+                    });
+                }
             }
 
             // --- 3. SCROLL & HOVER ANIMATIONS ---
@@ -636,20 +758,35 @@
 
                 // a) Marquee Scroll Speed Animation
                 if (marqueeContainer) {
-                    const marqueeAnimation = gsap.to(marqueeContainer, { xPercent: -50, repeat: -1, duration: 60, ease: "linear" }).totalProgress(0.5);
-                    ScrollTrigger.create({
-                        trigger: "body",
-                        start: "top top",
-                        end: "bottom bottom",
-                        onUpdate: self => {
-                            let direction = self.direction === 1 ? 1 : -1;
-                            let velocity = self.getVelocity();
-                            const sensitivity = direction === 1 ? 50 : 250;
-                            let timeScale = 1 + (Math.abs(velocity) / sensitivity) * direction;
-                            timeScale = gsap.utils.clamp(-4, 6, timeScale);
-                            gsap.to(marqueeAnimation, { timeScale: timeScale, duration: 0.5, ease: "power2.out" });
-                        }
-                    });
+                    const contentWrapper = marqueeContainer.querySelector('.marquee-content-wrapper');
+                    if (contentWrapper) {
+                        marqueeContainer.appendChild(contentWrapper.cloneNode(true));
+                        const marqueeParts = gsap.utils.toArray(marqueeContainer.children);
+
+                        const marqueeAnimation = gsap.to(marqueeParts, {
+                            xPercent: -100,
+                            repeat: -1,
+                            duration: 25,
+                            ease: "linear",
+                            modifiers: {
+                                xPercent: gsap.utils.wrap(-100, 0)
+                            }
+                        });
+                        
+                        ScrollTrigger.create({
+                            trigger: "body",
+                            start: "top top",
+                            end: "bottom bottom",
+                            onUpdate: self => {
+                                let direction = self.direction === 1 ? 1 : -1;
+                                let velocity = self.getVelocity();
+                                const sensitivity = direction === 1 ? 260 : 1300;
+                                let timeScale = 1 + (Math.abs(velocity) / sensitivity) * direction;
+                                timeScale = gsap.utils.clamp(-3, 5, timeScale); 
+                                gsap.to(marqueeAnimation, { timeScale: timeScale, duration: 0.5, ease: "power2.out" });
+                            }
+                        });
+                    }
                 }
                 
                 // b) General Reveal Animations for sections on scroll
@@ -663,81 +800,11 @@
                         }
                     });
                 });
-                
-                // d) About Section Reveal Sequence
-                const aboutTextLeft = document.getElementById('about-text-left');
-                const aboutTextRight = document.getElementById('about-text-right');
-                const personalPhotoContainer = document.getElementById('personal-photo-container');
 
-                if (aboutTextLeft && aboutTextRight && personalPhotoContainer) {
-                    
-                    const originalTextLeft = "Design from the Human outwards: <br>Research to hear what data can’t, <br>Psychology to guide what data won’t & <br>AI to work faster with efficiency.";
-                    aboutTextLeft.innerHTML = originalTextLeft.split(/(\s+|<br>)/).filter(p => p.trim() !== '' || p.includes('<br>')).map(part => {
-                        if (part === '<br>') return part;
-                        return `<span class="about-word inline-block">${part}</span>`;
-                    }).join(' ');
-                    const wordsLeft = aboutTextLeft.querySelectorAll('.about-word');
-                    
-                    const originalTextRight = "Shipped with clients across <br>India, Dubai, and US <br>in the past five years.";
-                    aboutTextRight.innerHTML = originalTextRight.split(/(\s+|<br>)/).filter(p => p.trim() !== '' || p.includes('<br>')).map(part => {
-                        if (part === '<br>') return part;
-                        return `<span class="about-word inline-block">${part}</span>`;
-                    }).join(' ');
-                    const wordsRight = aboutTextRight.querySelectorAll('.about-word');
-
-                    gsap.set([wordsLeft, wordsRight, personalPhotoContainer], { opacity: 0 });
-                    gsap.set([wordsLeft, wordsRight], { y: 25 });
-                    gsap.set(personalPhotoContainer, { y: 30, scale: 0.9 });
-                    
-                    const aboutSectionTl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: '#about',
-                            start: 'top 70%',
-                            toggleActions: 'play reverse restart reverse'
-                        }
-                    });
-
-                    aboutSectionTl.to(wordsLeft, {
-                        opacity: 1,
-                        y: 0,
-                        stagger: 0.03,
-                        duration: 0.8,
-                        ease: 'power3.out'
-                    });
-
-                    aboutSectionTl.to(personalPhotoContainer, {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.8,
-                        ease: 'power3.out'
-                    }, ">-0.4"); 
-
-                    aboutSectionTl.to(wordsRight, {
-                        opacity: 1,
-                        y: 0,
-                        stagger: 0.05,
-                        duration: 0.8,
-                        ease: 'power3.out'
-                    }, ">-0.4");
-                }
-
-
-                // e) Interactive Star in About Section
-                const aboutStar = document.getElementById('about-star');
-                if (aboutStar) {
-                    aboutStar.addEventListener('mouseenter', () => {
-                        gsap.to(aboutStar, { scale: 1.2, duration: 0.3, ease: 'power2.out' });
-                    });
-                    aboutStar.addEventListener('mouseleave', () => {
-                        gsap.to(aboutStar, { scale: 1, duration: 0.3, ease: 'power2.out' });
-                    });
-                }
-                
             } else { // Fallback for reduced motion
-                 gsap.utils.toArray('.reveal, .about-col').forEach(el => {
-                     el.style.opacity = 1;
-                     el.style.transform = 'none';
+                 gsap.utils.toArray('.reveal').forEach(el => {
+                      el.style.opacity = 1;
+                      el.style.transform = 'none';
                  });
             }
             
@@ -919,34 +986,37 @@
 
             function populateAndShowProjectPage(projectData) {
                  projectDetailPage.innerHTML = `
-                     <div class="relative">
-                          <button id="close-project-btn" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
-                              <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                              <span class="font-medium text-sm">Back</span>
-                          </button>
+                      <div class="relative">
+                           <button id="close-project-btn" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
+                               <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                               <span class="font-medium text-sm">Back</span>
+                           </button>
 
-                          <div style="height: 65vh; width: 100%; overflow: hidden;">
-                              <img id="project-hero-image-inner" src="${projectData.image}" alt="${projectData.title}" class="w-full h-full object-cover scale-110">
-                          </div>
+                           <div style="height: 65vh; width: 100%; overflow: hidden;">
+                               <img id="project-hero-image-inner" src="${projectData.image}" alt="${projectData.title}" class="w-full h-full object-cover scale-110">
+                           </div>
 
-                          <div class="container mx-auto px-6 py-12 md:py-20">
-                              <div class="max-w-4xl mx-auto">
-                                  <h1 class="text-4xl md:text-6xl font-bold project-content-reveal">${projectData.title}</h1>
-                                  <div class="mt-4 flex flex-wrap gap-3 project-content-reveal">
-                                      ${projectData.tags.map(tag => `<span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">${tag}</span>`).join('')}
-                                  </div>
-                                  
-                                  <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-10 text-gray-300">
-                                       ${projectData.description}
-                                  </div>
-                              </div>
-                          </div>
-                     </div>
+                           <div class="container mx-auto px-6 py-12 md:py-20">
+                               <div class="max-w-4xl mx-auto">
+                                   <h1 class="text-4xl md:text-6xl font-bold project-content-reveal">${projectData.title}</h1>
+                                   <div class="mt-4 flex flex-wrap gap-3 project-content-reveal">
+                                       ${projectData.tags.map(tag => `<span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">${tag}</span>`).join('')}
+                                   </div>
+                                   
+                                   <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-10 text-gray-300">
+                                        ${projectData.description}
+                                   </div>
+                               </div>
+                           </div>
+                      </div>
                  `;
-                 document.body.style.overflow = 'hidden';
+                
+                projectDetailPage.scrollTop = 0;
 
-                 const closeBtn = document.getElementById('close-project-btn');
-                 closeBtn.addEventListener('click', () => closeProject());
+                document.body.style.overflow = 'hidden';
+
+                const closeBtn = document.getElementById('close-project-btn');
+                closeBtn.addEventListener('click', () => closeProject());
             }
             
             function closeProject(){
@@ -1053,9 +1123,9 @@
                             vec3 x3 = x0 - D.yyy;
                             i = mod289(i);
                             vec4 p = permute( permute( permute( 
-                                 i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-                                 + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
-                                 + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+                                i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                                + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                                + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
                             float n_ = 0.142857142857;
                             vec3 ns = n_ * D.wyz - D.xzx;
                             vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
@@ -1121,36 +1191,41 @@
                      tags: ['UX Research', 'UI Design', 'Prototyping'], 
                      image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', 
                      description: `
-                         <div class="project-content-reveal">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Challenge: A Sinking Ship</h3>
-                             <p>The Travacations B2B platform was facing a critical downturn. User engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned. The culprit? A convoluted, 12-step booking process that left travel agents frustrated and inefficient. The interface was dated, the workflow was counter-intuitive, and the business was paying the price.</p>
-                         </div>
-
-                         <div class="project-content-reveal mt-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                             <div class="order-2 md:order-1">
-                                 <h3 class="text-3xl font-bold mb-4 text-white">My Approach: From Data to Design</h3>
-                                 <p>As the Lead UX Designer, I dove headfirst into understanding the user's world. I initiated a comprehensive research phase, conducting in-depth interviews with agents and performing a rigorous competitor analysis. The data pointed to a crucial insight: agents weren't just booking for one client at a time; they were juggling multiple itineraries simultaneously. The existing linear system was fundamentally broken for their needs.</p>
+                         <div class="project-content-reveal space-y-12">
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
+                                 <p>The Travacations B2B platform, a critical tool for travel agents, was underperforming. Key metrics revealed a sinking ship: user engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned mid-process. The core issue was a convoluted, 12-step booking workflow that was unintuitive and time-consuming, causing significant friction and frustration for its power users.</p>
                              </div>
-                             <div class="order-1 md:order-2">
-                                 <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1769&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="Workshop with sticky notes">
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                                 <p>As the Lead UX Designer, I was responsible for the end-to-end redesign. This involved spearheading the user research, defining the new user flow and information architecture, creating wireframes and high-fidelity prototypes, and conducting usability testing with key stakeholders.</p>
                              </div>
-                         </div>
-
-                         <div class="project-content-reveal mt-12">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Impact: A Resounding Success</h3>
-                             <p class="max-w-3xl">The redesigned platform was a game-changer. We streamlined the booking process from 12 steps to just 4, resulting in a 70% reduction in booking time. Agent satisfaction soared, and more importantly, the booking abandonment rate dropped by over 80%. The platform wasn't just usable anymore; it was a powerful tool that empowered its users, directly boosting the company's bottom line.</p>
-                             <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
-                                 <div class="project-stat-card stat-card-hover p-6 rounded-lg">
-                                     <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="70">0</span>%</p>
-                                     <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                                 <div class="space-y-8">
+                                     <p><strong>Discovery & Research:</strong> The first step was to understand the "why" behind the data. I conducted in-depth interviews with 15 travel agents. The key insight was that agents weren't booking linearly; they were constantly juggling multiple client itineraries, comparing options, and needing to quickly jump between tasks. The existing system wasn't built for this multi-threaded workflow.</p>
+                                     <p><strong>Ideation:</strong> Armed with these insights, I sketched out new user flows that prioritized a non-linear, dashboard-centric approach. This allowed agents to manage multiple bookings from a central hub. Low-fidelity wireframes were created in Figma to quickly validate these new concepts with our user group.</p>
+                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframe+Sketch" class="rounded-lg project-image-reveal w-full" alt="Travel platform wireframe sketch">
+                                     <p><strong>Design & Prototyping:</strong> I developed a clean, modern design system to bring consistency to the UI. The high-fidelity prototypes focused on clarity and efficiency, with a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
+                                     <p><strong>Testing & Iteration:</strong> We conducted five moderated usability tests with agents using the Figma prototype. The feedback was overwhelmingly positive, but it also revealed a key area for improvement: the initial dashboard felt too cluttered. Based on this, I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
                                  </div>
-                                 <div class="project-stat-card stat-card-hover p-6 rounded-lg">
-                                     <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="80">0</span>%</p>
-                                     <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
-                                 </div>
-                                 <div class="project-stat-card stat-card-hover p-6 rounded-lg col-span-2 md:col-span-1">
-                                     <p class="text-4xl font-bold text-cyan-400">12 &rarr; 4</p>
-                                     <p class="text-sm text-gray-400 mt-1">Steps Reduced</p>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
+                                 <p>The redesigned platform was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in the average time to book. This efficiency gain led to a 90% increase in agent satisfaction and, crucially, an 80% drop in booking abandonment. This directly translated to a 25% increase in completed bookings within the first quarter of launch.</p>
+                                 <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
+                                     <div class="project-stat-card stat-card-hover p-6 rounded-lg">
+                                         <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="70">0</span>%</p>
+                                         <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                                     </div>
+                                     <div class="project-stat-card stat-card-hover p-6 rounded-lg">
+                                         <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="80">0</span>%</p>
+                                         <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
+                                     </div>
+                                     <div class="project-stat-card stat-card-hover p-6 rounded-lg col-span-2 md:col-span-1">
+                                         <p class="text-4xl font-bold text-cyan-400">25%</p>
+                                         <p class="text-sm text-gray-400 mt-1">Increase in Bookings (Q1)</p>
+                                     </div>
                                  </div>
                              </div>
                          </div>
@@ -1160,22 +1235,32 @@
                      id: 'p2', 
                      title: 'Fintech Super-App', 
                      tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], 
-                     image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format=fit=crop', 
+                     image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', 
                      description: `
-                         <div class="project-content-reveal">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Vision: Finance Reimagined</h3>
-                             <p>The goal was ambitious: create a revolutionary fintech "super-app" that would serve as a single touchpoint for all of a user's financial needs. The core challenge was to integrate AI-powered financial advice, budgeting tools, and investment platforms into a single, cohesive, and utterly seamless user experience. How could we make something so complex feel simple and empowering?</p>
-                         </div>
-                         <div class="project-content-reveal mt-12">
-                             <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format=fit=crop" class="rounded-lg project-image-reveal w-full" alt="Fintech app UI screenshot">
-                         </div>
-                         <div class="project-content-reveal mt-12">
-                             <h3 class="text-3xl font-bold mb-4 text-white">My Role: Architecting Simplicity</h3>
-                             <p>My role was to architect the user's journey. I began by developing a comprehensive design system to ensure visual and interactive consistency across every feature. I then led extensive user journey mapping sessions, charting out dozens of potential pathways and identifying key moments of friction and opportunity. We prototyped and tested relentlessly, refining every interaction to be as intuitive as possible. The AI integration was key. I worked closely with the data science team to design an interface that could present complex financial advice in a way that was digestible, trustworthy, and actionable for the average user.</p>
-                         </div>
-                          <div class="project-content-reveal mt-12">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Outcome: Award-Winning Innovation</h3>
-                             <p>The result was a highly intuitive platform that increased user retention by 35% within six months of launch. The app was featured on several major tech blogs for its innovative approach to personal finance and, most importantly, user feedback was overwhelmingly positive. We had successfully demystified personal finance for thousands of users.</p>
+                         <div class="project-content-reveal space-y-12">
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
+                                 <p>The client's vision was a revolutionary fintech "super-app" combining budgeting, investments, and AI-powered financial advice. The central UX challenge was immense: how to unify these complex, data-heavy services into a single, cohesive experience that felt simple, empowering, and trustworthy to the average user, who is often intimidated by financial management tools.</p>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                                 <p>As the lead product designer, I was tasked with architecting the complete user journey. My responsibilities included developing a comprehensive design system, leading user journey mapping workshops, and working closely with the data science team to design an intuitive interface for the AI-driven features.</p>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                                 <div class="space-y-8">
+                                     <p><strong>Discovery & Research:</strong> We began with extensive market research and user interviews with 20 individuals from diverse financial backgrounds. A key insight was the "trust gap"—users were skeptical of AI making financial recommendations. They wanted transparency and control.</p>
+                                     <p><strong>Ideation:</strong> I facilitated journey mapping workshops to chart out every potential user path, from onboarding to making a first investment. For the AI feature, we sketched multiple concepts for presenting financial advice, focusing on clarity and "explainability" to build trust.</p>
+                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=User+Journey+Map" class="rounded-lg project-image-reveal w-full" alt="Fintech app user journey map">
+                                     <p><strong>Design & Prototyping:</strong> A modular design system was crucial for consistency. We used a clean, card-based UI with clear data visualizations to make complex information digestible. I designed the AI interface to provide recommendations with clear reasoning and sliders for users to adjust risk levels, giving them a sense of control.</p>
+                                      <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Fintech app UI screenshot">
+                                     <p><strong>Testing & Iteration:</strong> We ran A/B tests on the AI recommendation feature. Version A was direct ("You should invest in X"). Version B was more conversational and explanatory ("Based on your goals, here are a few options, and here's why..."). Version B overwhelmingly won, increasing user trust and engagement with the feature by 40%.</p>
+                                 </div>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
+                                 <p>The focus on building trust and providing a seamless experience paid off. The app achieved a 35% increase in user retention within six months and was featured on several major tech blogs for its innovative, user-centric approach. We successfully turned a complex suite of tools into a beloved daily financial companion for thousands of users.</p>
+                             </div>
                          </div>
                      `
                  },
@@ -1183,22 +1268,32 @@
                      id: 'p3', 
                      title: 'Patient Management Platform', 
                      tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], 
-                     image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format=fit=crop', 
+                     image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', 
                      description: `
-                          <div class="project-content-reveal">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Need: Care Over Clicks</h3>
-                             <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
-                         </div>
-                         <div class="project-content-reveal mt-12">
-                             <h3 class="text-3xl font-bold mb-4 text-white">My Process: Empathy-Driven Design</h3>
-                             <p>This project required deep empathy. I spent weeks shadowing nurses and doctors, observing their workflows, and understanding their pain points. This firsthand research was invaluable. I designed a streamlined, task-based interface that prioritized clarity and speed. Every color, font size, and layout choice was made with accessibility at the forefront. Through rigorous, iterative usability testing with medical professionals, we refined high-fidelity prototypes, ensuring the final design was not just compliant, but genuinely helpful and intuitive for its users in high-pressure situations.</p>
-                         </div>
-                         <div class="project-content-reveal mt-12">
-                             <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format=fit=crop" class="rounded-lg project-image-reveal w-full" alt="Doctor using a tablet">
-                         </div>
-                          <div class="project-content-reveal mt-12">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Result: More Time for Patients</h3>
-                             <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
+                           <div class="project-content-reveal space-y-12">
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Need</h3>
+                                 <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                                 <p>I led the UX and UI design, with a special focus on accessibility. My process was rooted in deep empathy, involving contextual inquiry, task analysis, and iterative prototyping and testing with medical professionals.</p>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                                 <div class="space-y-8">
+                                     <p><strong>Discovery & Research:</strong> I spent two weeks shadowing nurses and doctors on their rounds. This firsthand observation was invaluable. I identified major pain points, such as excessive clicking to access patient vitals and difficulty reading text in poorly lit rooms. </p>
+                                     <p><strong>Ideation:</strong> Based on the research, I designed streamlined, task-based user flows. I sketched out a dashboard that prioritized at-a-glance information, with a strong focus on high-contrast typography and clear iconography to meet accessibility needs from the ground up.</p>
+                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Accessible+UI+Sketch" class="rounded-lg project-image-reveal w-full" alt="Healthcare platform accessibility sketch">
+                                     <p><strong>Design & Prototyping:</strong> Using Figma, I created high-fidelity, interactive prototypes. Every design choice, from color palettes to font sizes, was vetted against WCAG 2.1 AA guidelines. The design featured a dark mode to reduce eye strain during night shifts, a feature specifically requested by nurses.</p>
+                                      <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Doctor using a tablet">
+                                     <p><strong>Testing & Iteration:</strong> We conducted usability tests with 10 medical professionals in a simulated environment. The tests confirmed that the task-based approach was much faster, but revealed that some icons were not immediately intuitive. I iterated on the icon library, adding text labels for clarity, which tested perfectly in the second round.</p>
+                                 </div>
+                             </div>
+                              <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Result & Impact</h3>
+                                 <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
+                             </div>
                          </div>
                      `
                  },
@@ -1206,23 +1301,31 @@
                      id: 'p4', 
                      title: 'E-Commerce Experience', 
                      tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], 
-                     image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format=fit=crop', 
+                     image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop', 
                      description: `
-                         <div class="project-content-reveal">
-                             <h3 class="text-3xl font-bold mb-4 text-white">The Problem: The Leaky Funnel</h3>
-                             <p>An established e-commerce brand was facing a classic challenge: high traffic, but low conversions. Users were abandoning their carts at an alarming rate, and the checkout process was identified as the primary culprit. My mission was to overhaul the user experience, plug the leaks in the conversion funnel, and ultimately drive revenue.</p>
-                         </div>
-                         <div class="project-content-reveal mt-12">
-                              <h3 class="text-3xl font-bold mb-4 text-white">My Strategy: Data-Driven Redesign</h3>
-                             <p>This project was a deep dive into data. I led the UI design and A/B testing efforts, analyzing user behavior data, heatmaps, and session recordings to identify specific points of friction. I redesigned the product pages to be more visually appealing and informative, and completely streamlined the checkout process into a single, frictionless page. Every major design change was proposed as a hypothesis and rigorously A/B tested against the original. This data-driven approach allowed us to make confident decisions based on user behavior, not assumptions.</p>
-                         </div>
-                         <div class="project-content-reveal mt-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                           <div class="project-content-reveal space-y-12">
                              <div>
-                                <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format=fit=crop" class="rounded-lg project-image-reveal" alt="People shopping on a website">
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
+                                 <p>A successful e-commerce brand was facing a classic "leaky funnel" problem: high traffic but a low conversion rate of just 1.5%. Analytics and session recordings pointed to a high cart abandonment rate, with the multi-page checkout process being the primary culprit.</p>
                              </div>
                              <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Numbers: A Clear Victory</h3>
-                                 <p>The results spoke for themselves. By implementing the winning design variations, we achieved a 25% increase in the overall conversion rate and a significant 15% uplift in the average order value within the first quarter. The project demonstrated a clear return on investment and and set a new standard for the company's design process.</p>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                                 <p>As the lead UI/UX designer, I aimed to plug the leaks and drive revenue. I was responsible for analyzing user behavior, forming data-driven hypotheses, and designing and running A/B tests to validate solutions.</p>
+                             </div>
+                             <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                                 <div class="space-y-8">
+                                     <p><strong>Discovery & Research:</strong> Using Hotjar, I analyzed heatmaps and session recordings of over 200 user sessions. I discovered that users were dropping off significantly when asked to create an account and when presented with unexpected shipping costs late in the process.</p>
+                                     <p><strong>Ideation:</strong> My primary hypothesis was that a single-page checkout with guest checkout options and transparent shipping costs would significantly reduce friction. I sketched several variations of a streamlined checkout and redesigned product pages to be more visually persuasive.</p>
+                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=A/B+Test+Wireframes" class="rounded-lg project-image-reveal w-full" alt="E-commerce checkout wireframes">
+                                     <p><strong>Design & Prototyping:</strong> I designed two primary challengers in Figma for A/B testing: one with a prominent guest checkout and another with a collapsible one-page accordion layout. Both designs brought shipping information forward in the flow.</p>
+                                     <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="People shopping on a website">
+                                     <p><strong>Testing & Iteration:</strong> We ran the A/B tests over two weeks. The version with the prominent guest checkout and accordion layout was the clear winner, showing a statistically significant lift in conversions.</p>
+                                 </div>
+                             </div>
+                              <div>
+                                 <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
+                                 <p>The results were immediate and impactful. By implementing the winning design, the site's overall conversion rate increased by 25%, and the average order value saw a 15% uplift in the first quarter alone. The project delivered a clear return on investment and established a new, data-driven design process for the company.</p>
                              </div>
                          </div>
                      `
@@ -1309,33 +1412,147 @@
                 }
             });
             
-            // --- 8. SKILLS MARQUEE ---
-            const skills = ['Figma', 'Critical Thinking', 'UX Research', 'Psychology & Interviews', 'AI backed research', 'UI Design', 'Design Thinking', 'Problem solving', 'IA & Userflow', 'Logical Thinking'];
-            const skillsMarquee = document.getElementById('skills-marquee');
-            
-            const starSVG = `<div class="flex items-center justify-center px-8"><svg class="star-separator w-8 h-8 text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg></div>`;
-            
-            const marqueeContent = document.createElement('div');
-            marqueeContent.className = 'flex items-center';
-            marqueeContent.innerHTML = skills.map(s => `<div class="skill-item" data-text="${s}">${s}</div>`).join(starSVG);
-            
-            skillsMarquee.appendChild(marqueeContent);
-            skillsMarquee.appendChild(marqueeContent.cloneNode(true));
+            // --- 8. TOOLS MARQUEE ---
+            const tools = [
+                { name: 'Figma', logo: 'https://logowik.com/content/uploads/images/figma-2022-new-logo4869.jpg' },
+                { name: 'Adobe XD', logo: 'https://logowik.com/content/uploads/images/adobe-xd-icon-20212459.jpg' },
+                { name: 'Notion', logo: 'https://logowik.com/content/uploads/images/notion-logo-2022-4312.jpg' },
+                { name: 'Miro', logo: 'https://logowik.com/content/uploads/images/miro-2022-new-logo7069.jpg' },
+                { name: 'Hotjar', logo: 'https://logowik.com/content/uploads/images/hotjar8179.jpg' },
+                { name: 'Adobe', logo: 'https://logowik.com/content/uploads/images/adobe-cc3598.jpg' },
+                { name: 'Canva', logo: 'https://logowik.com/content/uploads/images/canva-2023-new-logo9815.jpg' },
+                { name: 'HTML', logo: 'https://logowik.com/content/uploads/images/html5-logo7578.jpg' },
+                { name: 'Gemini', logo: 'https://logowik.com/content/uploads/images/google-gemini-icon9505.jpg' },
+                { name: 'ChatGPT', logo: 'https://logowik.com/content/uploads/images/chatgpt-logo-black-and-white1013.jpg' },
+                { name: 'UX Pilot', logo: 'https://placehold.co/150x40/1e1f1f/ffffff?text=UX+Pilot' },
+                { name: 'Github', logo: 'https://logowik.com/content/uploads/images/github-icon8868.jpg' }
+            ];
+            const toolsMarqueeContainer = document.getElementById('tools-marquee-container');
 
-            const marqueeParts = gsap.utils.toArray(skillsMarquee.children);
+            if (toolsMarqueeContainer) {
+                const marqueeContent = document.createElement('div');
+                marqueeContent.className = 'flex items-center flex-shrink-0';
+                
+                let contentHTML = '';
+                tools.forEach(tool => {
+                    contentHTML += `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/150x40/1e1f1f/ffffff?text=${tool.name.replace(' ', '+')}';" alt="${tool.name} Logo"></div>`;
+                });
+                marqueeContent.innerHTML = contentHTML;
+                
+                toolsMarqueeContainer.appendChild(marqueeContent);
+                toolsMarqueeContainer.appendChild(marqueeContent.cloneNode(true));
 
-            let marqueeTween = gsap.to(marqueeParts, {
-                xPercent: -100,
-                repeat: -1,
-                duration: 40,
-                ease: "linear",
-                modifiers: {
-                    xPercent: gsap.utils.wrap(-100, 0)
+                const marqueeParts = gsap.utils.toArray(toolsMarqueeContainer.children);
+                
+                if (!prefersReducedMotion.matches) {
+                    let marqueeTween = gsap.to(marqueeParts, {
+                        xPercent: -100,
+                        repeat: -1,
+                        duration: 8,
+                        ease: "linear",
+                        modifiers: {
+                            xPercent: gsap.utils.wrap(-100, 0)
+                        }
+                    });
+                
+                    toolsMarqueeContainer.addEventListener('mouseenter', () => marqueeTween.timeScale(0.2));
+                    toolsMarqueeContainer.addEventListener('mouseleave', () => marqueeTween.timeScale(1));
                 }
-            });
+            }
 
-            skillsMarquee.addEventListener('mouseenter', () => marqueeTween.timeScale(0.1));
-            skillsMarquee.addEventListener('mouseleave', () => marqueeTween.timeScale(1));
+
+            // --- Footer Animations & Go to Top Button ---
+            const footer = document.getElementById('contact');
+            if (footer && !prefersReducedMotion.matches) {
+                const footerTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: footer,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+
+                const footerHeading = footer.querySelector('h2');
+                if (footerHeading) {
+                    const words = footerHeading.innerText.split(' ');
+                    footerHeading.innerHTML = '';
+                    words.forEach(word => {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.className = 'word-wrapper';
+                        const innerSpan = document.createElement('span');
+                        innerSpan.className = 'inline-block';
+                        innerSpan.innerText = word;
+                        wordSpan.appendChild(innerSpan);
+                        footerHeading.appendChild(wordSpan);
+                        footerHeading.appendChild(document.createTextNode(' '));
+                    });
+                    
+                    footerTimeline.from(footerHeading.querySelectorAll('.word-wrapper > span'), {
+                        yPercent: 120,
+                        duration: 0.8,
+                        stagger: 0.05,
+                        ease: 'power3.out'
+                    });
+                }
+
+                footerTimeline.from('.footer-cta-link, .footer-anim', {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: 'power3.out'
+                }, "-=0.5");
+                 const goToTopBtn = document.getElementById('go-to-top-btn');
+                if (goToTopBtn) {
+                     footerTimeline.to(goToTopBtn, {
+                        opacity: 1,
+                        pointerEvents: 'auto',
+                        duration: 0.5,
+                    }, ">-0.4"); 
+                }
+            }
+
+            const goToTopBtn = document.getElementById('go-to-top-btn');
+            if (goToTopBtn) {
+                goToTopBtn.addEventListener('click', () => {
+                    gsap.to(window, {
+                        scrollTo: 0,
+                        duration: 1.5,
+                        ease: 'power3.inOut'
+                    });
+                });
+            }
+
+            const footerMagneticLinks = gsap.utils.toArray('.footer-magnetic-link');
+
+            if (footerMagneticLinks.length > 0 && !isTouchDevice) {
+                const magnetStrength = 0.4;
+                const snapStrength = 0.7;
+                footerMagneticLinks.forEach(item => {
+                    item.addEventListener('mousemove', (e) => {
+                        const { clientX, clientY } = e;
+                        const { left, top, width, height } = item.getBoundingClientRect();
+                        const centerX = left + width / 2;
+                        const centerY = top + height / 2;
+                        
+                        gsap.to(item, {
+                            x: (clientX - centerX) * magnetStrength,
+                            y: (clientY - centerY) * magnetStrength,
+                            duration: snapStrength,
+                            ease: 'power3.out'
+                        });
+                    });
+
+                    item.addEventListener('mouseleave', () => {
+                        gsap.to(item, {
+                            x: 0,
+                            y: 0,
+                            duration: snapStrength,
+                            ease: 'elastic.out(1, 0.3)'
+                        });
+                    });
+                });
+            }
 
 
             // This section is now moved after the projects are created
@@ -1349,17 +1566,14 @@
                         scrollTrigger: {
                             trigger: item,
                             start: 'top 90%',
-							toggleActions: 'play none none none'
-}
-});
-});
-}
-});
-</script>
+                            toggleActions: 'play none none none'
+                        }
+                    });
+                });
+            }
+        });
+    </script>
     
 </body>
 </html>
-
-
-
 
