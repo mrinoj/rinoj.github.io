@@ -48,7 +48,7 @@
 
         body {
             font-family: 'Satoshi', sans-serif;
-            background-color: var(--bg-gradient-start); /* Sets the base to the gradient's blue */
+            background-color: #000833;
             color: var(--text-primary);
             cursor: none;
         }
@@ -57,8 +57,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;   /* Use viewport width for perfect coverage */
-            height: 100dvh;  /* Use dynamic viewport height for mobile */
+            width: 100%;
+            height: 100vh;
             z-index: -1;
         }
 
@@ -76,9 +76,6 @@
         #page-content {
             position: relative;
             z-index: 10;
-            will-change: transform; /* Hint to the browser to optimise this element */
-            -webkit-transform: translateZ(0); /* A trick to force GPU acceleration */
-            transform: translateZ(0);
         }
 
         .preloader {
@@ -1575,6 +1572,7 @@
     
 </body>
 </html>
+
 
 
 
