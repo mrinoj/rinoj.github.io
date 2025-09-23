@@ -195,10 +195,17 @@
             padding: 0 2rem;
         }
         .tool-logo-item img {
-            height: 80px;
+            height: 50px; /* This is the NEW default size for MOBILE */
             width: auto;
             object-fit: contain;
             transition: transform 0.3s var(--animation-easing);
+        }
+        
+        /* This rule applies ONLY to screens 768px and wider (desktop) */
+        @media (min-width: 768px) {
+            .tool-logo-item img {
+                height: 80px; /* This is the size for DESKTOP */
+            }
         }
         .tool-logo-item:hover img {
             transform: scale(1);
@@ -1572,6 +1579,7 @@
     
 </body>
 </html>
+
 
 
 
