@@ -392,26 +392,26 @@
         <!-- Hero Section -->
         <section id="home" class="h-screen flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
 
-            <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-28 md:pt-32">
+            <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-20 md:pt-16">
                 <div class="max-w-4xl mx-auto">
-                    <h1 class="text-lg md:text-2xl font-medium leading-tight">
-                        <span class="tagline-word">Let's</span> <span class="tagline-word">design</span> <span class="tagline-word">intuitive</span> <span class="tagline-word">workflows</span> <span class="tagline-word">that</span> <span class="tagline-word">turn</span><br> <span class="tagline-word">complex</span> <span class="tagline-word">products</span> <span class="tagline-word">into</span> <span class="tagline-word">simple,</span><br> <span class="tagline-word">Human-centred</span> <span class="tagline-word">experiences.</span>
+                    <h1 class="text-2xl md:text-4xl font-bold leading-tight">
+                        <span class="tagline-word">Design</span> <span class="tagline-word">intuitive</span> <span class="tagline-word">workflows</span> <span class="tagline-word">that</span> <span class="tagline-word">turn</span><br> <span class="tagline-word">complex</span> <span class="tagline-word">products</span> <span class="tagline-word">into</span> <span class="tagline-word">simple,</span><br> <span class="tagline-word">Human-centred</span> <span class="tagline-word">experiences.</span>
                     </h1>
                     <p class="text-lg md:text-xl font-medium mt-6 max-w-2xl mx-auto" style="color: var(--text-primary);">
                         <span class="tagline-word">Blending</span> <span class="tagline-word">Design,</span> <span class="tagline-word">Research</span> <span class="tagline-word">and</span> <span class="tagline-word">AI</span> <span class="tagline-word">to</span> <span class="tagline-word">craft</span> <span class="tagline-word">user-friendly</span> <span class="tagline-word">digital</span> <span class="tagline-word">products.</span>
                     </p>
-                    <div id="hero-ctas" class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-10 pointer-events-auto">
-                        <a href="#contact" class="clean-cta cta-primary font-semibold px-8 py-3 rounded-full w-full sm:w-auto">Let's Talk</a>
-                        <a href="#" class="clean-cta cta-secondary font-semibold px-8 py-3 rounded-full w-full sm:w-auto">Resume</a>
+                    <div id="hero-ctas" class="mt-10 flex flex-row items-center justify-center gap-10 pointer-events-auto">
+                        <a href="#contact" class="clean-cta cta-primary font-semibold text-sm sm:text-base px-8 sm:px-10 py-2 sm:py-2.5 rounded-full whitespace-nowrap">Let's Talk</a>
+                        <a href="#" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap">Resume</a>
                     </div>
                 </div>
             </div>
 
-             <div class="absolute bottom-0 left-0 right-0 z-10 pb-2">
+             <div class="absolute bottom-0 left-0 right-0 z-10 pb-10 md:pb-0">
                  <div class="name-marquee-container flex whitespace-nowrap items-center">
                      <div class="marquee-content-wrapper flex-shrink-0 flex items-center">
-                         <span class="text-[8vw] md:text-[6.5vw] text-white select-none px-4">
-                             <span class="font-black">Rinoj Hashim</span>
+                         <span class="text-[12vw] md:text-[6.5vw] text-white select-none px-6">
+                             <span class="font-black">Mohamed Rinoj Hashim</span>
                              <span class="font-semibold"> | UX / Product Designer | Ex-Fintech & E-Commerce</span>
                          </span>
                          <span class="px-4 inline-flex items-center justify-center">
@@ -428,12 +428,17 @@
                 <div id="story-pin-container" class="h-screen w-full overflow-hidden">
                     <!-- Text content positioned at the top of the viewport -->
                     <div class="absolute top-0 left-0 right-0 pt-32 md:pt-40 z-10 pointer-events-none">
-                        <div class="container mx-auto px-6 md:px-12">
-                            <div class="grid md:grid-cols-2 gap-8 items-start">
-                                <div>
+                        <div class="w-full px-6 md:px-12">
+                            <!-- Use a 5-column grid for more control -->
+                            <div class="grid grid-cols-1 md:grid-cols-6 gap-x-8">
+                                
+                                <!-- Column 1: Title (takes up 2 of the 5 columns) -->
+                                <div class="md:col-span-2">
                                     <h3 id="story-subtitle" class="text-3xl md:text-5xl font-bold">The Graduation</h3>
                                 </div>
-                                <div id="story-text-container" class="relative min-h-[10rem] md:min-h-0">
+                                
+                                <!-- Column 2: Story Text (takes up 3 of the 5 columns) -->
+                                <div id="story-text-container" class="md:col-span-4 relative min-h-[10rem] md:min-h-0 mt-4 md:mt-0">
                                     <div class="story-text-item">
                                         <p class="text-xl text-white">It all starts with a single idea. A spark of curiosity that leads to sketching, planning, and laying the digital foundation.</p>
                                     </div>
@@ -456,7 +461,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Image track positioned at the bottom of the viewport -->
                     <div class="absolute bottom-[-10%] left-0 w-full h-[60vh]">
                         <div id="story-track" class="absolute top-0 h-full flex items-center space-x-8">
@@ -639,8 +643,8 @@
 
 
             gsap.to(preloaderLogo, {
-                scale: 1.05,
-                duration: 1,
+                scale: 1.1,
+                duration: 0.8,
                 repeat: -1,
                 yoyo: true,
                 ease: 'power1.inOut'
@@ -763,7 +767,7 @@
                         const marqueeAnimation = gsap.to(marqueeParts, {
                             xPercent: -100,
                             repeat: -1,
-                            duration: 100,
+                            duration: 20,
                             ease: "linear",
                             modifiers: {
                                 xPercent: gsap.utils.wrap(-100, 0)
@@ -1562,6 +1566,7 @@
     
 </body>
 </html>
+
 
 
 
