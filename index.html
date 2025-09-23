@@ -315,7 +315,9 @@
             background-size: 100% 1px;
         }
 
-
+        #home {
+            height: 100dvh;
+        }
         #go-to-top-btn {
             transition: opacity 0.4s, transform 0.4s;
         }
@@ -392,7 +394,7 @@
 
     <main id="main-content" role="main">
         <!-- Hero Section -->
-        <section id="home" class="h-screen flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
+        <section id="home" class="flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
 
             <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-20 md:pt-16">
                 <div class="max-w-4xl mx-auto">
@@ -586,7 +588,8 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
+            history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
             gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             let projectScrollTriggers = []; // To store project-specific scroll triggers
@@ -1569,24 +1572,5 @@
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
