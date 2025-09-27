@@ -3,233 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dennis Snellenberg - A Closer Replica</title>
+    <title>Project | E-Commerce Experience</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Case study for an E-Commerce Experience by Mohamed Rinoj Hashim.">
+    <meta property="og:title" content="Project | E-Commerce Experience" />
+    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
-
-        :root {
-            --background-color: #f0f0f0;
-            --text-color: #111111;
-            --accent-color: #a3a3a3;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            overflow: hidden; /* Important: Prevents vertical scrollbar */
+            font-family: 'Satoshi', sans-serif;
+            background-color: #1e1f1f;
+            color: #EAEAEA;
         }
-
-        .main-container {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-        }
-
-        .scroll-section {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            will-change: transform;
-            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth easing */
-        }
-
-        .section {
-            flex-shrink: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 10vw;
-        }
-
-        .intro-section {
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding-left: 15vw;
-        }
-
-        .intro-section h1 {
-            font-size: 8vw;
-            font-weight: 700;
-            margin: 0;
-            line-height: 1;
-        }
-
-        .intro-section p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: var(--accent-color);
-            max-width: 400px;
-            margin-top: 2rem;
-        }
-
-        .portfolio-section {
-            display: flex;
-            align-items: center;
-            gap: 10vw;
-        }
-
-        .portfolio-item {
-            width: 30vw;
-            height: 80vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.4);
-            transition: transform 1s ease-out;
-        }
-
-        .portfolio-item.in-view img {
-            transform: scale(1);
-        }
-
-        .portfolio-item h3 {
-            position: absolute;
-            bottom: -100%; /* Initially hidden */
-            left: 1.5rem;
-            color: white;
-            font-size: 2rem;
-            font-weight: 500;
-            transition: bottom 0.8s ease-out;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .portfolio-item.in-view h3 {
-            bottom: 1.5rem; /* Slide in */
-        }
-
-        .nav-dots {
-            position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: var(--text-color);
-        }
-
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <div class="main-container">
-        <div class="scroll-section">
-            <section class="section intro-section">
+    <!-- Back Button -->
+    <a href="index.html" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
+        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span class="font-medium text-sm">Back to Portfolio</span>
+    </a>
+
+    <!-- Hero Image -->
+    <div style="height: 65vh; width: 100%; overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop" alt="E-Commerce Experience" class="w-full h-full object-cover">
+    </div>
+
+    <!-- Project Content -->
+    <div class="container mx-auto px-6 py-12 md:py-20">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold">E-Commerce Experience</h1>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">Conversion Optimization</span>
+                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">A/B Testing</span>
+                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UI Design</span>
+            </div>
+            
+            <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
                 <div>
-                    <h1>Dennis<br>Snellenberg</h1>
-                    <p>Award-winning creative director and designer, creating unique digital experiences. Based in the Netherlands.</p>
+                    <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
+                    <p>A successful e-commerce brand was facing a classic "leaky funnel" problem: high traffic but a low conversion rate of just 1.5%. Analytics and session recordings pointed to a high cart abandonment rate, with the multi-page checkout process being the primary culprit.</p>
                 </div>
-            </section>
-
-            <section class="section portfolio-section">
-                <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1528740561666-dc2479703592?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 1">
-                    <h3>Project One</h3>
+                <div>
+                    <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                    <p>As the lead UI/UX designer, my goal was to plug the leaks and drive revenue. I was responsible for analyzing user behavior, forming data-driven hypotheses, and designing and running A/B tests to validate solutions.</p>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1558980394-a3099ed4a489?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 2">
-                    <h3>Project Two</h3>
+                <div>
+                    <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                    <div class="space-y-8">
+                        <p><strong>Discovery & Research:</strong> Using Hotjar, I analyzed heatmaps and session recordings of over 200 user sessions. I discovered that users were dropping off significantly when asked to create an account and when presented with unexpected shipping costs late in the process.</p>
+                        <p><strong>Ideation:</strong> My primary hypothesis was that a single-page checkout with guest checkout options and transparent shipping costs would significantly reduce friction. I sketched several variations of a streamlined checkout and redesigned product pages to be more visually persuasive.</p>
+                        <img src="https://placehold.co/800x450/2d3748/eaeaea?text=A/B+Test+Wireframes" class="rounded-lg w-full" alt="E-commerce checkout wireframes">
+                        <p><strong>Design & Prototyping:</strong> I designed two primary challengers in Figma for A/B testing: one with a prominent guest checkout and another with a collapsible one-page accordion layout. Both designs brought shipping information forward in the flow.</p>
+                        <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" class="rounded-lg" alt="People shopping on a website">
+                        <p><strong>Testing & Iteration:</strong> We ran the A/B tests over two weeks. The version with the prominent guest checkout and accordion layout was the clear winner, showing a statistically significant lift in conversions.</p>
+                    </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 3">
-                    <h3>Project Three</h3>
+                 <div>
+                    <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
+                    <p>The results were immediate and impactful. By implementing the winning design, the site's overall conversion rate increased by 25%, and the average order value saw a 15% uplift in the first quarter alone. The project delivered a clear return on investment and established a new, data-driven design process for the company.</p>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
-    
-    <div class="nav-dots"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollSection = document.querySelector('.scroll-section');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-            const sections = document.querySelectorAll('.section');
-            const navDotsContainer = document.querySelector('.nav-dots');
-
-            let currentTranslateX = 0;
-            let targetTranslateX = 0;
-            const scrollSpeed = 0.08; // Adjust for sensitivity
-
-            // Create navigation dots
-            sections.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    // This part is for potential click navigation, not fully implemented
-                    // For now, the main interaction is scrolling
-                });
-                navDotsContainer.appendChild(dot);
-            });
-            const dots = document.querySelectorAll('.dot');
-
-            // --- Horizontal Scroll Logic ---
-            document.body.addEventListener('wheel', (event) => {
-                event.preventDefault();
-                targetTranslateX -= event.deltaY;
-
-                // Clamp the scroll position
-                const maxScroll = scrollSection.scrollWidth - window.innerWidth;
-                targetTranslateX = Math.max(-maxScroll, Math.min(0, targetTranslateX));
-
-                updateActiveDot();
-            }, { passive: false });
-            
-            function animateScroll() {
-                currentTranslateX += (targetTranslateX - currentTranslateX) * scrollSpeed;
-                scrollSection.style.transform = `translateX(${currentTranslateX}px)`;
-
-                // --- Intersection Observer for Animations ---
-                portfolioItems.forEach(item => {
-                    const rect = item.getBoundingClientRect();
-                    // Check if item is mostly in the viewport
-                    if (rect.left < window.innerWidth * 0.8 && rect.right > window.innerWidth * 0.2) {
-                        item.classList.add('in-view');
-                    } else {
-                        item.classList.remove('in-view');
-                    }
-                });
-
-                requestAnimationFrame(animateScroll);
-            }
-
-            function updateActiveDot() {
-                const scrollPercentage = -targetTranslateX / (scrollSection.scrollWidth - window.innerWidth);
-                const activeIndex = Math.round(scrollPercentage * (sections.length - 1));
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === activeIndex);
-                });
-            }
-
-            animateScroll();
-        });
-    </script>
 </body>
 </html>
