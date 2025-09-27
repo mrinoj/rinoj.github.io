@@ -147,7 +147,8 @@
             border-bottom: 1px solid var(--accent-color);
             transform: translateX(-100%);
             opacity: 0;
-            display: block; /* Make it a block element for the whole area to be clickable */
+            cursor: pointer; /* Change cursor to pointer */
+            display: block;
             transition: background-color 0.3s ease;
         }
         .project-item:hover {
@@ -174,27 +175,39 @@
             z-index: 1;
         }
 
+        #project-detail-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1e1f1f;
+            z-index: 10001;
+            display: none;
+        }
+
         /* Styles for Tool Logos */
         .tool-logo-item {
             flex-shrink: 0;
             padding: 0 2rem;
         }
         .tool-logo-item img {
-            height: 64px; /* This is the NEW default size for MOBILE */
+            height: 64px; /* Default size for MOBILE */
             width: auto;
             object-fit: contain;
             transition: transform 0.3s var(--animation-easing);
         }
        
-        /* This rule applies ONLY to screens 768px and wider (desktop) */
         @media (min-width: 768px) {
             .tool-logo-item img {
-                height: 80px; /* This is the size for DESKTOP */
+                height: 80px; /* Size for DESKTOP */
             }
         }
+        /* Removed scale on hover */
         .tool-logo-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1);
         }
+
 
         /* Styles for Story Section */
         #story-track {
@@ -260,6 +273,11 @@
 
         .clean-cta:hover::before {
             left: 125%;
+        }
+
+        /* Specific shimmer for primary CTA */
+        .cta-primary::before {
+            background: linear-gradient(110deg, rgba(103, 232, 249, 0) 30%, rgba(103, 232, 249, 0.5), rgba(103, 232, 249, 0) 70%);
         }
         
         .cta-primary {
@@ -371,7 +389,7 @@
         <section id="home" class="flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
             <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-20 md:pt-16">
                 <div class="max-w-4xl mx-auto">
-                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+                    <h1 class="text-3xl md:text-5xl font-bold leading-tight">
                         <span class="tagline-word">DESIGN INTUITIVE WORKFLOWS THAT TURN</span><br> <span class="tagline-word">COMPLEX PRODUCTS INTO SIMPLE,</span><br> <span class="tagline-word">HUMAN-CENTRED EXPERIENCES.</span>
                     </h1>
                     <p class="text-lg md:text-xl font-medium mt-6 max-w-2xl mx-auto" style="color: var(--text-primary);">
@@ -529,6 +547,9 @@
             <path class="scroll-to-top-arrow" d="M50 58 V42 M44 48 l6 -6 l6 6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </button>
+    
+    <!-- Project Detail Page Transition Overlay -->
+    <div id="project-detail-page"></div>
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-[#1e1f1f] bg-opacity-50 z-[9990] hidden" role="dialog" aria-modal="true">
@@ -547,8 +568,16 @@
    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            history.scrollRestoration = 'manual';
-            window.scrollTo(0, 0);
+            // Restore scroll position if it exists
+            const scrollPos = sessionStorage.getItem('scrollPos');
+            if (scrollPos) {
+                window.scrollTo(0, parseInt(scrollPos));
+                sessionStorage.removeItem('scrollPos');
+            } else {
+                history.scrollRestoration = 'manual';
+                window.scrollTo(0, 0);
+            }
+
             gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -564,10 +593,6 @@
                     scrub: 0.3
                 }
             });
-
-            window.onbeforeunload = function () {
-                window.scrollTo(0, 0);
-            };
 
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -591,76 +616,77 @@
 
             // --- 1. PRELOADER & INITIAL PAGE REVEAL ---
             const preloader = document.querySelector('.preloader');
-            const preloaderLogo = document.querySelector('.preloader-logo');
-            const header = document.getElementById('header');
-            const tagline = document.getElementById('hero-tagline');
-            const heroCTAs = document.getElementById('hero-ctas');
-            const marqueeContainer = document.querySelector('.name-marquee-container');
-            const taglineWords = gsap.utils.toArray('.tagline-word');
-            const ctaButtons = gsap.utils.toArray('#hero-ctas a');
-           
-            gsap.set([header, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
-            gsap.set([header, marqueeContainer], { y: 80 });
-            gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
-            gsap.set(ctaButtons, { opacity: 0, y: 20 });
+            if (preloader) {
+                const preloaderLogo = document.querySelector('.preloader-logo');
+                const header = document.getElementById('header');
+                const tagline = document.getElementById('hero-tagline');
+                const heroCTAs = document.getElementById('hero-ctas');
+                const marqueeContainer = document.querySelector('.name-marquee-container');
+                const taglineWords = gsap.utils.toArray('.tagline-word');
+                const ctaButtons = gsap.utils.toArray('#hero-ctas a');
+            
+                gsap.set([header, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
+                gsap.set([header, marqueeContainer], { y: 80 });
+                gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
+                gsap.set(ctaButtons, { opacity: 0, y: 20 });
 
-
-            gsap.to(preloaderLogo, {
-                scale: 1.1,
-                duration: 0.8,
-                repeat: -1,
-                yoyo: true,
-                ease: 'power1.inOut'
-            });
-
-            window.addEventListener('load', () => {
-                const tl = gsap.timeline({
-                    onComplete: () => {
-                        setupStorySectionAnimation();
-                        ScrollTrigger.refresh();
-                    }
-                });
-               
-                tl.to(preloader, {
-                    yPercent: -100,
-                    duration: 1.2,
-                    ease: 'power3.inOut',
-                    delay: 0.4
-                });
-
-                tl.to([header, marqueeContainer, tagline, heroCTAs], {
-                    autoAlpha: 1,
-                }, "-=1.0");
-
-                tl.to([header, marqueeContainer], {
-                    y: 0,
-                    duration: 1.2,
-                    ease: 'power3.out',
-                    stagger: 0.1
-                }, "-=1.0");
-
-                tl.to(taglineWords, {
-                    opacity: 1,
-                    y: 0,
-                    rotationX: 0,
+                gsap.to(preloaderLogo, {
+                    scale: 1.1,
                     duration: 0.8,
-                    stagger: 0.04,
-                    ease: 'power3.out'
-                }, "-=0.8");
-
-                tl.to(ctaButtons, {
-                    opacity: 1,
-                    y: 0,
-                    stagger: 0.15,
-                    duration: 0.8,
-                    ease: 'power3.out'
-                }, "-=0.6");
-
-                tl.call(() => {
-                    document.body.style.overflow = '';
-                    preloader.remove();
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
                 });
-            });
+
+                window.addEventListener('load', () => {
+                    const tl = gsap.timeline({
+                        onComplete: () => {
+                            setupStorySectionAnimation();
+                            ScrollTrigger.refresh();
+                        }
+                    });
+                
+                    tl.to(preloader, {
+                        yPercent: -100,
+                        duration: 1.2,
+                        ease: 'power3.inOut',
+                        delay: 0.4
+                    });
+
+                    tl.to([header, marqueeContainer, tagline, heroCTAs], {
+                        autoAlpha: 1,
+                    }, "-=1.0");
+
+                    tl.to([header, marqueeContainer], {
+                        y: 0,
+                        duration: 1.2,
+                        ease: 'power3.out',
+                        stagger: 0.1
+                    }, "-=1.0");
+
+                    tl.to(taglineWords, {
+                        opacity: 1,
+                        y: 0,
+                        rotationX: 0,
+                        duration: 0.8,
+                        stagger: 0.04,
+                        ease: 'power3.out'
+                    }, "-=0.8");
+
+                    tl.to(ctaButtons, {
+                        opacity: 1,
+                        y: 0,
+                        stagger: 0.15,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    }, "-=0.6");
+
+                    tl.call(() => {
+                        preloader.remove();
+                    });
+                });
+            }
+
 
             // --- 2. CUSTOM CURSOR ---
             const cursor = document.querySelector('.cursor');
@@ -685,6 +711,7 @@
             if (!prefersReducedMotion.matches) {
 
                 // a) Marquee Scroll Speed Animation
+                const marqueeContainer = document.querySelector('.name-marquee-container');
                 if (marqueeContainer) {
                     const contentWrapper = marqueeContainer.querySelector('.marquee-content-wrapper');
                     if (contentWrapper) {
@@ -738,13 +765,14 @@
            
             function setupStorySectionAnimation() {
                 const storySection = document.getElementById('story');
+                if (!storySection) return;
                 const storyPinContainer = document.getElementById('story-pin-container');
                 const storyTrack = document.getElementById('story-track');
                 const storyPanels = gsap.utils.toArray(".story-panel");
                 const storyTexts = gsap.utils.toArray(".story-text-item");
                 const storySubtitle = document.getElementById("story-subtitle");
 
-                if (!storySection || !storyTrack || storyPanels.length === 0) return;
+                if (!storyTrack || storyPanels.length === 0) return;
 
                 gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
                
@@ -837,67 +865,66 @@
             // --- 5. THREE.JS GRADIENT BACKGROUND ---
             let scene, camera, renderer, material;
             const gradientCanvas = document.getElementById('hero-gradient-background');
+            if(gradientCanvas) {
+                function initGradientBackground() {
+                    scene = new THREE.Scene();
+                    camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                    renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true });
+                
+                    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                    material = new THREE.ShaderMaterial({
+                        uniforms: {
+                            u_time: { value: 0 },
+                            u_resolution: { value: new THREE.Vector2() },
+                            u_color1: { value: new THREE.Color(0x0047AB) },
+                            u_color2: { value: new THREE.Color(0x00008B) },
+                        },
+                        vertexShader: `
+                            varying vec2 vUv;
+                            void main() {
+                                vUv = uv;
+                                gl_Position = vec4(position, 1.0);
+                            }
+                        `,
+                        fragmentShader: `
+                            varying vec2 vUv;
+                            uniform float u_time;
+                            uniform vec3 u_color1;
+                            uniform vec3 u_color2;
+                            void main() {
+                                vec2 p = vUv;
+                                float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1;
+                                vec3 color = mix(u_color1, u_color2, blend);
+                                gl_FragColor = vec4(color, 1.0);
+                            }
+                        `,
+                    });
+                
+                    const mesh = new THREE.Mesh(geometry, material);
+                    scene.add(mesh);
+                
+                    onWindowResizeGradient();
+                    window.addEventListener('resize', onWindowResizeGradient);
+                    animateGradient();
+                }
 
-            function initGradientBackground() {
-                scene = new THREE.Scene();
-                camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-                renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true });
-               
-                const geometry = new THREE.PlaneBufferGeometry(2, 2);
-                material = new THREE.ShaderMaterial({
-                    uniforms: {
-                        u_time: { value: 0 },
-                        u_resolution: { value: new THREE.Vector2() },
-                        u_color1: { value: new THREE.Color(0x0047AB) },
-                        u_color2: { value: new THREE.Color(0x00008B) },
-                    },
-                    vertexShader: `
-                        varying vec2 vUv;
-                        void main() {
-                            vUv = uv;
-                            gl_Position = vec4(position, 1.0);
-                        }
-                    `,
-                    fragmentShader: `
-                        varying vec2 vUv;
-                        uniform float u_time;
-                        uniform vec3 u_color1;
-                        uniform vec3 u_color2;
-                        // Simplex Noise function (for subtle movement)
-                        // ... [Noise function code from original file] ...
-                        void main() {
-                            vec2 p = vUv;
-                            // A simple time-based gradient shift
-                            float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1;
-                            vec3 color = mix(u_color1, u_color2, blend);
-                            gl_FragColor = vec4(color, 1.0);
-                        }
-                    `,
-                });
-               
-                const mesh = new THREE.Mesh(geometry, material);
-                scene.add(mesh);
-               
-                onWindowResizeGradient();
-                window.addEventListener('resize', onWindowResizeGradient);
-                animateGradient();
+                function animateGradient() {
+                    material.uniforms.u_time.value += 0.01;
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(animateGradient);
+                }
+
+                function onWindowResizeGradient() {
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                    material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+                }
+            
+                initGradientBackground();
             }
 
-            function animateGradient() {
-                material.uniforms.u_time.value += 0.01;
-                renderer.render(scene, camera);
-                requestAnimationFrame(animateGradient);
-            }
 
-            function onWindowResizeGradient() {
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-            }
-           
-            initGradientBackground();
-
-            // --- 6. DYNAMIC PROJECT INJECTION ---
+            // --- 6. DYNAMIC PROJECT INJECTION & ANIMATION ---
             const projects = [
                  { 
                     id: 'bankiom', 
@@ -930,101 +957,110 @@
             ];
 
             const projectsContainer = document.getElementById('projects-container');
-            projects.forEach((p) => {
-                const projectEl = document.createElement('a');
-                projectEl.href = p.href;
-                projectEl.className = 'project-item relative';
-                projectEl.innerHTML = `
-                    <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
-                        <h3 class="text-2xl md:text-4xl font-bold">${p.title}</h3>
-                        <span class="text-sm font-lg text-secondary hidden md:block">${p.tags.join(' / ')}</span>
-                    </div>
-                    <img src="${p.image}" class="project-image-preview">
-                `;
-                projectsContainer.appendChild(projectEl);
+            if (projectsContainer) {
+                projects.forEach((p) => {
+                    const projectEl = document.createElement('div');
+                    projectEl.className = 'project-item relative';
+                    projectEl.dataset.href = p.href; // Store href in data attribute
+                    projectEl.innerHTML = `
+                        <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
+                            <h3 class="text-2xl md:text-4xl font-bold">${p.title}</h3>
+                            <span class="text-sm font-lg text-secondary hidden md:block">${p.tags.join(' / ')}</span>
+                        </div>
+                        <img src="${p.image}" class="project-image-preview">
+                    `;
+                    projectsContainer.appendChild(projectEl);
 
-                if (!isTouchDevice) {
-                    const previewImage = projectEl.querySelector('.project-image-preview');
-
-                    projectEl.addEventListener('mouseenter', () => {
-                        cursorText.textContent = "View";
-                        gsap.to(cursor, { 
-                            width: '80px', 
-                            height: '80px',
-                            backgroundColor: 'white',
-                            borderWidth: 0,
-                            duration: 0.3 
-                        });
-                        gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
-                    });
-
-                    projectEl.addEventListener('mouseleave', () => {
-                          cursorText.textContent = "";
-                          gsap.to(cursor, { 
-                              width: '24px', 
-                              height: '24px',
-                              backgroundColor: 'transparent',
-                              borderWidth: '1px',
-                              duration: 0.3 
-                        });
-                        gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
-                    });
-
-                    projectEl.addEventListener('mousemove', (e) => {
+                    projectEl.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        sessionStorage.setItem('scrollPos', window.scrollY);
+                        
                         const rect = projectEl.getBoundingClientRect();
-                        gsap.to(previewImage, {
-                            x: e.clientX - rect.left - (previewImage.width / 2),
-                            y: e.clientY - rect.top - previewImage.height - 20, // Move image above cursor
-                            duration: 0.8,
-                            ease: 'power3.out'
+                        const originX = rect.left + rect.width / 2;
+                        const originY = rect.top + rect.height / 2;
+                        const projectDetailPage = document.getElementById('project-detail-page');
+
+                        const tl = gsap.timeline({
+                            onComplete: () => {
+                                window.location.href = projectEl.dataset.href;
+                            }
+                        });
+                        tl.set(projectDetailPage, { 
+                            display: 'block',
+                            clipPath: `circle(0% at ${originX}px ${originY}px)`
+                        });
+                        tl.to(projectDetailPage, {
+                            clipPath: `circle(150% at ${originX}px ${originY}px)`,
+                            duration: 1.2,
+                            ease: 'expo.inOut'
                         });
                     });
-                }
-            });
+
+                    if (!isTouchDevice) {
+                        const previewImage = projectEl.querySelector('.project-image-preview');
+
+                        projectEl.addEventListener('mouseenter', () => {
+                            cursorText.textContent = "View";
+                            gsap.to(cursor, { 
+                                width: '80px', height: '80px',
+                                backgroundColor: 'white', borderWidth: 0,
+                                duration: 0.3 
+                            });
+                            gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+                        });
+
+                        projectEl.addEventListener('mouseleave', () => {
+                            cursorText.textContent = "";
+                            gsap.to(cursor, { 
+                                width: '24px', height: '24px',
+                                backgroundColor: 'transparent', borderWidth: '1px',
+                                duration: 0.3 
+                            });
+                            gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
+                        });
+
+                        projectEl.addEventListener('mousemove', (e) => {
+                            const rect = projectEl.getBoundingClientRect();
+                            gsap.to(previewImage, {
+                                x: e.clientX - rect.left - (previewImage.width / 2),
+                                y: e.clientY - rect.top - previewImage.height - 20,
+                                duration: 0.8,
+                                ease: 'power3.out'
+                            });
+                        });
+                    }
+                });
+            }
            
             // --- 7. TOOLS MARQUEE ---
             const tools = [
-                { name: 'Figma', logo: 'assets/tools/figma.png' },
-                { name: 'Adobe CC', logo: 'assets/tools/adobe.png' },
-                { name: 'Notion', logo: 'assets/tools/notion.png' },
-                { name: 'Miro', logo: 'assets/tools/miro.png' },
-                { name: 'Hotjar', logo: 'assets/tools/hotjar.png' },
-                { name: 'Github', logo: 'assets/tools/github.png' },
-                { name: 'Canva', logo: 'assets/tools/canva.png' },
-                { name: 'HTML5', logo: 'assets/tools/html5.png' },
-                { name: 'Gemini', logo: 'assets/tools/gemini.png' },
-                { name: 'ChatGPT', logo: 'assets/tools/chatgpt.png' },
-                { name: 'Webflow', logo: 'assets/tools/webflow.png' },
-                { name: 'Sheets', logo: 'assets/tools/sheets.png' }
+                { name: 'Figma', logo: 'assets/tools/figma.png' }, { name: 'Adobe CC', logo: 'assets/tools/adobe.png' },
+                { name: 'Notion', logo: 'assets/tools/notion.png' }, { name: 'Miro', logo: 'assets/tools/miro.png' },
+                { name: 'Hotjar', logo: 'assets/tools/hotjar.png' }, { name: 'Github', logo: 'assets/tools/github.png' },
+                { name: 'Canva', logo: 'assets/tools/canva.png' }, { name: 'HTML5', logo: 'assets/tools/html5.png' },
+                { name: 'Gemini', logo: 'assets/tools/gemini.png' }, { name: 'ChatGPT', logo: 'assets/tools/chatgpt.png' },
+                { name: 'Webflow', logo: 'assets/tools/webflow.png' }, { name: 'Sheets', logo: 'assets/tools/sheets.png' }
             ];
             const toolsMarqueeContainer = document.getElementById('tools-marquee-container');
 
             if (toolsMarqueeContainer) {
                 const marqueeContent = document.createElement('div');
                 marqueeContent.className = 'flex items-center flex-shrink-0';
-               
-                let contentHTML = '';
-                tools.forEach(tool => {
-                    contentHTML += `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/150x40/1e1f1f/ffffff?text=${tool.name.replace(' ', '+')}';" alt="${tool.name} Logo"></div>`;
-                });
-                marqueeContent.innerHTML = contentHTML;
-               
+                marqueeContent.innerHTML = tools.map(tool => 
+                    `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/150x40/1e1f1f/ffffff?text=${tool.name.replace(' ', '+')}';" alt="${tool.name} Logo"></div>`
+                ).join('');
+                
                 toolsMarqueeContainer.appendChild(marqueeContent);
                 toolsMarqueeContainer.appendChild(marqueeContent.cloneNode(true));
 
-                const marqueeParts = gsap.utils.toArray(toolsMarqueeContainer.children);
-               
                 if (!prefersReducedMotion.matches) {
-                    let marqueeTween = gsap.to(marqueeParts, {
+                    let marqueeTween = gsap.to(toolsMarqueeContainer.children, {
                         xPercent: -100,
                         repeat: -1,
                         duration: 25,
                         ease: "linear",
-                        modifiers: {
-                            xPercent: gsap.utils.wrap(-100, 0)
-                        }
+                        modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
                     });
-               
                     toolsMarqueeContainer.addEventListener('mouseenter', () => marqueeTween.timeScale(0.2));
                     toolsMarqueeContainer.addEventListener('mouseleave', () => marqueeTween.timeScale(1));
                 }
@@ -1034,12 +1070,15 @@
             const goToTopBtn = document.getElementById('go-to-top-btn');
             if (goToTopBtn) {
                  ScrollTrigger.create({
-                    start: "top -150%", // Show after scrolling down 1.5 viewports
+                    trigger: "body",
+                    start: "top -200px",
                     end: "bottom bottom",
                     toggleClass: {
                         targets: goToTopBtn,
                         className: "is-active"
-                    }
+                    },
+                    // This ensures it doesn't toggle off at the very end
+                    onLeaveBack: self => self.trigger.classList.remove("is-active"),
                 });
 
                 goToTopBtn.addEventListener('click', () => {
@@ -1051,7 +1090,7 @@
                 });
             }
             
-            // Re-run project reveal animation setup
+            // Re-run project reveal animation setup for elements that exist on the page
             if (!prefersReducedMotion.matches) {
                 gsap.utils.toArray('.project-item').forEach(item => {
                     gsap.to(item, {
@@ -1067,9 +1106,9 @@
                     });
                 });
             }
-
         });
     </script>
-   
 </body>
 </html>
+
+
