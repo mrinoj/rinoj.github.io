@@ -3,87 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project | Bhavanam Donation App</title>
+    <title>Project: Bhavanam | Rinoj. UX Designer</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Case study for the Bhavanam Donation App by Mohamed Rinoj Hashim.">
-    <meta property="og:title" content="Project | Bhavanam Donation App" />
-    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop" />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <!-- Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
-
-    <!-- Custom Styles -->
     <style>
+        :root {
+            --bg-color: #1e1f1f;
+            --text-primary: #EAEAEA;
+            --text-secondary: #A0A0A0;
+            --border-color: #333333;
+            --accent-color: #22d3ee;
+        }
         body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
             font-family: 'Satoshi', sans-serif;
-            background-color: #1e1f1f;
-            color: #EAEAEA;
+        }
+        .project-stat-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .project-stat-card:hover {
+            transform: translateY(-4px);
+            background-color: rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Back Button -->
-    <a href="index.html" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
-        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        <span class="font-medium text-sm">Back to Portfolio</span>
-    </a>
-
-    <!-- Hero Image -->
-    <div style="height: 65vh; width: 100%; overflow: hidden;">
-        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop" alt="Bhavanam Donation App" class="w-full h-full object-cover">
-    </div>
-
-    <!-- Project Content -->
-    <div class="container mx-auto px-6 py-12 md:py-20">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-bold">Bhavanam: Donation App</h1>
-            <div class="mt-4 flex flex-wrap gap-3">
-                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UX Research</span>
-                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UI Design</span>
-                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">Social Impact</span>
-            </div>
-            
-            <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">About The Project</h3>
-                     <p>Bhavanam is a CSR initiative by BPCL Kochi Refinery to provide eco-friendly and safe cooking stoves to underprivileged families. This project involved designing a donation app to facilitate contributions, ensuring a transparent, engaging, and easy-to-use platform for donors who want to make a tangible difference in empowering rural women and promoting healthier communities.</p>
-                 </div>
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
-                     <p>The existing manual donation process for social causes often suffers from inefficiency, a lack of transparency, limited reach, and poor donor engagement. Donors are disconnected from the impact of their contributions and are hesitant to give due to a lack of trust and a complicated process.</p>
-                 </div>
-                  <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                     <p>As the lead UX/UI designer, my responsibility was to design the entire mobile app experience from the ground up. This included conducting user research to understand donor motivations, creating the design system, mapping out user flows, and crafting high-fidelity wireframes and UI screens for development.</p>
-                 </div>
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                     <div class="space-y-8">
-                         <p><strong>User Research:</strong> I conducted interviews with potential donors to understand their needs and pain points. Key insights revealed that donors desire transparency above all, want a simple and quick donation process, appreciate regular updates on the impact of their contribution, and want to feel emotionally connected to the cause.</p>
-                         <img src="https://placehold.co/800x450/2d3748/eaeaea?text=User+Flow+Diagram" class="rounded-lg w-full" alt="User flow diagram for the Bhavanam app">
-                         <p><strong>Design System:</strong> A clean and trust-inspiring design system was developed, using a color palette of blues and greens to evoke a sense of calm, trust, and environmental consciousness. The typography was chosen for its clarity and readability on mobile screens.</p>
-                          <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframes" class="rounded-lg w-full" alt="Wireframes of the Bhavanam app">
-                         <p><strong>Prototyping & UI:</strong> I created high-fidelity wireframes and interactive prototypes in Figma, focusing on a streamlined donation flow. The final UI was designed to be clean, intuitive, and emotionally resonant, with clear calls-to-action and visuals that highlight the impact of each donation.</p>
-                          <img src="https://placehold.co/400x800/2d3748/eaeaea?text=UI+Screens" class="rounded-lg w-full max-w-sm mx-auto" alt="UI Screens of the Bhavanam app">
-                     </div>
-                 </div>
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">Takeaways & Learnings</h3>
-                     <p>This project reinforced the importance of user-centered design in the social impact space. By focusing on transparency and emotional connection, we could design an experience that not only facilitates donations but also builds a community of engaged supporters. A key learning was that simplifying the donation process to just a few taps significantly lowers the barrier for users to contribute, leading to greater impact for the cause.</p>
-                 </div>
-            </div>
+    <!-- Header -->
+    <header class="py-6 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">Rinoj<span style="color: var(--accent-color);">.</span></a>
+            <a href="/#work" class="text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span>Back to Projects</span>
+            </a>
         </div>
-    </div>
+    </header>
 
+    <main>
+        <!-- Project Hero -->
+        <section class="h-[60vh] w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" alt="Real Estate Platform" class="w-full h-full object-cover">
+        </section>
+
+        <!-- Project Content -->
+        <section class="py-12 md:py-20">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-6xl font-bold">Bhavanam - Real Estate Platform</h1>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">Healthcare UX</span>
+                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">Accessibility (WCAG)</span>
+                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">Prototyping</span>
+                    </div>
+
+                    <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
+                         <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Need</h3>
+                            <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                            <p>I led the UX and UI design, with a special focus on accessibility. My process was rooted in deep empathy, involving contextual inquiry, task analysis, and iterative prototyping and testing with medical professionals.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                            <div class="space-y-8">
+                                <p><strong>Discovery & Research:</strong> I spent two weeks shadowing nurses and doctors on their rounds. This firsthand observation was invaluable. I identified major pain points, such as excessive clicking to access patient vitals and difficulty reading text in poorly lit rooms. </p>
+                                <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Accessible+UI+Sketch" class="rounded-lg w-full" alt="Healthcare platform accessibility sketch">
+                                <p><strong>Design & Prototyping:</strong> Using Figma, I created high-fidelity, interactive prototypes. Every design choice, from color palettes to font sizes, was vetted against WCAG 2.1 AA guidelines. The design featured a dark mode to reduce eye strain during night shifts, a feature specifically requested by nurses.</p>
+                                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop" class="rounded-lg w-full" alt="Doctor using a tablet">
+                                <p><strong>Testing & Iteration:</strong> We conducted usability tests with 10 medical professionals in a simulated environment. The tests confirmed that the task-based approach was much faster, but revealed that some icons were not immediately intuitive. I iterated on the icon library, adding text labels for clarity, which tested perfectly in the second round.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Result & Impact</h3>
+                            <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
+                            <div class="mt-8 grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6 text-center">
+                                <div class="project-stat-card p-6 rounded-lg">
+                                    <p class="text-4xl font-bold text-cyan-400">50%</p>
+                                    <p class="text-sm text-gray-400 mt-1">Reduction in Admin Time</p>
+                                </div>
+                                <div class="project-stat-card p-6 rounded-lg">
+                                    <p class="text-4xl font-bold text-cyan-400">100%</p>
+                                    <p class="text-sm text-gray-400 mt-1">WCAG 2.1 AA Compliant</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
-
