@@ -577,11 +577,6 @@
         </svg>
     </button>
 
-    <!-- Project Detail Page -->
-    <div id="project-detail-page">
-        <!-- Content will be injected by JS -->
-    </div>
-
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-[#1e1f1f] bg-opacity-50 z-[9990] hidden" role="dialog" aria-modal="true">
         <div id="mobile-menu-panel" class="absolute top-0 right-0 h-full w-2/3 max-w-sm bg-[#1e1f1f]/95 backdrop-blur-lg shadow-2xl p-8 transform translate-x-full">
@@ -896,49 +891,8 @@
             const projectDetailPage = document.getElementById('project-detail-page');
             const mainContent = document.getElementById('main-content');
             
-            function openProject(projectData, projectElement) {
-                const rect = projectElement.getBoundingClientRect();
-                const originX = rect.left + rect.width / 2;
-                const originY = rect.top + rect.height / 2;
-                
-                populateAndShowProjectPage(projectData);
 
-                const tl = gsap.timeline();
-                tl.set(projectDetailPage, { 
-                    display: 'block',
-                    clipPath: `circle(0% at ${originX}px ${originY}px)`
-                });
-
-                tl.to([mainContent, header], {
-                    opacity: 0,
-                    duration: 0.5,
-                    ease: 'power2.in'
-                })
-                .to(projectDetailPage, {
-                    clipPath: `circle(150% at ${originX}px ${originY}px)`,
-                    opacity: 1,
-                    duration: 1.2,
-                    ease: 'expo.inOut'
-                }, 0)
-                .call(animateProjectContent);
-            }
-
-            function animateProjectContent() {
-                // Animate hero image with parallax
-                projectScrollTriggers.push(
-                    gsap.to("#project-hero-image-inner", {
-                        yPercent: 20,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: "#project-detail-page",
-                            scroller: "#project-detail-page",
-                            start: "top top",
-                            end: "bottom top",
-                            scrub: true
-                        }
-                    })
-                );
-
+            
                 // Animate content reveal on scroll
                 gsap.utils.toArray('.project-content-reveal').forEach(el => {
                     projectScrollTriggers.push(
@@ -1000,63 +954,6 @@
                         })
                     );
                 });
-            }
-
-            function populateAndShowProjectPage(projectData) {
-                 projectDetailPage.innerHTML = `
-                      <div class="relative">
-                           <button id="close-project-btn" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
-                               <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                               <span class="font-medium text-sm">Back</span>
-                           </button>
-
-                           <div style="height: 65vh; width: 100%; overflow: hidden;">
-                               <img id="project-hero-image-inner" src="${projectData.image}" alt="${projectData.title}" class="w-full h-full object-cover scale-110">
-                           </div>
-
-                           <div class="container mx-auto px-6 py-12 md:py-20">
-                               <div class="max-w-4xl mx-auto">
-                                   <h1 class="text-4xl md:text-6xl font-bold project-content-reveal">${projectData.title}</h1>
-                                   <div class="mt-4 flex flex-wrap gap-3 project-content-reveal">
-                                       ${projectData.tags.map(tag => `<span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">${tag}</span>`).join('')}
-                                   </div>
-                                   
-                                   <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-10 text-gray-300">
-                                        ${projectData.description}
-                                   </div>
-                               </div>
-                           </div>
-                      </div>
-                 `;
-                
-                projectDetailPage.scrollTop = 0;
-
-                document.body.style.overflow = 'hidden';
-
-                const closeBtn = document.getElementById('close-project-btn');
-                closeBtn.addEventListener('click', () => closeProject());
-            }
-            
-            function closeProject(){
-                // Kill all project-specific ScrollTriggers to prevent memory leaks
-                projectScrollTriggers.forEach(st => st.kill());
-                projectScrollTriggers = [];
-
-                const tl = gsap.timeline();
-
-                tl.to(projectDetailPage, {
-                    opacity: 0,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                })
-                .set(projectDetailPage, { display: 'none' })
-                .to([mainContent, header], { 
-                    opacity: 1, 
-                    duration: 0.6, 
-                    ease: 'power3.inOut'
-                }, ">-0.3");
-
-                document.body.style.overflow = '';
             }
 
             // --- 5. MOBILE MENU LOGIC ---
@@ -1208,145 +1105,28 @@
                      title: 'B2B Travel Platform Redesign', 
                      tags: ['UX Research', 'UI Design', 'Prototyping'], 
                      image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', 
-                     description: `
-                         <div class="project-content-reveal space-y-12">
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
-                                 <p>The Travacations B2B platform, a critical tool for travel agents, was underperforming. Key metrics revealed a sinking ship: user engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned mid-process. The core issue was a convoluted, 12-step booking workflow that was unintuitive and time-consuming, causing significant friction and frustration for its power users.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                                 <p>As the Lead UX Designer, I was responsible for the end-to-end redesign. This involved spearheading the user research, defining the new user flow and information architecture, creating wireframes and high-fidelity prototypes, and conducting usability testing with key stakeholders.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                                 <div class="space-y-8">
-                                     <p><strong>Discovery & Research:</strong> The first step was to understand the "why" behind the data. I conducted in-depth interviews with 15 travel agents. The key insight was that agents weren't booking linearly; they were constantly juggling multiple client itineraries, comparing options, and needing to quickly jump between tasks. The existing system wasn't built for this multi-threaded workflow.</p>
-                                     <p><strong>Ideation:</strong> Armed with these insights, I sketched out new user flows that prioritized a non-linear, dashboard-centric approach. This allowed agents to manage multiple bookings from a central hub. Low-fidelity wireframes were created in Figma to quickly validate these new concepts with our user group.</p>
-                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframe+Sketch" class="rounded-lg project-image-reveal w-full" alt="Travel platform wireframe sketch">
-                                     <p><strong>Design & Prototyping:</strong> I developed a clean, modern design system to bring consistency to the UI. The high-fidelity prototypes focused on clarity and efficiency, with a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
-                                     <p><strong>Testing & Iteration:</strong> We conducted five moderated usability tests with agents using the Figma prototype. The feedback was overwhelmingly positive, but it also revealed a key area for improvement: the initial dashboard felt too cluttered. Based on this, I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
-                                 </div>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
-                                 <p>The redesigned platform was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in the average time to book. This efficiency gain led to a 90% increase in agent satisfaction and, crucially, an 80% drop in booking abandonment. This directly translated to a 25% increase in completed bookings within the first quarter of launch.</p>
-                                 <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
-                                     <div class="project-stat-card stat-card-hover p-6 rounded-lg">
-                                         <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="70">0</span>%</p>
-                                         <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
-                                     </div>
-                                     <div class="project-stat-card stat-card-hover p-6 rounded-lg">
-                                         <p class="text-4xl font-bold text-cyan-400"><span class="stat-number" data-value="80">0</span>%</p>
-                                         <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
-                                     </div>
-                                     <div class="project-stat-card stat-card-hover p-6 rounded-lg col-span-2 md:col-span-1">
-                                         <p class="text-4xl font-bold text-cyan-400">25%</p>
-                                         <p class="text-sm text-gray-400 mt-1">Increase in Bookings (Q1)</p>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     ` 
+                     url: 'project-travion.html'
                  },
                  { 
                      id: 'p2', 
                      title: 'Fintech Super-App', 
                      tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], 
                      image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', 
-                     description: `
-                         <div class="project-content-reveal space-y-12">
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
-                                 <p>The client's vision was a revolutionary fintech "super-app" combining budgeting, investments, and AI-powered financial advice. The central UX challenge was immense: how to unify these complex, data-heavy services into a single, cohesive experience that felt simple, empowering, and trustworthy to the average user, who is often intimidated by financial management tools.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                                 <p>As the lead product designer, I was tasked with architecting the complete user journey. My responsibilities included developing a comprehensive design system, leading user journey mapping workshops, and working closely with the data science team to design an intuitive interface for the AI-driven features.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                                 <div class="space-y-8">
-                                     <p><strong>Discovery & Research:</strong> We began with extensive market research and user interviews with 20 individuals from diverse financial backgrounds. A key insight was the "trust gap"—users were skeptical of AI making financial recommendations. They wanted transparency and control.</p>
-                                     <p><strong>Ideation:</strong> I facilitated journey mapping workshops to chart out every potential user path, from onboarding to making a first investment. For the AI feature, we sketched multiple concepts for presenting financial advice, focusing on clarity and "explainability" to build trust.</p>
-                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=User+Journey+Map" class="rounded-lg project-image-reveal w-full" alt="Fintech app user journey map">
-                                     <p><strong>Design & Prototyping:</strong> A modular design system was crucial for consistency. We used a clean, card-based UI with clear data visualizations to make complex information digestible. I designed the AI interface to provide recommendations with clear reasoning and sliders for users to adjust risk levels, giving them a sense of control.</p>
-                                      <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Fintech app UI screenshot">
-                                     <p><strong>Testing & Iteration:</strong> We ran A/B tests on the AI recommendation feature. Version A was direct ("You should invest in X"). Version B was more conversational and explanatory ("Based on your goals, here are a few options, and here's why..."). Version B overwhelmingly won, increasing user trust and engagement with the feature by 40%.</p>
-                                 </div>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
-                                 <p>The focus on building trust and providing a seamless experience paid off. The app achieved a 35% increase in user retention within six months and was featured on several major tech blogs for its innovative, user-centric approach. We successfully turned a complex suite of tools into a beloved daily financial companion for thousands of users.</p>
-                             </div>
-                         </div>
-                     `
+                     url: 'project-ourshoppee.html'
                  },
                  { 
                      id: 'p3', 
                      title: 'Patient Management Platform', 
                      tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], 
                      image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', 
-                     description: `
-                           <div class="project-content-reveal space-y-12">
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Need</h3>
-                                 <p>Designing for healthcare is a high-stakes environment where efficiency can literally impact lives. A leading hospital network was struggling with a clunky, outdated patient management system that was causing significant administrative overhead. The goal was to build a new platform from the ground up, with a primary focus on reducing cognitive load for medical staff and ensuring full accessibility compliance with WCAG 2.1 AA standards.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                                 <p>I led the UX and UI design, with a special focus on accessibility. My process was rooted in deep empathy, involving contextual inquiry, task analysis, and iterative prototyping and testing with medical professionals.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                                 <div class="space-y-8">
-                                     <p><strong>Discovery & Research:</strong> I spent two weeks shadowing nurses and doctors on their rounds. This firsthand observation was invaluable. I identified major pain points, such as excessive clicking to access patient vitals and difficulty reading text in poorly lit rooms. </p>
-                                     <p><strong>Ideation:</strong> Based on the research, I designed streamlined, task-based user flows. I sketched out a dashboard that prioritized at-a-glance information, with a strong focus on high-contrast typography and clear iconography to meet accessibility needs from the ground up.</p>
-                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Accessible+UI+Sketch" class="rounded-lg project-image-reveal w-full" alt="Healthcare platform accessibility sketch">
-                                     <p><strong>Design & Prototyping:</strong> Using Figma, I created high-fidelity, interactive prototypes. Every design choice, from color palettes to font sizes, was vetted against WCAG 2.1 AA guidelines. The design featured a dark mode to reduce eye strain during night shifts, a feature specifically requested by nurses.</p>
-                                      <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop" class="rounded-lg project-image-reveal w-full" alt="Doctor using a tablet">
-                                     <p><strong>Testing & Iteration:</strong> We conducted usability tests with 10 medical professionals in a simulated environment. The tests confirmed that the task-based approach was much faster, but revealed that some icons were not immediately intuitive. I iterated on the icon library, adding text labels for clarity, which tested perfectly in the second round.</p>
-                                 </div>
-                             </div>
-                              <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Result & Impact</h3>
-                                 <p>The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week across the hospital network. This wasn't just a win for efficiency; it meant that medical staff could dedicate more of their valuable time to what truly matters: patient care.</p>
-                             </div>
-                         </div>
-                     `
+                     url: 'project-bankiom.html'
                  },
                  { 
                      id: 'p4', 
                      title: 'E-Commerce Experience', 
                      tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], 
                      image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop', 
-                     description: `
-                           <div class="project-content-reveal space-y-12">
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
-                                 <p>A successful e-commerce brand faced a classic "leaky funnel" problem: high traffic but a low conversion rate of just 1.5%. Analytics and session recordings pointed to a high cart abandonment rate, with the multi-page checkout process being the primary culprit.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                                 <p>As the lead UI/UX designer, I aimed to plug the leaks and drive revenue. I was responsible for analyzing user behavior, forming data-driven hypotheses, and designing and running A/B tests to validate solutions.</p>
-                             </div>
-                             <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                                 <div class="space-y-8">
-                                     <p><strong>Discovery & Research:</strong> Using Hotjar, I analyzed heatmaps and session recordings of over 200 user sessions. I discovered that users were dropping off significantly when asked to create an account and when presented with unexpected shipping costs late in the process.</p>
-                                     <p><strong>Ideation:</strong> My primary hypothesis was that a single-page checkout with guest checkout options and transparent shipping costs would significantly reduce friction. I sketched several variations of a streamlined checkout and redesigned product pages to be more visually persuasive.</p>
-                                     <img src="https://placehold.co/800x450/2d3748/eaeaea?text=A/B+Test+Wireframes" class="rounded-lg project-image-reveal w-full" alt="E-commerce checkout wireframes">
-                                     <p><strong>Design & Prototyping:</strong> I designed two primary challengers in Figma for A/B testing: one with a prominent guest checkout and another with a collapsible one-page accordion layout. Both designs brought shipping information forward in the flow.</p>
-                                     <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" class="rounded-lg project-image-reveal" alt="People shopping on a website">
-                                     <p><strong>Testing & Iteration:</strong> We ran the A/B tests over two weeks. The version with the prominent guest checkout and accordion layout was the clear winner, showing a statistically significant lift in conversions.</p>
-                                 </div>
-                             </div>
-                              <div>
-                                 <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
-                                 <p>The results were immediate and impactful. By implementing the winning design, the site's overall conversion rate increased by 25%, and the average order value saw a 15% uplift in the first quarter alone. The project delivered a clear return on investment and established a new, data-driven design process for the company.</p>
-                             </div>
-                         </div>
-                     `
+                     url: 'project-bhavanam.html'
                  }
             ];
 
@@ -1385,7 +1165,7 @@
                         );
 
                         if (touchDuration < 250 && distance < 10) {
-                            openProject(p, projectEl);
+                            window.location.href = p.url;
                         }
                     });
                 } else {
@@ -1426,7 +1206,8 @@
                         });
                     });
                     
-                    projectEl.addEventListener('click', () => openProject(p, projectEl));
+                    projectEl.addEventListener('click', () => {
+                        window.location.href = p.url;
                 }
             });
             
@@ -1583,5 +1364,6 @@
     
 </body>
 </html>
+
 
 
