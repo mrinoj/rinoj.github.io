@@ -3,99 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project | Travion B2B Platform</title>
+    <title>Project: Travion | Rinoj. UX Designer</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Case study for the redesign of a B2B travel platform by Mohamed Rinoj Hashim.">
-    <meta property="og:title" content="Project | B2B Travel Platform Redesign" />
-    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <!-- Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
-
-    <!-- Custom Styles -->
     <style>
+        :root {
+            --bg-color: #1e1f1f;
+            --text-primary: #EAEAEA;
+            --text-secondary: #A0A0A0;
+            --border-color: #333333;
+            --accent-color: #22d3ee;
+        }
         body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
             font-family: 'Satoshi', sans-serif;
-            background-color: #1e1f1f;
-            color: #EAEAEA;
         }
         .project-stat-card {
-             background-color: rgba(255, 255, 255, 0.05);
-             border: 1px solid #333333;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .project-stat-card:hover {
+            transform: translateY(-4px);
+            background-color: rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Back Button -->
-    <a href="index.html" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
-        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        <span class="font-medium text-sm">Back to Portfolio</span>
-    </a>
-
-    <!-- Hero Image -->
-    <div style="height: 65vh; width: 100%; overflow: hidden;">
-        <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" alt="B2B Travel Platform" class="w-full h-full object-cover">
-    </div>
-
-    <!-- Project Content -->
-    <div class="container mx-auto px-6 py-12 md:py-20">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-bold">B2B Travel Platform Redesign</h1>
-            <div class="mt-4 flex flex-wrap gap-3">
-                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UX Research</span>
-                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UI Design</span>
-                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">Prototyping</span>
-            </div>
-            
-            <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
-                <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
-                     <p>The Travacations B2B platform, a critical tool for travel agents, was underperforming. Key metrics revealed a sinking ship: user engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned mid-process. The core issue was a convoluted, 12-step booking workflow that was unintuitive and time-consuming, causing significant friction and frustration for its power users.</p>
-                 </div>
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                     <p>As the Lead UX Designer, I was responsible for the end-to-end redesign. This involved spearheading the user research, defining the new user flow and information architecture, creating wireframes and high-fidelity prototypes, and conducting usability testing with key stakeholders.</p>
-                 </div>
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                     <div class="space-y-8">
-                         <p><strong>Discovery & Research:</strong> The first step was to understand the "why" behind the data. I conducted in-depth interviews with 15 travel agents. The key insight was that agents weren't booking linearly; they were constantly juggling multiple client itineraries, comparing options, and needing to quickly jump between tasks. The existing system wasn't built for this multi-threaded workflow.</p>
-                         <p><strong>Ideation:</strong> Armed with these insights, I sketched out new user flows that prioritized a non-linear, dashboard-centric approach. This allowed agents to manage multiple bookings from a central hub. Low-fidelity wireframes were created in Figma to quickly validate these new concepts with our user group.</p>
-                         <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframe+Sketch" class="rounded-lg w-full" alt="Travel platform wireframe sketch">
-                         <p><strong>Design & Prototyping:</strong> I developed a clean, modern design system to bring consistency to the UI. The high-fidelity prototypes focused on clarity and efficiency, with a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
-                         <p><strong>Testing & Iteration:</strong> We conducted five moderated usability tests with agents using the Figma prototype. The feedback was overwhelmingly positive, but it also revealed a key area for improvement: the initial dashboard felt too cluttered. Based on this, I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
-                     </div>
-                 </div>
-                 <div>
-                     <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
-                     <p>The redesigned platform was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in the average time to book. This efficiency gain led to a 90% increase in agent satisfaction and, crucially, an 80% drop in booking abandonment. This directly translated to a 25% increase in completed bookings within the first quarter of launch.</p>
-                     <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
-                         <div class="project-stat-card p-6 rounded-lg">
-                             <p class="text-4xl font-bold text-cyan-400">70%</p>
-                             <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
-                         </div>
-                         <div class="project-stat-card p-6 rounded-lg">
-                             <p class="text-4xl font-bold text-cyan-400">80%</p>
-                             <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
-                         </div>
-                         <div class="project-stat-card p-6 rounded-lg col-span-2 md:col-span-1">
-                             <p class="text-4xl font-bold text-cyan-400">25%</p>
-                             <p class="text-sm text-gray-400 mt-1">Increase in Bookings (Q1)</p>
-                         </div>
-                     </div>
-                 </div>
-            </div>
+    <!-- Header -->
+    <header class="py-6 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">Rinoj<span style="color: var(--accent-color);">.</span></a>
+            <a href="/#work" class="text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
+                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span>Back to Projects</span>
+            </a>
         </div>
-    </div>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="h-[60vh] w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" alt="B2B Travel Platform" class="w-full h-full object-cover">
+        </section>
+
+        <!-- Project Content -->
+        <section class="py-12 md:py-20">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-6xl font-bold">Travion - B2B Travel Platform Redesign</h1>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">UX Research</span>
+                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">UI Design</span>
+                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">Prototyping</span>
+                    </div>
+
+                    <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
+                            <p>The Travacations B2B platform, a critical tool for travel agents, was underperforming. Key metrics revealed a sinking ship: user engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned mid-process. The core issue was a convoluted, 12-step booking workflow that was unintuitive and time-consuming, causing significant friction and frustration for its power users.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                            <p>As the Lead UX Designer, I was responsible for the end-to-end redesign. This involved spearheading the user research, defining the new user flow and information architecture, creating wireframes and high-fidelity prototypes, and conducting usability testing with key stakeholders.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                            <div class="space-y-8">
+                                <p><strong>Discovery & Research:</strong> The first step was to understand the "why" behind the data. I conducted in-depth interviews with 15 travel agents. The key insight was that agents weren't booking linearly; they were constantly juggling multiple client itineraries, comparing options, and needing to quickly jump between tasks. The existing system wasn't built for this multi-threaded workflow.</p>
+                                <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframe+Sketch" class="rounded-lg w-full" alt="Travel platform wireframe sketch">
+                                <p><strong>Design & Prototyping:</strong> I developed a clean, modern design system to bring consistency to the UI. The high-fidelity prototypes focused on clarity and efficiency, with a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
+                                <p><strong>Testing & Iteration:</strong> We conducted five moderated usability tests with agents using the Figma prototype. The feedback was overwhelmingly positive, but it also revealed a key area for improvement: the initial dashboard felt too cluttered. Based on this, I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
+                            <p>The redesigned platform was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in the average time to book. This efficiency gain led to a 90% increase in agent satisfaction and, crucially, an 80% drop in booking abandonment. This directly translated to a 25% increase in completed bookings within the first quarter of launch.</p>
+                            <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
+                                <div class="project-stat-card p-6 rounded-lg">
+                                    <p class="text-4xl font-bold text-cyan-400">70%</p>
+                                    <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                                </div>
+                                <div class="project-stat-card p-6 rounded-lg">
+                                    <p class="text-4xl font-bold text-cyan-400">80%</p>
+                                    <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
+                                </div>
+                                <div class="project-stat-card p-6 rounded-lg col-span-2 md:col-span-1">
+                                    <p class="text-4xl font-bold text-cyan-400">25%</p>
+                                    <p class="text-sm text-gray-400 mt-1">Increase in Bookings (Q1)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
 </body>
 </html>
