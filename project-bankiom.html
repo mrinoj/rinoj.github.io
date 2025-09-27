@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dennis Snellenberg - A Closer Replica</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+        :root {
+            --background-color: #f0f0f0;
+            --text-color: #111111;
+            --accent-color: #a3a3a3;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow: hidden; /* Important: Prevents vertical scrollbar */
+        }
+
+        .main-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .scroll-section {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            will-change: transform;
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth easing */
+        }
+
+        .section {
+            flex-shrink: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10vw;
+        }
+
+        .intro-section {
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 15vw;
+        }
+
+        .intro-section h1 {
+            font-size: 8vw;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--accent-color);
+            max-width: 400px;
+            margin-top: 2rem;
+        }
+
+        .portfolio-section {
+            display: flex;
+            align-items: center;
+            gap: 10vw;
+        }
+
+        .portfolio-item {
+            width: 30vw;
+            height: 80vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.4);
+            transition: transform 1s ease-out;
+        }
+
+        .portfolio-item.in-view img {
+            transform: scale(1);
+        }
+
+        .portfolio-item h3 {
+            position: absolute;
+            bottom: -100%; /* Initially hidden */
+            left: 1.5rem;
+            color: white;
+            font-size: 2rem;
+            font-weight: 500;
+            transition: bottom 0.8s ease-out;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .portfolio-item.in-view h3 {
+            bottom: 1.5rem; /* Slide in */
+        }
+
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--text-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="scroll-section">
+            <section class="section intro-section">
+                <div>
+                    <h1>Dennis<br>Snellenberg</h1>
+                    <p>Award-winning creative director and designer, creating unique digital experiences. Based in the Netherlands.</p>
+                </div>
+            </section>
+
+            <section class="section portfolio-section">
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1528740561666-dc2479703592?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 1">
+                    <h3>Project One</h3>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1558980394-a3099ed4a489?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 2">
+                    <h3>Project Two</h3>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 3">
+                    <h3>Project Three</h3>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <div class="nav-dots"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollSection = document.querySelector('.scroll-section');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const sections = document.querySelectorAll('.section');
+            const navDotsContainer = document.querySelector('.nav-dots');
+
+            let currentTranslateX = 0;
+            let targetTranslateX = 0;
+            const scrollSpeed = 0.08; // Adjust for sensitivity
+
+            // Create navigation dots
+            sections.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    // This part is for potential click navigation, not fully implemented
+                    // For now, the main interaction is scrolling
+                });
+                navDotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.dot');
+
+            // --- Horizontal Scroll Logic ---
+            document.body.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                targetTranslateX -= event.deltaY;
+
+                // Clamp the scroll position
+                const maxScroll = scrollSection.scrollWidth - window.innerWidth;
+                targetTranslateX = Math.max(-maxScroll, Math.min(0, targetTranslateX));
+
+                updateActiveDot();
+            }, { passive: false });
+            
+            function animateScroll() {
+                currentTranslateX += (targetTranslateX - currentTranslateX) * scrollSpeed;
+                scrollSection.style.transform = `translateX(${currentTranslateX}px)`;
+
+                // --- Intersection Observer for Animations ---
+                portfolioItems.forEach(item => {
+                    const rect = item.getBoundingClientRect();
+                    // Check if item is mostly in the viewport
+                    if (rect.left < window.innerWidth * 0.8 && rect.right > window.innerWidth * 0.2) {
+                        item.classList.add('in-view');
+                    } else {
+                        item.classList.remove('in-view');
+                    }
+                });
+
+                requestAnimationFrame(animateScroll);
+            }
+
+            function updateActiveDot() {
+                const scrollPercentage = -targetTranslateX / (scrollSection.scrollWidth - window.innerWidth);
+                const activeIndex = Math.round(scrollPercentage * (sections.length - 1));
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === activeIndex);
+                });
+            }
+
+            animateScroll();
+        });
+    </script>
+</body>
+</html>
