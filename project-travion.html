@@ -3,233 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dennis Snellenberg - A Closer Replica</title>
+    <title>Project | Travion B2B Platform</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Case study for the redesign of a B2B travel platform by Mohamed Rinoj Hashim.">
+    <meta property="og:title" content="Project | B2B Travel Platform Redesign" />
+    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
-
-        :root {
-            --background-color: #f0f0f0;
-            --text-color: #111111;
-            --accent-color: #a3a3a3;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            overflow: hidden; /* Important: Prevents vertical scrollbar */
+            font-family: 'Satoshi', sans-serif;
+            background-color: #1e1f1f;
+            color: #EAEAEA;
         }
-
-        .main-container {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
+        .project-stat-card {
+             background-color: rgba(255, 255, 255, 0.05);
+             border: 1px solid #333333;
         }
-
-        .scroll-section {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            will-change: transform;
-            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth easing */
-        }
-
-        .section {
-            flex-shrink: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 10vw;
-        }
-
-        .intro-section {
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding-left: 15vw;
-        }
-
-        .intro-section h1 {
-            font-size: 8vw;
-            font-weight: 700;
-            margin: 0;
-            line-height: 1;
-        }
-
-        .intro-section p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: var(--accent-color);
-            max-width: 400px;
-            margin-top: 2rem;
-        }
-
-        .portfolio-section {
-            display: flex;
-            align-items: center;
-            gap: 10vw;
-        }
-
-        .portfolio-item {
-            width: 30vw;
-            height: 80vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.4);
-            transition: transform 1s ease-out;
-        }
-
-        .portfolio-item.in-view img {
-            transform: scale(1);
-        }
-
-        .portfolio-item h3 {
-            position: absolute;
-            bottom: -100%; /* Initially hidden */
-            left: 1.5rem;
-            color: white;
-            font-size: 2rem;
-            font-weight: 500;
-            transition: bottom 0.8s ease-out;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .portfolio-item.in-view h3 {
-            bottom: 1.5rem; /* Slide in */
-        }
-
-        .nav-dots {
-            position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: var(--text-color);
-        }
-
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <div class="main-container">
-        <div class="scroll-section">
-            <section class="section intro-section">
+    <!-- Back Button -->
+    <a href="index.html" class="fixed top-8 left-8 z-20 text-white flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
+        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span class="font-medium text-sm">Back to Portfolio</span>
+    </a>
+
+    <!-- Hero Image -->
+    <div style="height: 65vh; width: 100%; overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" alt="B2B Travel Platform" class="w-full h-full object-cover">
+    </div>
+
+    <!-- Project Content -->
+    <div class="container mx-auto px-6 py-12 md:py-20">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold">B2B Travel Platform Redesign</h1>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UX Research</span>
+                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">UI Design</span>
+                <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-700 text-gray-400">Prototyping</span>
+            </div>
+            
+            <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
                 <div>
-                    <h1>Dennis<br>Snellenberg</h1>
-                    <p>Award-winning creative director and designer, creating unique digital experiences. Based in the Netherlands.</p>
-                </div>
-            </section>
-
-            <section class="section portfolio-section">
-                <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1528740561666-dc2479703592?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 1">
-                    <h3>Project One</h3>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1558980394-a3099ed4a489?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 2">
-                    <h3>Project Two</h3>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200" alt="Project image 3">
-                    <h3>Project Three</h3>
-                </div>
-            </section>
+                     <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
+                     <p>The Travacations B2B platform, a critical tool for travel agents, was underperforming. Key metrics revealed a sinking ship: user engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned mid-process. The core issue was a convoluted, 12-step booking workflow that was unintuitive and time-consuming, causing significant friction and frustration for its power users.</p>
+                 </div>
+                 <div>
+                     <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
+                     <p>As the Lead UX Designer, I was responsible for the end-to-end redesign. This involved spearheading the user research, defining the new user flow and information architecture, creating wireframes and high-fidelity prototypes, and conducting usability testing with key stakeholders.</p>
+                 </div>
+                 <div>
+                     <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
+                     <div class="space-y-8">
+                         <p><strong>Discovery & Research:</strong> The first step was to understand the "why" behind the data. I conducted in-depth interviews with 15 travel agents. The key insight was that agents weren't booking linearly; they were constantly juggling multiple client itineraries, comparing options, and needing to quickly jump between tasks. The existing system wasn't built for this multi-threaded workflow.</p>
+                         <p><strong>Ideation:</strong> Armed with these insights, I sketched out new user flows that prioritized a non-linear, dashboard-centric approach. This allowed agents to manage multiple bookings from a central hub. Low-fidelity wireframes were created in Figma to quickly validate these new concepts with our user group.</p>
+                         <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframe+Sketch" class="rounded-lg w-full" alt="Travel platform wireframe sketch">
+                         <p><strong>Design & Prototyping:</strong> I developed a clean, modern design system to bring consistency to the UI. The high-fidelity prototypes focused on clarity and efficiency, with a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
+                         <p><strong>Testing & Iteration:</strong> We conducted five moderated usability tests with agents using the Figma prototype. The feedback was overwhelmingly positive, but it also revealed a key area for improvement: the initial dashboard felt too cluttered. Based on this, I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
+                     </div>
+                 </div>
+                 <div>
+                     <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
+                     <p>The redesigned platform was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in the average time to book. This efficiency gain led to a 90% increase in agent satisfaction and, crucially, an 80% drop in booking abandonment. This directly translated to a 25% increase in completed bookings within the first quarter of launch.</p>
+                     <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
+                         <div class="project-stat-card p-6 rounded-lg">
+                             <p class="text-4xl font-bold text-cyan-400">70%</p>
+                             <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                         </div>
+                         <div class="project-stat-card p-6 rounded-lg">
+                             <p class="text-4xl font-bold text-cyan-400">80%</p>
+                             <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
+                         </div>
+                         <div class="project-stat-card p-6 rounded-lg col-span-2 md:col-span-1">
+                             <p class="text-4xl font-bold text-cyan-400">25%</p>
+                             <p class="text-sm text-gray-400 mt-1">Increase in Bookings (Q1)</p>
+                         </div>
+                     </div>
+                 </div>
+            </div>
         </div>
     </div>
-    
-    <div class="nav-dots"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollSection = document.querySelector('.scroll-section');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-            const sections = document.querySelectorAll('.section');
-            const navDotsContainer = document.querySelector('.nav-dots');
-
-            let currentTranslateX = 0;
-            let targetTranslateX = 0;
-            const scrollSpeed = 0.08; // Adjust for sensitivity
-
-            // Create navigation dots
-            sections.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    // This part is for potential click navigation, not fully implemented
-                    // For now, the main interaction is scrolling
-                });
-                navDotsContainer.appendChild(dot);
-            });
-            const dots = document.querySelectorAll('.dot');
-
-            // --- Horizontal Scroll Logic ---
-            document.body.addEventListener('wheel', (event) => {
-                event.preventDefault();
-                targetTranslateX -= event.deltaY;
-
-                // Clamp the scroll position
-                const maxScroll = scrollSection.scrollWidth - window.innerWidth;
-                targetTranslateX = Math.max(-maxScroll, Math.min(0, targetTranslateX));
-
-                updateActiveDot();
-            }, { passive: false });
-            
-            function animateScroll() {
-                currentTranslateX += (targetTranslateX - currentTranslateX) * scrollSpeed;
-                scrollSection.style.transform = `translateX(${currentTranslateX}px)`;
-
-                // --- Intersection Observer for Animations ---
-                portfolioItems.forEach(item => {
-                    const rect = item.getBoundingClientRect();
-                    // Check if item is mostly in the viewport
-                    if (rect.left < window.innerWidth * 0.8 && rect.right > window.innerWidth * 0.2) {
-                        item.classList.add('in-view');
-                    } else {
-                        item.classList.remove('in-view');
-                    }
-                });
-
-                requestAnimationFrame(animateScroll);
-            }
-
-            function updateActiveDot() {
-                const scrollPercentage = -targetTranslateX / (scrollSection.scrollWidth - window.innerWidth);
-                const activeIndex = Math.round(scrollPercentage * (sections.length - 1));
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === activeIndex);
-                });
-            }
-
-            animateScroll();
-        });
-    </script>
 </body>
 </html>
