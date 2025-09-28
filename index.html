@@ -174,6 +174,12 @@
             transform: scale(0.8);
             z-index: 1;
         }
+        .project-item:last-of-type {
+             border-bottom: 1px solid var(--accent-color);
+        }
+        .hidden-project {
+            display: none;
+        }
 
         #project-detail-page {
             position: fixed;
@@ -356,7 +362,7 @@
     <div id="scrollbar-progress" class="fixed top-0 left-0 h-1.5 z-[60]" style="width: 0%; background-color: var(--accent-color);"></div>
     <canvas id="hero-gradient-background"></canvas>
     <div class="preloader">
-        <div class="preloader-logo text-3xl font-black" style="color: #FFFFFF;">Rinoj<span style="color: var(--accent-color);">.</span></div>
+        <div class="preloader-logo text-2xl font-bold" style="color: #FFFFFF;">Rinoj<span style="color: var(--accent-color);">.</span></div>
     </div>
     <div class="cursor"><div class="cursor-text"></div></div>
 
@@ -490,6 +496,9 @@
                         <!-- Projects will be dynamically inserted here -->
                     </div>
                     <div class="w-full h-[1px] bg-[var(--accent-color)] reveal"></div>
+                    <div id="more-projects-container" class="text-center mt-12 reveal">
+                        <button id="show-more-btn" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</button>
+                    </div>
                 </div>
             </section>
 
@@ -962,16 +971,19 @@
 
             const projectsContainer = document.getElementById('projects-container');
             if (projectsContainer) {
-                projects.forEach((p) => {
+                projects.forEach((p, index) => {
                     const projectEl = document.createElement('div');
                     projectEl.className = 'project-item relative';
+                    if (index >= 2) {
+                        projectEl.classList.add('hidden-project');
+                    }
                     projectEl.dataset.href = p.href; // Store href in data attribute
                     projectEl.innerHTML = `
                         <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
                             <h3 class="text-2xl md:text-4xl font-bold">${p.title}</h3>
                             <span class="text-sm font-lg text-secondary hidden md:block">${p.tags.join(' / ')}</span>
                         </div>
-                        <img src="${p.image}" class="project-image-preview">
+                        <img src="${p.image}" data-src="${p.image}" class="project-image-preview">
                     `;
                     projectsContainer.appendChild(projectEl);
 
@@ -979,6 +991,20 @@
                         e.preventDefault();
                         sessionStorage.setItem('scrollPos', window.scrollY);
                         
+                        const projectImage = projectEl.querySelector('.project-image-preview');
+                        const imageRect = projectImage.getBoundingClientRect();
+                        
+                        sessionStorage.setItem('transitionData', JSON.stringify({
+                            title: p.title,
+                            image: p.image,
+                            rect: {
+                                top: imageRect.top,
+                                left: imageRect.left,
+                                width: imageRect.width,
+                                height: imageRect.height
+                            }
+                        }));
+
                         const projectDetailPage = document.getElementById('project-detail-page');
 
                         const tl = gsap.timeline({
@@ -1056,20 +1082,40 @@
 
                 if (!prefersReducedMotion.matches) {
                     let marqueeTween = gsap.to(toolsMarqueeContainer.children, {
-                        xPercent: -100,
-                        repeat: -1,
-                        duration: 25,
-                        ease: "linear",
-                        modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
-                    });
-                    toolsMarqueeContainer.addEventListener('mouseenter', () => marqueeTween.timeScale(0.2));
-                    toolsMarqueeContainer.addEventListener('mouseleave', () => marqueeTween.timeScale(1));
-                }
+                    xPercent: -100,
+                    repeat: -1,
+                    duration: 25,
+                    ease: "linear",
+                    modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
+                });
+                // toolsMarqueeContainer.addEventListener('mouseenter', () => marqueeTween.timeScale(0.2));
+                // toolsMarqueeContainer.addEventListener('mouseleave', () => marqueeTween.timeScale(1));
             }
-             // --- 8. MAGNETIC EFFECT ---
+        }
+        
+        // --- Show More Projects ---
+        const showMoreBtn = document.getElementById('show-more-btn');
+        if(showMoreBtn) {
+            showMoreBtn.addEventListener('click', () => {
+                const hiddenProjects = document.querySelectorAll('.hidden-project');
+                hiddenProjects.forEach((project, index) => {
+                    project.style.display = 'block'; // Or remove the class if it sets display:none
+                    gsap.from(project, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 0.6,
+                        ease: 'power3.out',
+                        delay: index * 0.1
+                    });
+                });
+                gsap.to(showMoreBtn, { opacity: 0, duration: 0.3, onComplete: () => showMoreBtn.style.display = 'none' });
+            });
+        }
+
+
+            // --- 8. MAGNETIC EFFECT ---
             if (!isTouchDevice) {
                 document.querySelectorAll('.magnetic-item').forEach(el => {
-                    const strength = 30; // How much the element moves
                     el.addEventListener('mousemove', (e) => {
                         const rect = el.getBoundingClientRect();
                         const x = e.clientX - rect.left - rect.width / 2;
@@ -1131,4 +1177,5 @@
     </script>
 </body>
 </html>
+
 
