@@ -1070,15 +1070,9 @@
             const goToTopBtn = document.getElementById('go-to-top-btn');
             if (goToTopBtn) {
                  ScrollTrigger.create({
-                    trigger: "body",
-                    start: "top -200px",
-                    end: "bottom bottom",
-                    toggleClass: {
-                        targets: goToTopBtn,
-                        className: "is-active"
-                    },
-                    // This ensures it doesn't toggle off at the very end
-                    onLeaveBack: self => self.trigger.classList.remove("is-active"),
+                    start: 200, // Show after scrolling 200px
+                    end: "max",
+                    toggleClass: { targets: goToTopBtn, className: "is-active" }
                 });
 
                 goToTopBtn.addEventListener('click', () => {
@@ -1110,5 +1104,4 @@
     </script>
 </body>
 </html>
-
 
