@@ -7,6 +7,8 @@
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,94 +17,304 @@
             --text-secondary: #A0A0A0;
             --border-color: #333333;
             --accent-color: #22d3ee;
+             --animation-easing: cubic-bezier(0.25, 1, 0.5, 1);
         }
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
             font-family: 'Satoshi', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
         }
-        .project-stat-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, background-color 0.3s ease;
+        #hero-gradient-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
         }
-        .project-stat-card:hover {
-            transform: translateY(-4px);
-            background-color: rgba(255, 255, 255, 0.08);
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        .parallax-bg {
+            will-change: transform;
+        }
+        .image-pan {
+            will-change: transform;
+        }
+        .cursor {
+            width: 24px;
+            height: 24px;
+            border: 1px solid white;
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10003;
+            mix-blend-mode: difference;
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+        }
+        .cursor.hovered {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+        }
+        .clean-cta {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s var(--animation-easing);
+        }
+        .clean-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(110deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 60%);
+            transform: skewX(-25deg);
+            transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .clean-cta:hover::before {
+            left: 125%;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header -->
-    <header class="py-6 px-6 md:px-12">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold">Rinoj<span style="color: var(--accent-color);">.</span></a>
-            <a href="/#work" class="text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300">
-                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                <span>Back to Projects</span>
-            </a>
-        </div>
-    </header>
+    <canvas id="hero-gradient-background"></canvas>
+    <div class="cursor"></div>
+    
+    <div class="content-wrapper">
+        <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex-1 flex justify-start">
+                    <a href="/#work" class="text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        <span>Back</span>
+                    </a>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <a href="/" class="text-xl font-bold">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                </div>
+                <div class="flex-1 flex justify-end">
+                     <a href="/#contact" class="text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                        <span>Contact Me</span>
+                    </a>
+                </div>
+            </div>
+        </header>
 
-    <main>
-        <!-- Project Hero -->
-        <section class="h-[60vh] w-full overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" alt="B2B Travel Platform" class="w-full h-full object-cover">
+        <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+            <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" alt="B2B Travel Platform" class="absolute inset-0 w-full h-full object-cover parallax-bg">
+            <div class="relative z-20 p-6">
+                <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Travion - B2B Travel Platform Redesign</h1>
+                <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                    <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UX Research</span>
+                    <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
+                    <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
+                </div>
+            </div>
         </section>
 
-        <!-- Project Content -->
-        <section class="py-12 md:py-20">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto">
-                    <h1 class="text-4xl md:text-6xl font-bold">Travion - B2B Travel Platform Redesign</h1>
-                    <div class="mt-4 flex flex-wrap gap-3">
-                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">UX Research</span>
-                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">UI Design</span>
-                        <span class="text-sm font-semibold px-4 py-2 rounded-full border" style="border-color: var(--border-color); color: var(--text-secondary);">Prototyping</span>
+        <main class="bg-gray-900/90">
+             <section class="py-20 md:py-32">
+                <div class="container mx-auto px-6 max-w-3xl text-center">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
+                    <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A critical B2B tool for travel agents was failing. User engagement had plummeted by 40%, and 60% of bookings were abandoned due to a convoluted, 12-step workflow that was causing significant frustration.</p>
+                </div>
+            </section>
+            
+            <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="anim-reveal">
+                        <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
+                        <p class="text-lg text-gray-300">I conducted in-depth interviews with 15 travel agents. The key insight: agents weren't booking linearly; they were constantly juggling multiple client itineraries. The existing system wasn't built for this multi-threaded workflow.</p>
                     </div>
+                    <div class="rounded-lg overflow-hidden anim-reveal">
+                        <img src="https://images.unsplash.com/photo-1579762593175-20226054cad0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A designer sketching travel app wireframes on a whiteboard.">
+                    </div>
+                </div>
 
-                    <div class="mt-12 md:mt-16 text-lg max-w-3xl space-y-12 text-gray-300">
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Problem</h3>
-                            <p>The Travacations B2B platform, a critical tool for travel agents, was underperforming. Key metrics revealed a sinking ship: user engagement had plummeted by 40%, and a staggering 60% of booking attempts were being abandoned mid-process. The core issue was a convoluted, 12-step booking workflow that was unintuitive and time-consuming, causing significant friction and frustration for its power users.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 text-white">My Role</h3>
-                            <p>As the Lead UX Designer, I was responsible for the end-to-end redesign. This involved spearheading the user research, defining the new user flow and information architecture, creating wireframes and high-fidelity prototypes, and conducting usability testing with key stakeholders.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Process</h3>
-                            <div class="space-y-8">
-                                <p><strong>Discovery & Research:</strong> The first step was to understand the "why" behind the data. I conducted in-depth interviews with 15 travel agents. The key insight was that agents weren't booking linearly; they were constantly juggling multiple client itineraries, comparing options, and needing to quickly jump between tasks. The existing system wasn't built for this multi-threaded workflow.</p>
-                                <img src="https://placehold.co/800x450/2d3748/eaeaea?text=Wireframe+Sketch" class="rounded-lg w-full" alt="Travel platform wireframe sketch">
-                                <p><strong>Design & Prototyping:</strong> I developed a clean, modern design system to bring consistency to the UI. The high-fidelity prototypes focused on clarity and efficiency, with a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
-                                <p><strong>Testing & Iteration:</strong> We conducted five moderated usability tests with agents using the Figma prototype. The feedback was overwhelmingly positive, but it also revealed a key area for improvement: the initial dashboard felt too cluttered. Based on this, I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                        <img src="https://images.unsplash.com/photo-1600195077909-46e573870d99?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A polished user interface for a travel booking application.">
+                    </div>
+                    <div class="anim-reveal md:order-1">
+                        <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
+                        <p class="text-lg text-gray-300">I developed a clean design system and high-fidelity prototypes focused on a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="anim-reveal">
+                         <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
+                         <p class="text-lg text-gray-300">Moderated usability tests with agents revealed the initial dashboard felt too cluttered. I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
+                    </div>
+                    <div class="rounded-lg overflow-hidden anim-reveal">
+                        <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop.">
+                    </div>
+                </div>
+            </div>
+            
+            <section class="py-20 md:py-32">
+                <div class="container mx-auto px-6 max-w-5xl">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">From 12 Steps to 4</h2>
+                    <div class="relative">
+                        <div class="absolute left-1/2 h-full w-1 bg-gray-700 hidden md:block"></div>
+                        <div class="space-y-16">
+                            <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                <div class="text-center md:text-right md:pr-8 anim-reveal">
+                                    <h3 class="text-2xl font-bold text-cyan-400">Step 1: Simplified Search</h3>
+                                    <p class="text-gray-300">A clean, intuitive search interface that allows agents to quickly find flights, hotels, and car rentals.</p>
+                                </div>
+                                <div class="hidden md:block"></div>
                             </div>
-                        </div>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 text-white">The Outcome & Impact</h3>
-                            <p>The redesigned platform was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in the average time to book. This efficiency gain led to a 90% increase in agent satisfaction and, crucially, an 80% drop in booking abandonment. This directly translated to a 25% increase in completed bookings within the first quarter of launch.</p>
-                            <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 text-center">
-                                <div class="project-stat-card p-6 rounded-lg">
-                                    <p class="text-4xl font-bold text-cyan-400">70%</p>
-                                    <p class="text-sm text-gray-400 mt-1">Reduction in Booking Time</p>
+                             <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                <div class="hidden md:block"></div>
+                                <div class="text-center md:text-left md:pl-8 anim-reveal">
+                                    <h3 class="text-2xl font-bold text-cyan-400">Step 2: Itinerary Builder</h3>
+                                    <p class="text-gray-300">A drag-and-drop interface to easily build and manage multiple client itineraries.</p>
                                 </div>
-                                <div class="project-stat-card p-6 rounded-lg">
-                                    <p class="text-4xl font-bold text-cyan-400">80%</p>
-                                    <p class="text-sm text-gray-400 mt-1">Drop in Abandonment</p>
+                            </div>
+                             <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                <div class="text-center md:text-right md:pr-8 anim-reveal">
+                                    <h3 class="text-2xl font-bold text-cyan-400">Step 3: One-Page Booking</h3>
+                                    <p class="text-gray-300">A single-page booking form that consolidates all necessary information, reducing clicks and confusion.</p>
                                 </div>
-                                <div class="project-stat-card p-6 rounded-lg col-span-2 md:col-span-1">
-                                    <p class="text-4xl font-bold text-cyan-400">25%</p>
-                                    <p class="text-sm text-gray-400 mt-1">Increase in Bookings (Q1)</p>
+                                <div class="hidden md:block"></div>
+                            </div>
+                             <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                <div class="hidden md:block"></div>
+                                <div class="text-center md:text-left md:pl-8 anim-reveal">
+                                    <h3 class="text-2xl font-bold text-cyan-400">Step 4: Instant Confirmation</h3>
+                                    <p class="text-gray-300">A clear, concise confirmation page with all booking details and next steps.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
 
+            <section class="py-20 md:py-32">
+                <div class="container mx-auto px-6 max-w-4xl text-center">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The redesign was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in booking time, an 80% drop in abandonment, and a 25% increase in completed bookings in Q1.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                            <p class="text-6xl font-bold text-cyan-400 stat-number">70%</p>
+                            <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Booking Time</p>
+                        </div>
+                        <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                            <p class="text-6xl font-bold text-cyan-400 stat-number">80%</p>
+                            <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Drop in Abandonment</p>
+                        </div>
+                        <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                            <p class="text-6xl font-bold text-cyan-400 stat-number">25%</p>
+                            <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Bookings (Q1)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+            // --- Custom Cursor ---
+            const cursor = document.querySelector('.cursor');
+            if (isTouchDevice) {
+                if(cursor) cursor.style.display = 'none';
+            } else {
+                window.addEventListener('mousemove', (e) => {
+                    gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
+                });
+                document.querySelectorAll('a, button').forEach(el => {
+                    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
+                    el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
+                });
+            }
+
+            // --- Animations ---
+            gsap.from(".anim-hero-reveal", { duration: 1.2, y: 50, opacity: 0, stagger: 0.2, ease: "power3.out", delay: 0.5 });
+            gsap.to(".parallax-bg", { yPercent: 30, ease: "none", scrollTrigger: { trigger: ".parallax-bg", start: "top top", end: "bottom top", scrub: true } });
+            
+            gsap.utils.toArray('.anim-reveal').forEach(el => {
+                gsap.from(el, { opacity: 0, y: 60, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' } });
+            });
+            
+            gsap.utils.toArray('.image-pan').forEach(img => {
+                gsap.to(img, { scale: 1.15, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: 1.5 } });
+            });
+
+            gsap.utils.toArray('.stat-number').forEach(el => {
+                if (el.textContent.includes('%')) {
+                    const endValue = parseInt(el.textContent.replace('%', ''));
+                    if (isNaN(endValue)) return;
+                    let counter = { value: 0 };
+                    gsap.to(counter, {
+                        value: endValue,
+                        duration: 2.5,
+                        ease: 'power2.out',
+                        onUpdate: () => { el.textContent = Math.ceil(counter.value) + '%'; },
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+                    });
+                }
+            });
+
+            // --- Background ---
+            let scene, camera, renderer, material;
+            const gradientCanvas = document.getElementById('hero-gradient-background');
+            function initGradientBackground() {
+                scene = new THREE.Scene();
+                camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true });
+                const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        u_time: { value: 0 },
+                        u_resolution: { value: new THREE.Vector2() },
+                        u_color1: { value: new THREE.Color(0x0047AB) },
+                        u_color2: { value: new THREE.Color(0x00008B) },
+                    },
+                    vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
+                    fragmentShader: `varying vec2 vUv; uniform float u_time; uniform vec3 u_color1; uniform vec3 u_color2; void main() { vec2 p = vUv; float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1; vec3 color = mix(u_color1, u_color2, blend); gl_FragColor = vec4(color, 1.0); }`
+                });
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+                onWindowResizeGradient();
+                window.addEventListener('resize', onWindowResizeGradient);
+                animateGradient();
+            }
+            function animateGradient() {
+                if (!material) return;
+                material.uniforms.u_time.value += 0.01;
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateGradient);
+            }
+            function onWindowResizeGradient() {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                if (material) {
+                    material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+                }
+            }
+            if(gradientCanvas) initGradientBackground();
+        });
+    </script>
 </body>
 </html>
+
