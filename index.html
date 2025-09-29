@@ -50,6 +50,21 @@
             background-color: var(--bg-gradient-end); /* Sets the base to the gradient's blue */
             color: var(--text-primary);
             cursor: none;
+            position: relative;
+        }
+
+        #grain-overlay {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
+            opacity: 0.15;
+            z-index: 10000;
+            will-change: transform;
+            mix-blend-mode: overlay;
         }
 
         #hero-gradient-background {
@@ -84,7 +99,7 @@
             width: 100%;
             height: 100%;
             background-color: #1e1f1f;
-            z-index: 10000;
+            z-index: 10001; /* Above grain */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -152,7 +167,7 @@
             transition: background-color 0.3s ease;
         }
         .project-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            /* background-color: rgba(255, 255, 255, 0.05); */ /* Removed as requested */
         }
         .project-item:nth-child(even) {
             transform: translateX(100%);
@@ -174,9 +189,7 @@
             transform: scale(0.8);
             z-index: 1;
         }
-        .project-item:last-of-type {
-             border-bottom: 1px solid var(--accent-color);
-        }
+      
         .hidden-project {
             display: none;
         }
@@ -233,6 +246,7 @@
             transition: filter 0.5s var(--animation-easing), transform 0.5s var(--animation-easing);
             filter: grayscale(100%);
             transform: scale(0.95);
+            box-shadow: none !important;
         }
         .story-panel.is-active img {
             filter: grayscale(0%);
@@ -263,6 +277,9 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.3s var(--animation-easing), background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            isolation: isolate; /* Creates a new stacking context to properly clip pseudo-elements */
+            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Safari fix for overflow hidden */
+            transform: translateZ(0);
         }
 
         .clean-cta::before {
@@ -359,6 +376,7 @@
     </style>
 </head>
 <body class="antialiased">
+    <div id="grain-overlay"></div>
     <div id="scrollbar-progress" class="fixed top-0 left-0 h-1.5 z-[60]" style="width: 0%; background-color: var(--accent-color);"></div>
     <canvas id="hero-gradient-background"></canvas>
     <div class="preloader">
@@ -495,9 +513,9 @@
                     <div id="projects-container">
                         <!-- Projects will be dynamically inserted here -->
                     </div>
-                    <div class="w-full h-[1px] bg-[var(--accent-color)] reveal"></div>
+                    
                     <div id="more-projects-container" class="text-center mt-12 reveal">
-                        <button id="show-more-btn" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</button>
+                        <a href="https://www.linkedin.com/in/mohamedrinoj/" target="_blank" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</a>
                     </div>
                 </div>
             </section>
@@ -576,15 +594,27 @@
     </div>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Restore scroll position if it exists
+        window.addEventListener('load', function() {
+            history.scrollRestoration = 'manual';
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) { // Check if the page is from the bfcache
+                    const scrollPos = sessionStorage.getItem('scrollPos');
+                    if (scrollPos) {
+                        window.scrollTo(0, parseInt(scrollPos));
+                    }
+                }
+            });
+
             const scrollPos = sessionStorage.getItem('scrollPos');
             if (scrollPos) {
                 window.scrollTo(0, parseInt(scrollPos));
                 sessionStorage.removeItem('scrollPos');
+                if (window.location.hash) {
+                    history.pushState("", document.title, window.location.pathname + window.location.search);
+                }
             } else {
-                history.scrollRestoration = 'manual';
-                window.scrollTo(0, 0);
+                 window.scrollTo(0, 0);
             }
 
             gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -646,53 +676,51 @@
                     yoyo: true,
                     ease: 'power1.inOut'
                 });
-
-                window.addEventListener('load', () => {
-                    const tl = gsap.timeline({
-                        onComplete: () => {
-                            setupStorySectionAnimation();
-                            ScrollTrigger.refresh();
-                        }
-                    });
                 
-                    tl.to(preloader, {
-                        yPercent: -100,
-                        duration: 1.2,
-                        ease: 'power3.inOut',
-                        delay: 0.4
-                    });
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        setupStorySectionAnimation();
+                        ScrollTrigger.refresh();
+                    }
+                });
+            
+                tl.to(preloader, {
+                    yPercent: -100,
+                    duration: 1.2,
+                    ease: 'power3.inOut',
+                    delay: 0.4
+                });
 
-                    tl.to([header, marqueeContainer, tagline, heroCTAs], {
-                        autoAlpha: 1,
-                    }, "-=1.0");
+                tl.to([header, marqueeContainer, tagline, heroCTAs], {
+                    autoAlpha: 1,
+                }, "-=1.0");
 
-                    tl.to([header, marqueeContainer], {
-                        y: 0,
-                        duration: 1.2,
-                        ease: 'power3.out',
-                        stagger: 0.1
-                    }, "-=1.0");
+                tl.to([header, marqueeContainer], {
+                    y: 0,
+                    duration: 1.2,
+                    ease: 'power3.out',
+                    stagger: 0.1
+                }, "-=1.0");
 
-                    tl.to(taglineWords, {
-                        opacity: 1,
-                        y: 0,
-                        rotationX: 0,
-                        duration: 0.8,
-                        stagger: 0.04,
-                        ease: 'power3.out'
-                    }, "-=0.8");
+                tl.to(taglineWords, {
+                    opacity: 1,
+                    y: 0,
+                    rotationX: 0,
+                    duration: 0.8,
+                    stagger: 0.04,
+                    ease: 'power3.out'
+                }, "-=0.8");
 
-                    tl.to(ctaButtons, {
-                        opacity: 1,
-                        y: 0,
-                        stagger: 0.15,
-                        duration: 0.8,
-                        ease: 'power3.out'
-                    }, "-=0.6");
+                tl.to(ctaButtons, {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                }, "-=0.6");
 
-                    tl.call(() => {
-                        preloader.remove();
-                    });
+                tl.call(() => {
+                    preloader.remove();
                 });
             }
 
@@ -713,6 +741,23 @@
                 interactiveElements.forEach(el => {
                     el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
                     el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
+                });
+            }
+
+            // --- 2.5 INTERACTIVE GRAIN ---
+            const grainOverlay = document.getElementById('grain-overlay');
+            if (grainOverlay && !isTouchDevice) {
+                window.addEventListener('mousemove', (e) => {
+                    // Calculate movement based on cursor position from center
+                    const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
+                    const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
+
+                    gsap.to(grainOverlay, {
+                        x: -moveX, // Move in the opposite direction for a parallax effect
+                        y: -moveY,
+                        duration: 0.7,
+                        ease: 'power2.out'
+                    });
                 });
             }
 
@@ -974,9 +1019,7 @@
                 projects.forEach((p, index) => {
                     const projectEl = document.createElement('div');
                     projectEl.className = 'project-item relative';
-                    if (index >= 2) {
-                        projectEl.classList.add('hidden-project');
-                    }
+                    
                     projectEl.dataset.href = p.href; // Store href in data attribute
                     projectEl.innerHTML = `
                         <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
@@ -991,20 +1034,7 @@
                         e.preventDefault();
                         sessionStorage.setItem('scrollPos', window.scrollY);
                         
-                        const projectImage = projectEl.querySelector('.project-image-preview');
-                        const imageRect = projectImage.getBoundingClientRect();
-                        
-                        sessionStorage.setItem('transitionData', JSON.stringify({
-                            title: p.title,
-                            image: p.image,
-                            rect: {
-                                top: imageRect.top,
-                                left: imageRect.left,
-                                width: imageRect.width,
-                                height: imageRect.height
-                            }
-                        }));
-
+                        const mainContent = document.getElementById('main-content');
                         const projectDetailPage = document.getElementById('project-detail-page');
 
                         const tl = gsap.timeline({
@@ -1012,15 +1042,17 @@
                                 window.location.href = projectEl.dataset.href;
                             }
                         });
+
+                        tl.to(mainContent, { opacity: 0, duration: 0.5, ease: 'power1.in' }, 0);
                         tl.set(projectDetailPage, { 
                             display: 'block',
                             clipPath: `circle(0% at 50% 50%)`
                         });
                         tl.to(projectDetailPage, {
                             clipPath: `circle(150% at 50% 50%)`,
-                            duration: 1,
+                            duration: 1.2,
                             ease: 'power2.inOut'
-                        });
+                        }, 0);
                     });
 
                     if (!isTouchDevice) {
@@ -1088,31 +1120,9 @@
                     ease: "linear",
                     modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
                 });
-                // toolsMarqueeContainer.addEventListener('mouseenter', () => marqueeTween.timeScale(0.2));
-                // toolsMarqueeContainer.addEventListener('mouseleave', () => marqueeTween.timeScale(1));
             }
         }
         
-        // --- Show More Projects ---
-        const showMoreBtn = document.getElementById('show-more-btn');
-        if(showMoreBtn) {
-            showMoreBtn.addEventListener('click', () => {
-                const hiddenProjects = document.querySelectorAll('.hidden-project');
-                hiddenProjects.forEach((project, index) => {
-                    project.style.display = 'block'; // Or remove the class if it sets display:none
-                    gsap.from(project, {
-                        opacity: 0,
-                        y: 50,
-                        duration: 0.6,
-                        ease: 'power3.out',
-                        delay: index * 0.1
-                    });
-                });
-                gsap.to(showMoreBtn, { opacity: 0, duration: 0.3, onComplete: () => showMoreBtn.style.display = 'none' });
-            });
-        }
-
-
             // --- 8. MAGNETIC EFFECT ---
             if (!isTouchDevice) {
                 document.querySelectorAll('.magnetic-item').forEach(el => {
@@ -1177,5 +1187,9 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
