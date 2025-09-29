@@ -189,7 +189,7 @@
             transform: scale(0.8);
             z-index: 1;
         }
-      
+        
         .hidden-project {
             display: none;
         }
@@ -608,7 +608,13 @@
 
             const scrollPos = sessionStorage.getItem('scrollPos');
             if (scrollPos) {
-                window.scrollTo(0, parseInt(scrollPos));
+                // Smooth scroll to the previous position
+                gsap.to(window, { 
+                    scrollTo: { y: parseInt(scrollPos), autoKill: false }, 
+                    duration: 1.5, 
+                    ease: 'power3.inOut',
+                    delay: 0.2 // A little delay to let things settle
+                });
                 sessionStorage.removeItem('scrollPos');
                 if (window.location.hash) {
                     history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -1043,16 +1049,16 @@
                             }
                         });
 
-                        tl.to(mainContent, { opacity: 0, duration: 0.5, ease: 'power1.in' }, 0);
+                        tl.to(mainContent, { opacity: 0, duration: 0.6, ease: 'power1.in' }, 0);
                         tl.set(projectDetailPage, { 
                             display: 'block',
                             clipPath: `circle(0% at 50% 50%)`
                         });
                         tl.to(projectDetailPage, {
                             clipPath: `circle(150% at 50% 50%)`,
-                            duration: 1.2,
+                            duration: 1.5, // Increased duration for a smoother transition
                             ease: 'power2.inOut'
-                        }, 0);
+                        }, 0.2); // Start the wipe slightly after the fade begins
                     });
 
                     if (!isTouchDevice) {
@@ -1120,9 +1126,9 @@
                     ease: "linear",
                     modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
                 });
+               }
             }
-        }
-        
+            
             // --- 8. MAGNETIC EFFECT ---
             if (!isTouchDevice) {
                 document.querySelectorAll('.magnetic-item').forEach(el => {
@@ -1187,9 +1193,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
 
