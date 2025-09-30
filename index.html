@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rinoj. | UX Designer</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
+    
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Portfolio of Mohamed Rinoj Hashim, a Senior UX Designer with 4+ years of experience in India, UAE, and US markets, specializing in B2B platforms.">
+    <meta name="description" content="Portfolio of Mohamed Rinoj Hashim, a Senior UX Designer with 4+ years of experience, specializing in intuitive B2B platforms for Fintech, E-Commerce, and Healthcare.">
+    <meta name="keywords" content="Mohamed Rinoj Hashim, UX Designer, Product Designer, User Experience, UI/UX, Portfolio, B2B, Fintech, E-commerce, Healthcare, Design Systems, User Research, Prototyping">
+    <link rel="canonical" href="https://mohamedrinoj.com/" />
+
+    <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="Mohamed Rinoj Hashim | Senior UX Designer Portfolio" />
-    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results.">
+    <meta property="og:description" content="Transforming complex business challenges into intuitive, user-centered digital experiences that drive measurable results." />
     <meta property="og:image" content="https://placehold.co/1200x630/111111/EAEAEA?text=MRH" />
+    <meta property="og:url" content="https://mohamedrinoj.com/" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Libraries -->
@@ -48,10 +54,16 @@
 
         body {
             font-family: 'Satoshi', sans-serif;
-            background-color: var(--bg-gradient-end); /* Sets the base to the gradient's blue */
+            background-color: var(--bg-gradient-end);
             color: var(--text-primary);
             cursor: none;
             position: relative;
+        }
+        
+        @media (hover: none) and (pointer: coarse) {
+            body {
+                cursor: default;
+            }
         }
 
         #grain-overlay {
@@ -63,7 +75,7 @@
             pointer-events: none;
             background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
             opacity: 0.15;
-            z-index: 10000;
+            z-index: 0; /* FINE-TUNE: Lowered z-index to sit behind content */
             will-change: transform;
             mix-blend-mode: overlay;
         }
@@ -114,20 +126,10 @@
             position: fixed;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 10003; /* Ensure cursor is on top of everything */
+            z-index: 10003;
             mix-blend-mode: difference;
-            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-        }
-        .cursor.hovered {
-            width: 60px;
-            height: 60px;
-            background-color: white;
-        }
-        .cursor.project-hover {
-            width: 80px;
-            height: 80px;
-            background-color: white;
-            border: none;
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-width 0.3s ease;
+            backface-visibility: hidden;
         }
         .cursor-text {
             position: absolute;
@@ -139,8 +141,9 @@
             font-weight: 500;
         }
         
-        .reveal, .project-item, .nav-link-hover, .story-panel img, #mobile-menu-panel {
+        .reveal, .project-item, .nav-link-hover, .story-panel img, #mobile-menu-panel, .clean-cta, .feature-card, .parallax-bg {
             will-change: transform, opacity;
+            backface-visibility: hidden;
         }
         
         .reveal {
@@ -163,7 +166,7 @@
             border-bottom: 1px solid var(--accent-color);
             transform: translateX(-100%);
             opacity: 0;
-            cursor: pointer; /* Change cursor to pointer */
+            cursor: pointer;
             display: block;
             transition: background-color 0.3s ease;
         }
@@ -195,7 +198,6 @@
             display: block;
         }
 
-        /* Styles for Tool Logos */
         .tool-logo-item {
             flex-shrink: 0;
             padding: 0 2rem;
@@ -216,7 +218,6 @@
             transform: scale(1);
         }
 
-        /* Styles for Story Section */
         #story-track {
             display: flex;
             align-items: center;
@@ -251,7 +252,6 @@
             transform: translateY(0px);
         }
 
-        /* Microinteractions */
         .nav-link-hover {
             transition: transform 0.3s var(--animation-easing), color 0.3s var(--animation-easing);
         }
@@ -260,7 +260,6 @@
             color: #67e8f9; /* Tailwind cyan-300 */
         }
         
-        /* Clean CTA Styles */
         .clean-cta {
             position: relative;
             overflow: hidden;
@@ -286,7 +285,6 @@
             left: 125%;
         }
 
-        /* Specific shimmer for primary CTA */
         .cta-primary::before {
             background: linear-gradient(110deg, rgba(103, 232, 249, 0) 30%, rgba(103, 232, 249, 0.5), rgba(103, 232, 249, 0) 70%);
         }
@@ -381,7 +379,6 @@
             box-shadow: 0 20px 25px -5px rgba(34, 211, 238, 0.1), 0 10px 10px -5px rgba(34, 211, 238, 0.04);
         }
 
-
         @media (prefers-reduced-motion: reduce) {
             .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
                 transition: none !important; 
@@ -400,7 +397,6 @@
     </div>
     <div class="cursor"><div class="cursor-text"></div></div>
 
-
     <!-- Main Header for Homepage -->
     <header id="main-header" class="fixed top-6 left-6 right-6 z-50 rounded-full">
         <div class="pl-6 pr-4 py-1 flex justify-between items-center">
@@ -412,7 +408,8 @@
                 <nav class="flex items-center space-x-4" aria-label="Primary Navigation">
                     <a href="#story" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">My Story</a>
                     <a href="#work" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Projects</a>
-                    <a href="#" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
+                    <!-- SEO/UX FIX: Changed to open PDF in a new tab -->
+                    <a href="assets/Mohamed_Rinoj_Hashim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
                 </nav>
                 <a href="#contact" class="clean-cta cta-primary font-semibold px-5 py-[6px] rounded-full transition-all duration-300 whitespace-nowrap">Contact me</a>
             </div>
@@ -442,7 +439,7 @@
                             </p>
                             <div id="hero-ctas" class="mt-10 flex flex-row items-center justify-center gap-10 pointer-events-auto">
                                 <a href="#contact" class="clean-cta cta-primary font-semibold text-sm sm:text-base px-8 sm:px-10 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Let's Talk</a>
-                                <a href="#" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Resume</a>
+                                <a href="assets/Mohamed_Rinoj_Hashim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Resume</a>
                             </div>
                         </div>
                     </div>
@@ -498,22 +495,22 @@
                             <div class="absolute bottom-[-10%] left-0 w-full h-[60vh]">
                                 <div id="story-track" class="absolute top-0 h-full flex items-center space-x-8">
                                     <div class="story-panel" data-title="The Graduation">
-                                        <img data-src="assets/graduation.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="A graduate celebrating by throwing his cap in the air.">
+                                        <img data-src="assets/graduation.webp" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg" alt="A graduate celebrating by throwing his cap in the air." loading="lazy">
                                     </div>
                                     <div class="story-panel" data-title="My First Work">
-                                        <img data-src="assets/firstwork.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Overnight conference call with US Client.">
+                                        <img data-src="assets/firstwork.webp" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg" alt="Overnight conference call with US Client." loading="lazy">
                                     </div>
                                     <div class="story-panel" data-title="In Dubai">
-                                        <img data-src="assets/dubai.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Looking out window from My Office in Dubai.">
+                                        <img data-src="assets/dubai.webp" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg" alt="Looking out window from My Office in Dubai." loading="lazy">
                                     </div>
                                     <div class="story-panel" data-title="Hybrid">
-                                        <img data-src="assets/hybrid.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Working in Laptop from Airport with Cold Coffee in hand.">
+                                        <img data-src="assets/hybrid.webp" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg" alt="Working in Laptop from Airport with Cold Coffee in hand." loading="lazy">
                                     </div>
                                     <div class="story-panel" data-title="Brainstorming">
-                                        <img data-src="assets/brainstorming.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Brainstorming about a B2B login with laptop in desk.">
+                                        <img data-src="assets/brainstorming.webp" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg" alt="Brainstorming about a B2B login with laptop in desk." loading="lazy">
                                     </div>
                                     <div class="story-panel" data-title="What is Next?">
-                                       <img data-src="assets/thenext.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="In Flight looking sideways with confidence.">
+                                       <img data-src="assets/thenext.webp" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg" alt="In Flight looking sideways with confidence." loading="lazy">
                                     </div>
                                 </div>
                             </div>
@@ -532,7 +529,7 @@
                             </div>
                             
                             <div id="more-projects-container" class="text-center mt-12 reveal">
-                                <a href="https://www.linkedin.com/in/mohamedrinoj/" target="_blank" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</a>
+                                <a href="https://www.linkedin.com/in/mohamedrinoj/" target="_blank" rel="noopener noreferrer" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</a>
                             </div>
                         </div>
                     </section>
@@ -560,8 +557,9 @@
                                      <div class="footer-anim">
                                          <h3 class="text-lg font-semibold text-cyan-400 mb-4">Social</h3>
                                          <ul class="space-y-2">
-                                             <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">LinkedIn</a></li>
-                                             <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">Behance</a></li>
+                                             <!-- SEO/UX FIX: Added actual links -->
+                                             <li><a href="https://www.linkedin.com/in/mohamedrinoj/" target="_blank" rel="noopener noreferrer" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">LinkedIn</a></li>
+                                             <li><a href="https://www.behance.net/mohamedrinoj" target="_blank" rel="noopener noreferrer" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">Behance</a></li>
                                          </ul>
                                          <div class="mt-8">
                                              <h3 class="text-lg font-semibold text-cyan-400 mb-2">Contact</h3>
@@ -578,273 +576,378 @@
         
         <!-- Project Page Views -->
         <div id="project-page-bankiom" class="page-view project-page-view">
-             <!-- Bankiom content goes here -->
              <div class="content-wrapper">
-                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                    <div class="container mx-auto flex justify-between items-center">
-                        <div class="flex-1 flex justify-start">
-                            <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                <span>Back</span>
-                            </button>
-                        </div>
-                        <div class="flex-1 flex justify-center">
-                            <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                        </div>
-                        <div class="flex-1 flex justify-end">
-                             <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                        </div>
-                    </div>
-                </header>
-                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                    <img data-src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" src="https://placehold.co/1770x1180/1e1f1f/333333?text=+" alt="Fintech Super-App" class="absolute inset-0 w-full h-full object-cover parallax-bg">
-                    <div class="relative z-20 p-6">
-                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bankiom - Fintech Super-App</h1>
-                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">AI Integration</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Design Systems</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">User Journey Mapping</span>
-                        </div>
-                    </div>
-                </section>
-                <main class="bg-gray-900/90">
-                    <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-3xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Challenge</h2>
-                            <p class="text-xl md:text-2xl text-gray-300 anim-reveal">The client's vision was a revolutionary fintech "super-app" combining budgeting, investments, and AI-powered financial advice. The central UX challenge was immense: how to unify these complex, data-heavy services into a single, cohesive experience that felt simple, empowering, and trustworthy to the average user.</p>
-                        </div>
-                    </section>
-                    <section class="py-20 md:py-32 bg-black/20">
-                        <div class="container mx-auto px-6 max-w-5xl">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Understanding the User</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="bg-gray-800/50 p-8 rounded-lg border border-gray-700 anim-reveal">
-                                    <h3 class="text-xl font-bold text-cyan-400 mb-4">Persona: The Novice Investor</h3>
-                                    <p class="text-gray-300 mb-2"><strong>Age:</strong> 25-35</p>
-                                    <p class="text-gray-300 mb-2"><strong>Goal:</strong> Start investing but is intimidated by complex platforms.</p>
-                                    <p class="text-gray-300 mb-4"><strong>Pain Point:</strong> Fears making a costly mistake due to lack of knowledge.</p>
-                                    <img data-src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x400/1e1f1f/333333?text=+" class="rounded aspect-[2/1] object-cover" alt="A young professional looking thoughtfully at a screen.">
-                                </div>
-                                 <div class="bg-gray-800/50 p-8 rounded-lg border border-gray-700 anim-reveal">
-                                    <h3 class="text-xl font-bold text-cyan-400 mb-4">Persona: The Busy Professional</h3>
-                                    <p class="text-gray-300 mb-2"><strong>Age:</strong> 35-50</p>
-                                    <p class="text-gray-300 mb-2"><strong>Goal:</strong> Optimize finances without spending too much time.</p>
-                                    <p class="text-gray-300 mb-4"><strong>Pain Point:</strong> Uses multiple apps for banking, budgeting, and investing.</p>
-                                    <img data-src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x400/1e1f1f/333333?text=+" class="rounded aspect-[2/1] object-cover" alt="A mature professional working on a laptop in a modern office.">
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="h-screen overflow-hidden relative" id="horizontal-scroll-container-bankiom">
-                        <div class="horizontal-scroll-section">
-                            <div class="horizontal-panel">
-                                <div class="text-center p-8">
-                                   <h2 class="text-4xl md:text-6xl font-bold mb-4">From Sketch to Screen</h2>
-                                   <p class="text-xl text-gray-300">Mapping out the user flow and core app structure.</p>
-                                </div>
-                            </div>
-                             <div class="horizontal-panel">
-                                <img data-src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1200&auto=format&fit=crop" src="https://placehold.co/1200x900/1e1f1f/333333?text=+" class="rounded-lg h-3/4 w-auto object-contain" alt="A collection of digital wireframes for a mobile application on a computer screen.">
-                            </div>
-                             <div class="horizontal-panel">
-                                 <img data-src="https://images.unsplash.com/photo-1559028006-44a13675a834?q=80&w=1200&auto=format&fit=crop" src="https://placehold.co/1200x900/1e1f1f/333333?text=+" class="rounded-lg h-3/4 w-auto object-contain" alt="High-fidelity mockups of a financial application displayed on a smartphone.">
-                            </div>
-                        </div>
-                    </section>
-                    <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32 py-20 md:py-32">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                <img data-src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="Fintech app UI screenshot">
-                            </div>
-                            <div class="anim-reveal md:order-1">
-                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">Design & Prototyping</h3>
-                                <p class="text-lg text-gray-300">A modular design system was crucial. We used a clean, card-based UI with clear data visualizations to make complex information digestible. I designed the AI interface to provide recommendations with clear reasoning and sliders for users to adjust risk levels, giving them a sense of control.</p>
-                            </div>
-                        </div>
-                    </div>
+                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                     <div class="container mx-auto flex justify-between items-center">
+                         <div class="flex-1 flex justify-start">
+                             <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                 <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                 <span>Back</span>
+                             </button>
+                         </div>
+                         <div class="flex-1 flex justify-center">
+                             <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                         </div>
+                         <div class="flex-1 flex justify-end">
+                              <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                  <span>Contact Me</span>
+                              </a>
+                         </div>
+                     </div>
+                 </header>
+                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                     <img data-src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Hero image for the Bankiom project, showing a digital interface with abstract financial charts." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy">
+                     <div class="relative z-20 p-6">
+                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bankiom - Fintech Super-App</h1>
+                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">AI Integration</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Design Systems</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">User Journey Mapping</span>
+                         </div>
+                     </div>
+                 </section>
+                 <main class="bg-gray-900/90">
                      <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-5xl">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Design System</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                                <div class="anim-reveal">
-                                    <h3 class="text-2xl font-bold mb-4">Colors</h3>
-                                    <div class="flex space-x-4 color-palette">
-                                        <div class="w-20 h-20 rounded-full bg-cyan-400 flex items-center justify-center text-black font-mono text-sm">#22D3EE</div>
-                                        <div class="w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center font-mono text-sm">#1F2937</div>
-                                        <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-black font-mono text-sm">#E5E7EB</div>
-                                        <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center text-black font-mono text-sm">#FFFFFF</div>
-                                    </div>
-                                </div>
-                                <div class="anim-reveal">
-                                    <h3 class="text-2xl font-bold mb-4">Typography</h3>
-                                    <div>
-                                        <p class="text-4xl font-bold">Satoshi Bold</p>
-                                        <p class="text-lg">Satoshi Regular</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-4xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
-                            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The focus on building trust paid off. The app achieved a 35% increase in user retention within six months and was featured on several major tech blogs for its innovative, user-centric approach.</p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="35">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in User Retention</p>
-                                </div>
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Higher AI Engagement</p>
-                                </div>
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400">Top 10</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Featured on Tech Blogs</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-            </div>
+                         <div class="container mx-auto px-6 max-w-3xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Challenge</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">The client's vision was a revolutionary fintech "super-app" combining budgeting, investments, and AI-powered financial advice. The central UX challenge was immense: how to unify these complex, data-heavy services into a single, cohesive experience that felt simple, empowering, and trustworthy to the average user.</p>
+                         </div>
+                     </section>
+                     <section class="py-20 md:py-32 bg-black/20">
+                         <div class="container mx-auto px-6 max-w-5xl">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Understanding the User</h2>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                 <div class="bg-gray-800/50 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">Persona: The Novice Investor</h3>
+                                     <p class="text-gray-300 mb-2"><strong>Age:</strong> 25-35</p>
+                                     <p class="text-gray-300 mb-2"><strong>Goal:</strong> Start investing but is intimidated by complex platforms.</p>
+                                     <p class="text-gray-300 mb-4"><strong>Pain Point:</strong> Fears making a costly mistake due to lack of knowledge.</p>
+                                     <img data-src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded aspect-[2/1] object-cover" alt="A young professional looking thoughtfully at a screen, representing a novice investor." loading="lazy">
+                                 </div>
+                                  <div class="bg-gray-800/50 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">Persona: The Busy Professional</h3>
+                                     <p class="text-gray-300 mb-2"><strong>Age:</strong> 35-50</p>
+                                     <p class="text-gray-300 mb-2"><strong>Goal:</strong> Optimize finances without spending too much time.</p>
+                                     <p class="text-gray-300 mb-4"><strong>Pain Point:</strong> Uses multiple apps for banking, budgeting, and investing.</p>
+                                     <img data-src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded aspect-[2/1] object-cover" alt="A mature professional working on a laptop, representing a busy user needing efficiency." loading="lazy">
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                     <section class="h-screen overflow-hidden relative" id="horizontal-scroll-container-bankiom">
+                         <div class="horizontal-scroll-section">
+                             <div class="horizontal-panel">
+                                 <div class="text-center p-8">
+                                    <h2 class="text-4xl md:text-6xl font-bold mb-4">From Sketch to Screen</h2>
+                                     <p class="text-xl text-gray-300">Mapping out the user flow and core app structure.</p>
+                                 </div>
+                             </div>
+                              <div class="horizontal-panel">
+                                 <img data-src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1200&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg h-3/4 w-auto object-contain" alt="A collection of digital wireframes for a mobile application on a computer screen." loading="lazy">
+                             </div>
+                              <div class="horizontal-panel">
+                                   <img data-src="https://images.unsplash.com/photo-1559028006-44a13675a834?q=80&w=1200&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-lg h-3/4 w-auto object-contain" alt="High-fidelity mockups of a financial application displayed on a smartphone." loading="lazy">
+                             </div>
+                         </div>
+                     </section>
+                     <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32 py-20 md:py-32">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                 <img data-src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy">
+                             </div>
+                             <div class="anim-reveal md:order-1">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">Design & Prototyping</h3>
+                                 <p class="text-lg text-gray-300">A modular design system was crucial. We used a clean, card-based UI with clear data visualizations to make complex information digestible. I designed the AI interface to provide recommendations with clear reasoning and sliders for users to adjust risk levels, giving them a sense of control.</p>
+                             </div>
+                         </div>
+                     </div>
+                      <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-5xl">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Design System</h2>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                                 <div class="anim-reveal">
+                                     <h3 class="text-2xl font-bold mb-4">Colors</h3>
+                                     <div class="flex space-x-4 color-palette">
+                                         <div class="w-20 h-20 rounded-full bg-cyan-400 flex items-center justify-center text-black font-mono text-sm">#22D3EE</div>
+                                         <div class="w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center font-mono text-sm">#1F2937</div>
+                                         <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-black font-mono text-sm">#E5E7EB</div>
+                                         <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center text-black font-mono text-sm">#FFFFFF</div>
+                                     </div>
+                                 </div>
+                                 <div class="anim-reveal">
+                                     <h3 class="text-2xl font-bold mb-4">Typography</h3>
+                                     <div>
+                                         <p class="text-4xl font-bold">Satoshi Bold</p>
+                                         <p class="text-lg">Satoshi Regular</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                     <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-4xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The focus on building trust paid off. The app achieved a 35% increase in user retention within six months and was featured on several major tech blogs for its innovative, user-centric approach.</p>
+                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="35">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in User Retention</p>
+                                 </div>
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Higher AI Engagement</p>
+                                 </div>
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                      <p class="text-6xl font-bold text-cyan-400">Top 10</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Featured on Tech Blogs</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                 </main>
+             </div>
         </div>
         <div id="project-page-travion" class="page-view project-page-view">
-             <!-- Travion content goes here -->
              <div class="content-wrapper">
-                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                    <div class="container mx-auto flex justify-between items-center">
-                        <div class="flex-1 flex justify-start">
-                            <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                <span>Back</span>
-                            </button>
-                        </div>
-                        <div class="flex-1 flex justify-center">
-                            <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                        </div>
-                        <div class="flex-1 flex justify-end">
-                             <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                        </div>
-                    </div>
-                </header>
-                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                    <img data-src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" src="https://placehold.co/2070x1380/1e1f1f/333333?text=+" alt="B2B Travel Platform" class="absolute inset-0 w-full h-full object-cover parallax-bg">
-                    <div class="relative z-20 p-6">
-                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Travion - B2B Travel Platform Redesign</h1>
-                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UX Research</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
-                        </div>
-                    </div>
-                </section>
-                <main class="bg-gray-900/90">
+                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                     <div class="container mx-auto flex justify-between items-center">
+                         <div class="flex-1 flex justify-start">
+                             <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                 <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                 <span>Back</span>
+                             </button>
+                         </div>
+                         <div class="flex-1 flex justify-center">
+                             <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                         </div>
+                         <div class="flex-1 flex justify-end">
+                              <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                  <span>Contact Me</span>
+                              </a>
+                         </div>
+                     </div>
+                 </header>
+                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                     <img data-src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Hero image for the Travion project, showing a person with a backpack looking at a scenic mountain landscape." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy">
+                     <div class="relative z-20 p-6">
+                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Travion - B2B Travel Platform Redesign</h1>
+                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UX Research</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
+                         </div>
+                     </div>
+                 </section>
+                 <main class="bg-gray-900/90">
+                      <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-3xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A critical B2B tool for travel agents was failing. User engagement had plummeted by 40%, and 60% of bookings were abandoned due to a convoluted, 12-step workflow that was causing significant frustration.</p>
+                         </div>
+                     </section>
+                     <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="anim-reveal">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
+                                 <p class="text-lg text-gray-300">I conducted in-depth interviews with 15 travel agents. The key insight: agents weren't booking linearly; they were constantly juggling multiple client itineraries. The existing system wasn't built for this multi-threaded workflow.</p>
+                             </div>
+                             <div class="rounded-lg overflow-hidden anim-reveal">
+                                 <img data-src="https://images.unsplash.com/photo-1579762593175-20226054cad0?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A designer sketching travel app wireframes and user flows on a whiteboard." loading="lazy">
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                 <img data-src="https://images.unsplash.com/photo-1600195077909-46e573870d99?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A polished user interface for a travel booking application, showing flights and hotels." loading="lazy">
+                             </div>
+                             <div class="anim-reveal md:order-1">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
+                                 <p class="text-lg text-gray-300">I developed a clean design system and high-fidelity prototypes focused on a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="anim-reveal">
+                                  <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
+                                  <p class="text-lg text-gray-300">Moderated usability tests with agents revealed the initial dashboard felt too cluttered. I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
+                             </div>
+                             <div class="rounded-lg overflow-hidden anim-reveal">
+                                 <img data-src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop during usability testing." loading="lazy">
+                             </div>
+                         </div>
+                     </div>
+                      <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-5xl">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">From 12 Steps to 4</h2>
+                             <div class="relative">
+                                 <div class="absolute left-1/2 h-full w-1 bg-gray-700 hidden md:block"></div>
+                                 <div class="space-y-16">
+                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                         <div class="text-center md:text-right md:pr-8 anim-reveal">
+                                             <h3 class="text-2xl font-bold text-cyan-400">Step 1: Simplified Search</h3>
+                                             <p class="text-gray-300">A clean, intuitive search interface that allows agents to quickly find flights, hotels, and car rentals.</p>
+                                         </div>
+                                         <div class="hidden md:block"></div>
+                                     </div>
+                                      <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                         <div class="hidden md:block"></div>
+                                         <div class="text-center md:text-left md:pl-8 anim-reveal">
+                                             <h3 class="text-2xl font-bold text-cyan-400">Step 2: Itinerary Builder</h3>
+                                             <p class="text-gray-300">A drag-and-drop interface to easily build and manage multiple client itineraries.</p>
+                                         </div>
+                                     </div>
+                                      <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                         <div class="text-center md:text-right md:pr-8 anim-reveal">
+                                             <h3 class="text-2xl font-bold text-cyan-400">Step 3: One-Page Booking</h3>
+                                             <p class="text-gray-300">A single-page booking form that consolidates all necessary information, reducing clicks and confusion.</p>
+                                         </div>
+                                         <div class="hidden md:block"></div>
+                                     </div>
+                                      <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                         <div class="hidden md:block"></div>
+                                         <div class="text-center md:text-left md:pl-8 anim-reveal">
+                                             <h3 class="text-2xl font-bold text-cyan-400">Step 4: Instant Confirmation</h3>
+                                             <p class="text-gray-300">A clear, concise confirmation page with all booking details and next steps.</p>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
                      <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-3xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
-                            <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A critical B2B tool for travel agents was failing. User engagement had plummeted by 40%, and 60% of bookings were abandoned due to a convoluted, 12-step workflow that was causing significant frustration.</p>
-                        </div>
-                    </section>
-                    <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="anim-reveal">
-                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
-                                <p class="text-lg text-gray-300">I conducted in-depth interviews with 15 travel agents. The key insight: agents weren't booking linearly; they were constantly juggling multiple client itineraries. The existing system wasn't built for this multi-threaded workflow.</p>
-                            </div>
-                            <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img data-src="https://images.unsplash.com/photo-1579762593175-20226054cad0?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A designer sketching travel app wireframes on a whiteboard.">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                <img data-src="https://images.unsplash.com/photo-1600195077909-46e573870d99?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A polished user interface for a travel booking application.">
-                            </div>
-                            <div class="anim-reveal md:order-1">
-                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
-                                <p class="text-lg text-gray-300">I developed a clean design system and high-fidelity prototypes focused on a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="anim-reveal">
-                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
-                                 <p class="text-lg text-gray-300">Moderated usability tests with agents revealed the initial dashboard felt too cluttered. I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
-                            </div>
-                            <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img data-src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop.">
-                            </div>
-                        </div>
-                    </div>
-                     <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-5xl">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">From 12 Steps to 4</h2>
-                            <div class="relative">
-                                <div class="absolute left-1/2 h-full w-1 bg-gray-700 hidden md:block"></div>
-                                <div class="space-y-16">
-                                    <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
-                                        <div class="text-center md:text-right md:pr-8 anim-reveal">
-                                            <h3 class="text-2xl font-bold text-cyan-400">Step 1: Simplified Search</h3>
-                                            <p class="text-gray-300">A clean, intuitive search interface that allows agents to quickly find flights, hotels, and car rentals.</p>
-                                        </div>
-                                        <div class="hidden md:block"></div>
-                                    </div>
-                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
-                                        <div class="hidden md:block"></div>
-                                        <div class="text-center md:text-left md:pl-8 anim-reveal">
-                                            <h3 class="text-2xl font-bold text-cyan-400">Step 2: Itinerary Builder</h3>
-                                            <p class="text-gray-300">A drag-and-drop interface to easily build and manage multiple client itineraries.</p>
-                                        </div>
-                                    </div>
-                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
-                                        <div class="text-center md:text-right md:pr-8 anim-reveal">
-                                            <h3 class="text-2xl font-bold text-cyan-400">Step 3: One-Page Booking</h3>
-                                            <p class="text-gray-300">A single-page booking form that consolidates all necessary information, reducing clicks and confusion.</p>
-                                        </div>
-                                        <div class="hidden md:block"></div>
-                                    </div>
-                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
-                                        <div class="hidden md:block"></div>
-                                        <div class="text-center md:text-left md:pl-8 anim-reveal">
-                                            <h3 class="text-2xl font-bold text-cyan-400">Step 4: Instant Confirmation</h3>
-                                            <p class="text-gray-300">A clear, concise confirmation page with all booking details and next steps.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-4xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
-                            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The redesign was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in booking time, an 80% drop in abandonment, and a 25% increase in completed bookings in Q1.</p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="70">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Booking Time</p>
-                                </div>
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="80">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Drop in Abandonment</p>
-                                </div>
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Bookings (Q1)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-            </div>
+                         <div class="container mx-auto px-6 max-w-4xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The redesign was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in booking time, an 80% drop in abandonment, and a 25% increase in completed bookings in Q1.</p>
+                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="70">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Booking Time</p>
+                                 </div>
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="80">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Drop in Abandonment</p>
+                                 </div>
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Bookings (Q1)</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                 </main>
+             </div>
         </div>
         <div id="project-page-bhavanam" class="page-view project-page-view">
-            <!-- Bhavanam content goes here -->
-            <div class="content-wrapper">
-                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+             <div class="content-wrapper">
+                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                      <div class="container mx-auto flex justify-between items-center">
+                           <div class="flex-1 flex justify-start">
+                                <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                     <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                     <span>Back</span>
+                                </button>
+                           </div>
+                           <div class="flex-1 flex justify-center">
+                             <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                           </div>
+                           <div class="flex-1 flex justify-end">
+                                 <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                     <span>Contact Me</span>
+                                 </a>
+                           </div>
+                      </div>
+                 </header>
+                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                     <!-- CONTENT FIX: Updated alt text -->
+                     <img data-src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Hero image for the Bhavanam healthcare project, showing a medical professional analyzing patient data on a laptop." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy">
+                     <div class="relative z-20 p-6">
+                         <!-- CONTENT FIX: Updated project title to match description -->
+                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bhavanam - Patient Management Platform</h1>
+                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Healthcare UX</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Accessibility (WCAG)</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
+                         </div>
+                     </div>
+                 </section>
+                 <main class="bg-gray-900/90">
+                       <section class="py-20 md:py-32">
+                          <div class="container mx-auto px-6 max-w-3xl text-center">
+                               <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Need</h2>
+                               <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A leading hospital network was struggling with a clunky, outdated patient management system causing significant administrative overhead. The goal was to build a new platform focused on reducing cognitive load for medical staff and ensuring full accessibility compliance.</p>
+                          </div>
+                       </section>
+                       <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                               <div class="anim-reveal">
+                                    <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
+                                    <p class="text-lg text-gray-300">I spent two weeks shadowing nurses and doctors on their rounds. This firsthand observation was invaluable. I identified major pain points, such as excessive clicking to access patient vitals and difficulty reading text in poorly lit rooms.</p>
+                               </div>
+                               <div class="rounded-lg overflow-hidden anim-reveal">
+                                    <img data-src="https://images.unsplash.com/photo-1516131206829-1076e5b428d2?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A UX designer sketching UI concepts and user flows in a notepad during the discovery phase." loading="lazy">
+                               </div>
+                           </div>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                               <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                    <img data-src="https://images.unsplash.com/photo-1579684385127-1ef15d50811e?q=80&w=2080&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A doctor using a tablet to review patient information on the newly designed healthcare platform." loading="lazy">
+                               </div>
+                               <div class="anim-reveal md:order-1">
+                                    <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
+                                    <p class="text-lg text-gray-300">Using Figma, I created high-fidelity, interactive prototypes. Every design choice, from color palettes to font sizes, was vetted against WCAG 2.1 AA guidelines. The design featured a dark mode to reduce eye strain during night shifts, a feature specifically requested by nurses.</p>
+                               </div>
+                           </div>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                               <div class="anim-reveal">
+                                    <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
+                                    <p class="text-lg text-gray-300">Usability tests with 10 medical professionals confirmed the task-based approach was much faster, but revealed some icons were not immediately intuitive. I iterated on the icon library, adding text labels for clarity, which tested perfectly in the second round.</p>
+                               </div>
+                               <div class="rounded-lg overflow-hidden anim-reveal">
+                                     <img data-src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A team collaborating and reviewing designs on a screen during a usability test session." loading="lazy">
+                               </div>
+                           </div>
+                       </div>
+                       <section class="py-20 md:py-32">
+                          <div class="container mx-auto px-6 max-w-5xl">
+                               <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Key Features</h2>
+                               <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                   <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card">
+                                       <h3 class="text-xl font-bold text-cyan-400 mb-4">Dark Mode</h3>
+                                       <p class="text-gray-300">A high-contrast dark mode to reduce eye strain for medical staff during long night shifts.</p>
+                                   </div>
+                                   <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card" style="--delay: 0.1s;">
+                                       <h3 class="text-xl font-bold text-cyan-400 mb-4">Task-Based Dashboard</h3>
+                                       <p class="text-gray-300">An intuitive dashboard that surfaces the most critical patient information and tasks upfront.</p>
+                                   </div>
+                                   <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card" style="--delay: 0.2s;">
+                                       <h3 class="text-xl font-bold text-cyan-400 mb-4">WCAG 2.1 AA Compliance</h3>
+                                       <p class="text-gray-300">Ensuring the platform is usable by people with a wide range of disabilities.</p>
+                                   </div>
+                               </div>
+                          </div>
+                       </section>
+                       <section class="py-20 md:py-32">
+                          <div class="container mx-auto px-6 max-w-4xl text-center">
+                               <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Result & Impact</h2>
+                               <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week. This meant medical staff could dedicate more valuable time to what truly matters: patient care.</p>
+                               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                                   <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                       <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="50">0%</p>
+                                       <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Admin Time</p>
+                                   </div>
+                                   <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                       <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="100">0%</p>
+                                       <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">WCAG 2.1 AA Compliant</p>
+                                   </div>
+                               </div>
+                          </div>
+                       </section>
+                 </main>
+             </div>
+        </div>
+        <div id="project-page-ourshoppee" class="page-view project-page-view">
+             <div class="content-wrapper">
+                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
                      <div class="container mx-auto flex justify-between items-center">
                          <div class="flex-1 flex justify-start">
                              <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
@@ -856,200 +959,93 @@
                             <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
                          </div>
                          <div class="flex-1 flex justify-end">
-                              <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                  <span>Contact Me</span>
-                              </a>
+                               <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                   <span>Contact Me</span>
+                               </a>
                          </div>
                      </div>
-                </header>
-                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                    <img data-src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" src="https://placehold.co/1770x1180/1e1f1f/333333?text=+" alt="Real Estate Platform" class="absolute inset-0 w-full h-full object-cover parallax-bg">
-                    <div class="relative z-20 p-6">
-                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bhavanam - Real Estate Platform</h1>
-                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Healthcare UX</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Accessibility (WCAG)</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
-                        </div>
-                    </div>
-                </section>
-                <main class="bg-gray-900/90">
-                      <section class="py-20 md:py-32">
+                 </header>
+                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                     <img data-src="https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Hero image for the OurShoppee project, showing a person happily shopping online using a laptop." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy">
+                     <div class="relative z-20 p-6">
+                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">OurShoppee - E-Commerce Experience</h1>
+                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Conversion Optimization</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">A/B Testing</span>
+                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
+                         </div>
+                     </div>
+                 </section>
+                 <main class="bg-gray-900/90">
+                     <section class="py-20 md:py-32">
                          <div class="container mx-auto px-6 max-w-3xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Need</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A leading hospital network was struggling with a clunky, outdated patient management system causing significant administrative overhead. The goal was to build a new platform focused on reducing cognitive load for medical staff and ensuring full accessibility compliance.</p>
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A successful e-commerce brand faced a classic "leaky funnel": high traffic but a low conversion rate of just 1.5%. Analytics pointed to a high cart abandonment rate, with the multi-page checkout process being the primary culprit.</p>
                          </div>
                      </section>
                      <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
                          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                              <div class="anim-reveal">
                                  <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
-                                 <p class="text-lg text-gray-300">I spent two weeks shadowing nurses and doctors on their rounds. This firsthand observation was invaluable. I identified major pain points, such as excessive clicking to access patient vitals and difficulty reading text in poorly lit rooms.</p>
+                                 <p class="text-lg text-gray-300">Using Hotjar, I analyzed heatmaps and session recordings of over 200 user sessions. I discovered that users were dropping off significantly when asked to create an account and when presented with unexpected shipping costs late in the process.</p>
                              </div>
                              <div class="rounded-lg overflow-hidden anim-reveal">
-                                 <img data-src="https://images.unsplash.com/photo-1516131206829-1076e5b428d2?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A designer sketching UI concepts on a notepad.">
+                                 <img data-src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A team analyzing analytics data and website heatmaps on a large screen." loading="lazy">
                              </div>
                          </div>
                          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                              <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                 <img data-src="https://images.unsplash.com/photo-1579684385127-1ef15d50811e?q=80&w=2080&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="Doctor using a tablet">
+                                 <img data-src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A person shopping on an e-commerce website on their laptop, showcasing a smooth checkout experience." loading="lazy">
                              </div>
                              <div class="anim-reveal md:order-1">
                                  <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
-                                 <p class="text-lg text-gray-300">Using Figma, I created high-fidelity, interactive prototypes. Every design choice, from color palettes to font sizes, was vetted against WCAG 2.1 AA guidelines. The design featured a dark mode to reduce eye strain during night shifts, a feature specifically requested by nurses.</p>
+                                 <p class="text-lg text-gray-300">I designed two primary challengers in Figma for A/B testing: one with a prominent guest checkout and another with a collapsible one-page accordion layout. Both designs brought shipping information forward in the flow.</p>
                              </div>
                          </div>
                          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                              <div class="anim-reveal">
                                   <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
-                                  <p class="text-lg text-gray-300">Usability tests with 10 medical professionals confirmed the task-based approach was much faster, but revealed some icons were not immediately intuitive. I iterated on the icon library, adding text labels for clarity, which tested perfectly in the second round.</p>
+                                  <p class="text-lg text-gray-300">We ran the A/B tests over two weeks. The version with the prominent guest checkout and accordion layout was the clear winner, showing a statistically significant lift in conversions.</p>
                              </div>
                              <div class="rounded-lg overflow-hidden anim-reveal">
-                                  <img data-src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A team collaborating and reviewing designs on a screen during a usability test.">
+                                 <img data-src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=800&auto=format&fit=crop" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="w-full h-full object-cover image-pan" alt="A modern analytics dashboard on a laptop screen showing positive conversion rate trends." loading="lazy">
                              </div>
                          </div>
                      </div>
-                     <section class="py-20 md:py-32">
+                      <section class="py-20 md:py-32">
                          <div class="container mx-auto px-6 max-w-5xl">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Key Features</h2>
-                             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card">
-                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">Dark Mode</h3>
-                                     <p class="text-gray-300">A high-contrast dark mode to reduce eye strain for medical staff during long night shifts.</p>
+                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">User Testimonials</h2>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                     <p class="text-lg text-gray-300 mb-4">"The new checkout is a breeze! I was able to complete my purchase in under a minute."</p>
+                                     <p class="text-cyan-400 font-bold">- User A</p>
                                  </div>
-                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card" style="--delay: 0.1s;">
-                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">Task-Based Dashboard</h3>
-                                     <p class="text-gray-300">An intuitive dashboard that surfaces the most critical patient information and tasks upfront.</p>
-                                 </div>
-                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card" style="--delay: 0.2s;">
-                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">WCAG 2.1 AA Compliance</h3>
-                                     <p class="text-gray-300">Ensuring the platform is usable by people with a wide range of disabilities.</p>
+                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                     <p class="text-lg text-gray-300 mb-4">"I love that I can see the shipping costs upfront. No more surprises at the end!"</p>
+                                     <p class="text-cyan-400 font-bold">- User B</p>
                                  </div>
                              </div>
                          </div>
                      </section>
                      <section class="py-20 md:py-32">
                          <div class="container mx-auto px-6 max-w-4xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Result & Impact</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week. This meant medical staff could dedicate more valuable time to what truly matters: patient care.</p>
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The results were immediate. By implementing the winning design, the site's conversion rate increased by 25%, and average order value saw a 15% uplift in the first quarter, delivering a clear return on investment.</p>
                              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
                                  <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="50">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Admin Time</p>
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Conversion</p>
                                  </div>
                                  <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="100">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">WCAG 2.1 AA Compliant</p>
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="15">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Avg. Order Value</p>
                                  </div>
                              </div>
                          </div>
                      </section>
-                </main>
-            </div>
-        </div>
-        <div id="project-page-ourshoppee" class="page-view project-page-view">
-             <!-- OurShoppee content goes here -->
-             <div class="content-wrapper">
-                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                    <div class="container mx-auto flex justify-between items-center">
-                        <div class="flex-1 flex justify-start">
-                            <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                <span>Back</span>
-                            </button>
-                        </div>
-                        <div class="flex-1 flex justify-center">
-                           <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                        </div>
-                        <div class="flex-1 flex justify-end">
-                             <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                        </div>
-                    </div>
-                </header>
-                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                    <img data-src="https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop" src="https://placehold.co/1887x1258/1e1f1f/333333?text=+" alt="E-Commerce Experience" class="absolute inset-0 w-full h-full object-cover parallax-bg">
-                    <div class="relative z-20 p-6">
-                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">OurShoppee - E-Commerce Experience</h1>
-                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Conversion Optimization</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">A/B Testing</span>
-                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
-                        </div>
-                    </div>
-                </section>
-                <main class="bg-gray-900/90">
-                    <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-3xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
-                            <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A successful e-commerce brand faced a classic "leaky funnel": high traffic but a low conversion rate of just 1.5%. Analytics pointed to a high cart abandonment rate, with the multi-page checkout process being the primary culprit.</p>
-                        </div>
-                    </section>
-                    <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="anim-reveal">
-                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
-                                <p class="text-lg text-gray-300">Using Hotjar, I analyzed heatmaps and session recordings of over 200 user sessions. I discovered that users were dropping off significantly when asked to create an account and when presented with unexpected shipping costs late in the process.</p>
-                            </div>
-                            <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img data-src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A team looking at analytics and heatmaps on a screen.">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                <img data-src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="People shopping on a website">
-                            </div>
-                            <div class="anim-reveal md:order-1">
-                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
-                                <p class="text-lg text-gray-300">I designed two primary challengers in Figma for A/B testing: one with a prominent guest checkout and another with a collapsible one-page accordion layout. Both designs brought shipping information forward in the flow.</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="anim-reveal">
-                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
-                                 <p class="text-lg text-gray-300">We ran the A/B tests over two weeks. The version with the prominent guest checkout and accordion layout was the clear winner, showing a statistically significant lift in conversions.</p>
-                            </div>
-                            <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img data-src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A modern analytics dashboard on a laptop screen showing positive trends.">
-                            </div>
-                        </div>
-                    </div>
-                     <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-5xl">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">User Testimonials</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal">
-                                    <p class="text-lg text-gray-300 mb-4">"The new checkout is a breeze! I was able to complete my purchase in under a minute."</p>
-                                    <p class="text-cyan-400 font-bold">- User A</p>
-                                </div>
-                                <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal">
-                                    <p class="text-lg text-gray-300 mb-4">"I love that I can see the shipping costs upfront. No more surprises at the end!"</p>
-                                    <p class="text-cyan-400 font-bold">- User B</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="py-20 md:py-32">
-                        <div class="container mx-auto px-6 max-w-4xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
-                            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The results were immediate. By implementing the winning design, the site's conversion rate increased by 25%, and average order value saw a 15% uplift in the first quarter, delivering a clear return on investment.</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Conversion</p>
-                                </div>
-                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="15">0%</p>
-                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Avg. Order Value</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-            </div>
+                 </main>
+             </div>
         </div>
     </div>
     
@@ -1079,7 +1075,7 @@
             <nav class="flex flex-col items-end space-y-4 mt-20 text-2xl font-bold text-right" aria-label="Mobile Navigation">
                 <a href="#story" class="mobile-nav-link opacity-0">My Story</a>
                 <a href="#work" class="mobile-nav-link opacity-0">Projects</a>
-                <a href="#" class="mobile-nav-link opacity-0">Resume</a>
+                <a href="assets/Mohamed_Rinoj_Hashim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="mobile-nav-link opacity-0">Resume</a>
                 <a href="#contact" class="mobile-nav-link-cta clean-cta cta-primary mt-8 px-5 py-2 rounded-full text-xl font-bold opacity-0">Contact Me</a>
             </nav>
         </div>
@@ -1087,6 +1083,9 @@
     
     <script>
     // --- COMBINED & REFACTORED SCRIPT FOR SINGLE PAGE APP ---
+    // FIX: Declare key DOM element variables in a higher scope to prevent reference errors.
+    let mainHeader, goToTopBtn, cursor, cursorText;
+
     window.addEventListener('load', function() {
         history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
@@ -1098,10 +1097,11 @@
         let projectPageScrollTriggers = [];
 
         // --- 0. GLOBAL ELEMENTS & UTILS ---
-        const cursor = document.querySelector('.cursor');
-        const cursorText = document.querySelector('.cursor-text');
-        const mainHeader = document.getElementById('main-header');
-        const goToTopBtn = document.getElementById('go-to-top-btn');
+        // FIX: Initialize variables inside the load handler.
+        cursor = document.querySelector('.cursor');
+        cursorText = document.querySelector('.cursor-text');
+        mainHeader = document.getElementById('main-header');
+        goToTopBtn = document.getElementById('go-to-top-btn');
 
         // --- 1. PAGE TRANSITION LOGIC ---
         function switchView(targetId, e) {
@@ -1111,38 +1111,42 @@
 
             if (!currentView || !targetView || currentView === targetView || wrapper.classList.contains('is-transitioning')) return;
             wrapper.classList.add('is-transitioning');
+            
+            gsap.killTweensOf([currentView, targetView]);
 
             const isGoingBack = targetId === 'homepage-view';
 
-            const clickX = e ? `${e.clientX}px` : '50%';
-            const clickY = e ? `${e.clientY}px` : '50%';
+            const clickX = e ? e.clientX : window.innerWidth / 2;
+            const clickY = e ? e.clientY : window.innerHeight / 2;
             
-            const clipStart = `circle(0% at ${clickX} ${clickY})`;
-            const clipEnd = `circle(150% at ${clickX} ${clickY})`;
+            const radius = Math.hypot(
+                Math.max(clickX, window.innerWidth - clickX),
+                Math.max(clickY, window.innerHeight - clickY)
+            );
+            const clipStart = `circle(0px at ${clickX}px ${clickY}px)`;
+            const clipEnd = `circle(${radius}px at ${clickX}px ${clickY}px)`;
 
             if (isGoingBack) {
                 // --- TRANSITION: PROJECT -> HOME ---
-                // 1. Prepare homepage underneath.
-                gsap.set(targetView, { display: 'block', zIndex: -1 });
+                gsap.set(targetView, { display: 'block', zIndex: 1, opacity: 1 });
                 window.scrollTo(0, lastScrollPos);
 
-                // 2. Animate the current view closing
                 gsap.fromTo(currentView, 
                     { clipPath: clipEnd }, 
                     {
                         clipPath: clipStart,
-                        duration: 1.2,
+                        duration: 1.0,
                         ease: 'power3.inOut',
                         onStart: () => {
                             destroyProjectPageScrollTriggers();
                             gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.5 });
+                            gsap.set(currentView, { zIndex: 2 });
                         },
                         onComplete: () => {
-                            // 3. Cleanup
                             currentView.classList.remove('is-active');
                             targetView.classList.add('is-active');
                             gsap.set(currentView, { clearProps: 'all', display: 'none' });
-                            gsap.set(targetView, { clearProps: 'all' });
+                            gsap.set(targetView, { clearProps: 'zIndex,opacity' });
                             wrapper.classList.remove('is-transitioning');
                             ScrollTrigger.refresh();
                         }
@@ -1153,29 +1157,26 @@
                 // --- TRANSITION: HOME -> PROJECT ---
                 lastScrollPos = window.scrollY;
 
-                // 1. Prepare targetView to animate in
                 gsap.set(targetView, {
                     display: 'block',
                     clipPath: clipStart,
-                    zIndex: 100 // Ensure it's on top
+                    zIndex: 100
                 });
                 window.scrollTo(0, 0);
 
-                // 2. Animate reveal
                 gsap.to(targetView, {
                     clipPath: clipEnd,
-                    duration: 1.2,
+                    duration: 1.0,
                     ease: 'power3.inOut',
                     onStart: () => {
                         gsap.to([mainHeader, goToTopBtn], { autoAlpha: 0, duration: 0.5 });
                         initializeProjectPageAnimations(targetView);
+                        gsap.set(currentView, { display: 'none' });
                     },
                     onComplete: () => {
-                        // 3. Cleanup
                         currentView.classList.remove('is-active');
-                        gsap.set(currentView, { display: 'none' });
                         targetView.classList.add('is-active');
-                        gsap.set(targetView, { clearProps: 'all' }); 
+                        gsap.set(targetView, { clearProps: 'clipPath,zIndex' }); 
                         wrapper.classList.remove('is-transitioning');
                         ScrollTrigger.refresh();
                     }
@@ -1203,6 +1204,7 @@
             const tl = gsap.timeline({
                 onComplete: () => {
                     initializeHomepageAnimations();
+                    preloadProjectImages();
                     ScrollTrigger.refresh();
                 }
             });
@@ -1217,7 +1219,7 @@
 
         // --- 3. GLOBAL INTERACTIVITY (CURSOR, GRAIN, ETC) ---
         if (isTouchDevice) {
-            cursor.style.display = 'none';
+            if (cursor) cursor.style.display = 'none';
         } else {
             window.addEventListener('mousemove', (e) => {
                 gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
@@ -1230,7 +1232,7 @@
         }
 
         const grainOverlay = document.getElementById('grain-overlay');
-        if (grainOverlay && !isTouchDevice) {
+        if (grainOverlay && !isTouchDevice && !prefersReducedMotion.matches) {
             window.addEventListener('mousemove', (e) => {
                 const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
                 const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
@@ -1304,7 +1306,7 @@
                 const marqueeContent = document.createElement('div');
                 marqueeContent.className = 'flex items-center flex-shrink-0';
                 marqueeContent.innerHTML = tools.map(tool => 
-                    `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/150x40/1e1f1f/ffffff?text=${tool.name.replace(' ', '+')}';" alt="${tool.name} Logo"></div>`
+                    `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/150x40/1e1f1f/1e1f1f?text=';" alt="${tool.name} Logo"></div>`
                 ).join('');
                 toolsMarqueeContainer.appendChild(marqueeContent);
                 toolsMarqueeContainer.appendChild(marqueeContent.cloneNode(true));
@@ -1328,7 +1330,6 @@
 
             if (!storyTrack || storyPanels.length === 0) return;
 
-            // Preload first story image
             const firstStoryImg = storyPanels[0].querySelector('img');
             if(firstStoryImg && firstStoryImg.dataset.src) {
                 firstStoryImg.src = firstStoryImg.dataset.src;
@@ -1375,7 +1376,6 @@
                             storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === activePanelIndex));
                             if(storyPanels[activePanelIndex]) {
                                 storySubtitle.innerText = storyPanels[activePanelIndex].dataset.title;
-                                // Lazy load image for the newly active panel
                                 const img = storyPanels[activePanelIndex].querySelector('img');
                                 if (img && img.dataset.src) {
                                     img.src = img.dataset.src;
@@ -1393,9 +1393,17 @@
         const projects = [
             { id: 'bankiom', title: 'Bankiom - Fintech Super-App', tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
             { id: 'travion', title: 'Travion - B2B Travel Platform', tags: ['UX Research', 'UI Design', 'Prototyping'], image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', href: '#'},
-            { id: 'bhavanam', title: 'Bhavanam - Real Estate Platform', tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'},
-            { id: 'ourshoppee', title: 'OurShoppee - E-Commerce Experience', tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'}
+            { id: 'bhavanam', title: 'Bhavanam - Patient Management Platform', tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'},
+            { id: 'ourshoppee', title: 'OurShoppee - E-Commerce Experience', tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], image: 'https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'}
         ];
+        
+        function preloadProjectImages() {
+            projects.forEach(p => {
+                const img = new Image();
+                img.src = p.image;
+            });
+        }
+
         const projectsContainer = document.getElementById('projects-container');
         if (projectsContainer) {
             projects.forEach(p => {
@@ -1407,17 +1415,15 @@
                         <h3 class="text-2xl md:text-4xl font-bold pointer-events-none">${p.title}</h3>
                         <span class="text-sm font-lg text-secondary hidden md:block pointer-events-none">${p.tags.join(' / ')}</span>
                     </div>
-                    <img src="${p.image}" class="project-image-preview">
+                    <img src="${p.image}" class="project-image-preview" alt="Preview image for ${p.title}" loading="lazy">
                 `;
                 projectsContainer.appendChild(projectEl);
 
-                // Add click listener for page transition
                 projectEl.addEventListener('click', (e) => {
                     e.preventDefault();
                     switchView(projectEl.dataset.target, e);
                 });
 
-                // Image preview hover effect
                 if (!isTouchDevice) {
                     const previewImage = projectEl.querySelector('.project-image-preview');
                     projectEl.addEventListener('mouseenter', () => {
@@ -1455,27 +1461,20 @@
             destroyProjectPageScrollTriggers(); 
             let triggers = [];
 
-            // NEW: Hero text parallax effect
             const heroContent = pageElement.querySelector('section:first-child .relative.z-20');
             if (heroContent) {
                 triggers.push(gsap.to(heroContent, {
-                    yPercent: 40,
-                    ease: 'none',
+                    yPercent: 40, ease: 'none',
                     scrollTrigger: {
                         trigger: pageElement.querySelector('section:first-child'),
-                        start: "top top",
-                        end: "bottom top",
-                        scrub: true
+                        start: "top top", end: "bottom top", scrub: true
                     }
                 }));
             }
 
-            // Lazy load images
             pageElement.querySelectorAll('img[data-src]').forEach(img => {
                 triggers.push(ScrollTrigger.create({
-                    trigger: img,
-                    start: 'top 95%',
-                    once: true,
+                    trigger: img, start: 'top 95%', once: true,
                     onEnter: () => {
                         if (img.dataset.src) {
                             img.src = img.dataset.src;
@@ -1491,15 +1490,13 @@
                triggers.push(gsap.to(parallaxBg, { yPercent: 30, ease: "none", scrollTrigger: { trigger: parallaxBg, start: "top top", end: "bottom top", scrub: true } }));
             }
             
-            // MODIFIED: General reveal animations with new text effect for titles
             pageElement.querySelectorAll('.anim-reveal').forEach(el => {
                 const isTitle = el.tagName === 'H2' || el.tagName === 'H3';
                 if (isTitle && el.textContent.length > 0 && !prefersReducedMotion.matches) {
-                    const originalText = el.textContent.trim();
-                    // Prevent re-splitting if already done
                     if(el.querySelector('.char')) return; 
 
-                    el.innerHTML = ''; // Clear existing content
+                    const originalText = el.textContent.trim();
+                    el.innerHTML = ''; 
                     originalText.split('').forEach(char => {
                         const span = document.createElement('span');
                         span.className = 'char';
@@ -1511,18 +1508,10 @@
                     });
                     
                     triggers.push(gsap.to(el.querySelectorAll('.char'), {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.6,
-                        stagger: 0.02,
-                        ease: 'power2.out',
-                        scrollTrigger: { 
-                            trigger: el, 
-                            start: 'top 90%', 
-                            toggleActions: 'play none none none' 
-                        }
+                        opacity: 1, y: 0, duration: 0.6, stagger: 0.02, ease: 'power2.out',
+                        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
                     }));
-                } else { // Standard reveal for other elements
+                } else {
                     let delay = el.style.getPropertyValue('--delay') || 0;
                     triggers.push(gsap.from(el, { 
                         opacity: 0, y: 60, duration: 1, ease: 'power3.out', 
@@ -1532,7 +1521,6 @@
                 }
             });
             
-            // Image pan
             pageElement.querySelectorAll('.image-pan').forEach(img => {
                 triggers.push(gsap.to(img, { scale: 1.15, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: 1.5 } }));
             });
@@ -1574,17 +1562,17 @@
 
 
         // --- 7. MISC & EVENT LISTENERS ---
-        // Back to Home buttons
         document.querySelectorAll('.back-to-home, .back-to-home-logo').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 switchView('homepage-view', e);
             });
         });
+        
         document.querySelectorAll('.go-to-contact').forEach(btn => {
             btn.addEventListener('click', e => {
                 e.preventDefault();
-                switchView('homepage-view');
+                switchView('homepage-view', e); 
                 setTimeout(() => {
                     const contactSection = document.getElementById('contact');
                     if(contactSection) {
@@ -1650,11 +1638,11 @@
         // --- THREE.JS GRADIENT BACKGROUND ---
         let scene, camera, renderer, material;
         const gradientCanvas = document.getElementById('hero-gradient-background');
-        if(gradientCanvas) {
+        if(gradientCanvas && !prefersReducedMotion.matches) {
             function initGradientBackground() {
                 scene = new THREE.Scene();
                 camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-                renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true });
+                renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true, alpha: true });
                 const geometry = new THREE.PlaneBufferGeometry(2, 2);
                 material = new THREE.ShaderMaterial({
                     uniforms: {
@@ -1693,4 +1681,5 @@
     </script>
 </body>
 </html>
+
 
