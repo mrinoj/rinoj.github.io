@@ -32,6 +32,7 @@
             --text-secondary: #A0A0A0;
             --border-color: #333333;
             --accent-color: #22d3ee;
+            --bg-color-project: #1e1f1f;
             --animation-easing: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -71,8 +72,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;    /* Use viewport width for perfect coverage */
-            height: 100dvh;  /* Use dynamic viewport height for mobile */
+            width: 100vw;
+            height: 100dvh;
             z-index: -1;
         }
 
@@ -80,14 +81,14 @@
             height: 100dvh;
         }
 
-        header {
+        #main-header {
             background-color: transparent;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             transition: background-color 0.4s var(--animation-easing);
         }
         
-        #page-content {
+        #page-content-wrapper {
             position: relative;
             z-index: 10;
         }
@@ -166,9 +167,6 @@
             display: block;
             transition: background-color 0.3s ease;
         }
-        .project-item:hover {
-            /* background-color: rgba(255, 255, 255, 0.05); */ /* Removed as requested */
-        }
         .project-item:nth-child(even) {
             transform: translateX(100%);
         }
@@ -190,19 +188,11 @@
             z-index: 1;
         }
         
-        .hidden-project {
+        .page-view {
             display: none;
         }
-
-        #project-detail-page {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1e1f1f;
-            z-index: 10001;
-            display: none;
+        .page-view.is-active {
+            display: block;
         }
 
         /* Styles for Tool Logos */
@@ -222,11 +212,9 @@
                 height: 80px; /* Size for DESKTOP */
             }
         }
-        /* Removed scale on hover */
         .tool-logo-item:hover img {
             transform: scale(1);
         }
-
 
         /* Styles for Story Section */
         #story-track {
@@ -277,8 +265,8 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.3s var(--animation-easing), background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-            isolation: isolate; /* Creates a new stacking context to properly clip pseudo-elements */
-            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Safari fix for overflow hidden */
+            isolation: isolate;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
             transform: translateZ(0);
         }
 
@@ -367,15 +355,43 @@
             to { transform: rotate(360deg); }
         }
 
+        /* PROJECT PAGE SPECIFIC STYLES */
+        .project-page-view { background-color: var(--bg-color-project); }
+        .parallax-bg, .image-pan { will-change: transform; }
+        .color-palette div { transition: transform 0.3s ease; }
+        .color-palette div:hover { transform: scale(1.1); }
+        .horizontal-scroll-section {
+            width: 300%;
+            display: flex;
+            flex-wrap: nowrap;
+        }
+        .horizontal-panel {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(34, 211, 238, 0.1), 0 10px 10px -5px rgba(34, 211, 238, 0.04);
+        }
+
+
         @media (prefers-reduced-motion: reduce) {
-          .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
-            transition: none !important; 
-            animation: none !important;
-          }
+            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
+                transition: none !important; 
+                animation: none !important;
+            }
         }
     </style>
 </head>
 <body class="antialiased">
+    <!-- Global Elements -->
     <div id="grain-overlay"></div>
     <div id="scrollbar-progress" class="fixed top-0 left-0 h-1.5 z-[60]" style="width: 0%; background-color: var(--accent-color);"></div>
     <canvas id="hero-gradient-background"></canvas>
@@ -384,8 +400,9 @@
     </div>
     <div class="cursor"><div class="cursor-text"></div></div>
 
-    <!-- Header & Navigation -->
-    <header id="header" class="fixed top-6 left-6 right-6 z-50 rounded-full">
+
+    <!-- Main Header for Homepage -->
+    <header id="main-header" class="fixed top-6 left-6 right-6 z-50 rounded-full">
         <div class="pl-6 pr-4 py-1 flex justify-between items-center">
             <div class="flex-1 flex justify-start">
                  <a href="/" class="text-2xl font-bold whitespace-nowrap" style="color: #FFFFFF;">Rinoj<span style="color: var(--accent-color);">.</span></a>
@@ -408,155 +425,633 @@
         </div>
     </header>
 
-    <main id="main-content" role="main">
-        <!-- Hero Section -->
-        <section id="home" class="flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
-            <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-20 md:pt-16">
-                <div class="max-w-4xl mx-auto">
-                    <h1 class="text-3xl md:text-4xl font-bold leading-tight">
-                        <span class="tagline-word">DESIGN INTUITIVE WORKFLOWS THAT TURN</span><br> <span class="tagline-word">COMPLEX PRODUCTS INTO SIMPLE,</span><br> <span class="tagline-word">HUMAN-CENTRED EXPERIENCES.</span>
-                    </h1>
-                    <p class="text-lg md:text-xl font-medium mt-6 max-w-2xl mx-auto" style="color: var(--text-primary);">
-                        <span class="tagline-word">Blending</span> <span class="tagline-word">Design,</span> <span class="tagline-word">Research</span> <span class="tagline-word">and</span> <span class="tagline-word">AI</span> <span class="tagline-word">to</span> <span class="tagline-word">craft</span> <span class="tagline-word">user-friendly</span> <span class="tagline-word">digital</span> <span class="tagline-word">products.</span>
-                    </p>
-                    <div id="hero-ctas" class="mt-10 flex flex-row items-center justify-center gap-10 pointer-events-auto">
-                        <a href="#contact" class="clean-cta cta-primary font-semibold text-sm sm:text-base px-8 sm:px-10 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Let's Talk</a>
-                        <a href="#" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Resume</a>
+    <!-- Content Wrapper -->
+    <div id="page-content-wrapper">
+        <!-- Homepage View -->
+        <div id="homepage-view" class="page-view is-active">
+            <main id="main-content" role="main">
+                <!-- Hero Section -->
+                <section id="home" class="flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
+                    <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-20 md:pt-16">
+                        <div class="max-w-4xl mx-auto">
+                            <h1 class="text-3xl md:text-4xl font-bold leading-tight">
+                                <span class="tagline-word">DESIGN INTUITIVE WORKFLOWS THAT TURN</span><br> <span class="tagline-word">COMPLEX PRODUCTS INTO SIMPLE,</span><br> <span class="tagline-word">HUMAN-CENTRED EXPERIENCES.</span>
+                            </h1>
+                            <p class="text-lg md:text-xl font-medium mt-6 max-w-2xl mx-auto" style="color: var(--text-primary);">
+                                <span class="tagline-word">Blending</span> <span class="tagline-word">Design,</span> <span class="tagline-word">Research</span> <span class="tagline-word">and</span> <span class="tagline-word">AI</span> <span class="tagline-word">to</span> <span class="tagline-word">craft</span> <span class="tagline-word">user-friendly</span> <span class="tagline-word">digital</span> <span class="tagline-word">products.</span>
+                            </p>
+                            <div id="hero-ctas" class="mt-10 flex flex-row items-center justify-center gap-10 pointer-events-auto">
+                                <a href="#contact" class="clean-cta cta-primary font-semibold text-sm sm:text-base px-8 sm:px-10 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Let's Talk</a>
+                                <a href="#" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Resume</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-             <div class="absolute bottom-0 left-0 right-0 z-10 pb-10 md:pb-0">
-                 <div class="name-marquee-container flex whitespace-nowrap items-center">
-                     <div class="marquee-content-wrapper flex-shrink-0 flex items-center">
-                         <span class="text-[12vw] md:text-[6.5vw] text-white select-none px-6">
-                             <span class="font-black">Mohamed Rinoj Hashim</span>
-                             <span class="font-semibold"> | UX / Product Designer | Ex-Fintech & E-Commerce</span>
-                         </span>
-                         <span class="px-4 inline-flex items-center justify-center">
-                             <svg class="star-separator w-[6vw] md:w-[4vw] h-[6vw] md:h-[4vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                         </span>
+                     <div class="absolute bottom-0 left-0 right-0 z-10 pb-10 md:pb-0">
+                         <div class="name-marquee-container flex whitespace-nowrap items-center">
+                             <div class="marquee-content-wrapper flex-shrink-0 flex items-center">
+                                 <span class="text-[12vw] md:text-[6.5vw] text-white select-none px-6">
+                                     <span class="font-black">Mohamed Rinoj Hashim</span>
+                                     <span class="font-semibold"> | UX / Product Designer | Ex-Fintech & E-Commerce</span>
+                                 </span>
+                                 <span class="px-4 inline-flex items-center justify-center">
+                                     <svg class="star-separator w-[6vw] md:w-[4vw] h-[6vw] md:h-[4vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                                 </span>
+                             </div>
+                         </div>
                      </div>
-                 </div>
-             </div>
-        </section>
-        
-        <div id="page-content">
-            <!-- Story Section -->
-            <section id="story" class="relative">
-                <div id="story-pin-container" class="w-full">
-                    <!-- Text content positioned at the top of the viewport -->
-                    <div class="absolute top-0 left-0 right-0 pt-32 md:pt-40 z-10 pointer-events-none">
-                        <div class="w-full px-6 md:px-12">
-                            <div class="grid grid-cols-1 md:grid-cols-6 gap-x-8">
-                                
-                                <div class="md:col-span-2">
-                                    <h3 id="story-subtitle" class="text-3xl md:text-5xl font-bold">The Graduation</h3>
+                </section>
+                
+                <div id="page-content">
+                    <!-- Story Section -->
+                    <section id="story" class="relative">
+                        <div id="story-pin-container" class="w-full">
+                            <div class="absolute top-0 left-0 right-0 pt-32 md:pt-40 z-10 pointer-events-none">
+                                <div class="w-full px-6 md:px-12">
+                                    <div class="grid grid-cols-1 md:grid-cols-6 gap-x-8">
+                                        <div class="md:col-span-2">
+                                            <h3 id="story-subtitle" class="text-3xl md:text-5xl font-bold">The Graduation</h3>
+                                        </div>
+                                        <div id="story-text-container" class="md:col-span-4 relative min-h-[10rem] md:min-h-0 mt-4 md:mt-0">
+                                            <div class="story-text-item">
+                                                <p class="text-xl text-white">It all starts with a single idea. A spark of curiosity that leads to sketching, planning, and laying the digital foundation.</p>
+                                            </div>
+                                            <div class="story-text-item">
+                                                <p class="text-xl text-white">Collaboration is at the heart of my process. I believe the best ideas are born from shared perspectives and open discussions.</p>
+                                            </div>
+                                            <div class="story-text-item">
+                                                <p class="text-xl text-white">From wireframes to high-fidelity prototypes, I focus on crafting clean, intuitive interfaces that are both beautiful and functional.</p>
+                                            </div>
+                                            <div class="story-text-item">
+                                                <p class="text-xl text-white">Dedication goes beyond the 9-to-5. I thrive on the challenge of solving complex problems and getting every detail just right.</p>
+                                            </div>
+                                            <div class="story-text-item">
+                                                <p class="text-xl text-white">Usability testing provides invaluable insights that data alone can't reveal, leading to more human-centered designs.</p>
+                                            </div>
+                                            <div class="story-text-item">
+                                                <p class="text-xl text-white">The end goal is to launch a product that not only looks great but performs flawlessly, creating a seamless bridge between technology and the user.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                <div id="story-text-container" class="md:col-span-4 relative min-h-[10rem] md:min-h-0 mt-4 md:mt-0">
-                                    <div class="story-text-item">
-                                        <p class="text-xl text-white">It all starts with a single idea. A spark of curiosity that leads to sketching, planning, and laying the digital foundation.</p>
+                            </div>
+                            <div class="absolute bottom-[-10%] left-0 w-full h-[60vh]">
+                                <div id="story-track" class="absolute top-0 h-full flex items-center space-x-8">
+                                    <div class="story-panel" data-title="The Graduation">
+                                        <img data-src="assets/graduation.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="A graduate celebrating by throwing his cap in the air.">
                                     </div>
-                                    <div class="story-text-item">
-                                        <p class="text-xl text-white">Collaboration is at the heart of my process. I believe the best ideas are born from shared perspectives and open discussions.</p>
+                                    <div class="story-panel" data-title="My First Work">
+                                        <img data-src="assets/firstwork.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Overnight conference call with US Client.">
                                     </div>
-                                    <div class="story-text-item">
-                                        <p class="text-xl text-white">From wireframes to high-fidelity prototypes, I focus on crafting clean, intuitive interfaces that are both beautiful and functional.</p>
+                                    <div class="story-panel" data-title="In Dubai">
+                                        <img data-src="assets/dubai.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Looking out window from My Office in Dubai.">
                                     </div>
-                                    <div class="story-text-item">
-                                        <p class="text-xl text-white">Dedication goes beyond the 9-to-5. I thrive on the challenge of solving complex problems and getting every detail just right.</p>
+                                    <div class="story-panel" data-title="Hybrid">
+                                        <img data-src="assets/hybrid.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Working in Laptop from Airport with Cold Coffee in hand.">
                                     </div>
-                                    <div class="story-text-item">
-                                        <p class="text-xl text-white">Usability testing provides invaluable insights that data alone can't reveal, leading to more human-centered designs.</p>
+                                    <div class="story-panel" data-title="Brainstorming">
+                                        <img data-src="assets/brainstorming.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="Brainstorming about a B2B login with laptop in desk.">
                                     </div>
-                                    <div class="story-text-item">
-                                        <p class="text-xl text-white">The end goal is to launch a product that not only looks great but performs flawlessly, creating a seamless bridge between technology and the user.</p>
+                                    <div class="story-panel" data-title="What is Next?">
+                                       <img data-src="assets/thenext.webp" src="https://placehold.co/600x360/1e1f1f/333333?text=+" class="rounded-lg" alt="In Flight looking sideways with confidence.">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Image track positioned at the bottom of the viewport -->
-                    <div class="absolute bottom-[-10%] left-0 w-full h-[60vh]">
-                        <div id="story-track" class="absolute top-0 h-full flex items-center space-x-8">
-                            <div class="story-panel" data-title="The Graduation">
-                                <img src="assets/graduation.webp" class="rounded-lg" alt="A graduate celebrating by throwing his cap in the air.">
-                            </div>
-                            <div class="story-panel" data-title="My First Work">
-                                <img src="assets/firstwork.webp" class="rounded-lg" alt="Overnight conference call with US Client.">
-                            </div>
-                            <div class="story-panel" data-title="In Dubai">
-                                <img src="assets/dubai.webp" class="rounded-lg" alt="Looking out window from My Office in Dubai.">
-                            </div>
-                            <div class="story-panel" data-title="Hybrid">
-                                <img src="assets/hybrid.webp" class="rounded-lg" alt="Working in Laptop from Airport with Cold Coffee in hand.">
-                            </div>
-                            <div class="story-panel" data-title="Brainstorming">
-                                <img src="assets/brainstorming.webp" class="rounded-lg" alt="Brainstorming about a B2B login with laptop in desk.">
-                            </div>
-                            <div class="story-panel" data-title="What is Next?">
-                               <img src="assets/thenext.webp" class="rounded-lg" alt="In Flight looking sideways with confidence.">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            <!-- Projects Section -->
-            <section id="work" class="py-12 md:py-24">
-                <div class="container mx-auto px-6 md:px-12">
-                    <div class="mb-16 reveal text-center md:text-left">
-                        <h2 class="text-4xl md:text-5xl font-bold">Projects</h2>
-                        <p class="text-lg mt-2" style="color: var(--text-secondary);">A selection of projects that shaped my journey.</p>
-                    </div>
-                    <div id="projects-container">
-                        <!-- Projects will be dynamically inserted here -->
-                    </div>
+                    <!-- Projects Section -->
+                    <section id="work" class="py-12 md:py-24">
+                        <div class="container mx-auto px-6 md:px-12">
+                            <div class="mb-16 reveal text-center md:text-left">
+                                <h2 class="text-4xl md:text-5xl font-bold">Projects</h2>
+                                <p class="text-lg mt-2" style="color: var(--text-secondary);">A selection of projects that shaped my journey.</p>
+                            </div>
+                            <div id="projects-container">
+                                <!-- Projects will be dynamically inserted here -->
+                            </div>
+                            
+                            <div id="more-projects-container" class="text-center mt-12 reveal">
+                                <a href="https://www.linkedin.com/in/mohamedrinoj/" target="_blank" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tools Section -->
+                    <section id="skills" class="py-8 md:py-10 bg-black/10">
+                        <div id="tools-marquee-container" class="w-full flex flex-nowrap overflow-hidden [mask-image:_linear_gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
+                            <!-- Tool logos will be injected by JS -->
+                        </div>
+                    </section>
                     
-                    <div id="more-projects-container" class="text-center mt-12 reveal">
-                        <a href="https://www.linkedin.com/in/mohamedrinoj/" target="_blank" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tools Section -->
-            <section id="skills" class="py-8 md:py-10 bg-black/10">
-                <div id="tools-marquee-container" class="w-full flex flex-nowrap overflow-hidden [mask-image:_linear_gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
-                    <!-- Tool logos will be injected by JS -->
-                </div>
-            </section>
-            
-             <!-- Footer Section -->
-            <footer id="contact" class="min-h-[70vh] bg-[#1C1C1C] text-white flex items-center justify-center py-12 md:py-16">
-                <div class="container mx-auto px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div class="text-left">
-                            <h2 class="text-5xl md:text-7xl font-bold leading-tight">
-                                Let's create something great together.
-                            </h2>
-                            <a href="mailto:hello@mohamedrinoj.com" class="underline-link footer-magnetic-link mt-8 text-2xl md:text-3xl font-medium inline-block magnetic-item">
-                                <span>hello@mohamedrinoj.com</span>
-                            </a>
+                     <!-- Footer Section -->
+                    <footer id="contact" class="min-h-[70vh] bg-[#1C1C1C] text-white flex items-center justify-center py-12 md:py-16">
+                        <div class="container mx-auto px-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div class="text-left">
+                                    <h2 class="text-5xl md:text-7xl font-bold leading-tight">
+                                        Let's create something great together.
+                                    </h2>
+                                    <a href="mailto:hello@mohamedrinoj.com" class="underline-link footer-magnetic-link mt-8 text-2xl md:text-3xl font-medium inline-block magnetic-item">
+                                        <span>hello@mohamedrinoj.com</span>
+                                    </a>
+                                </div>
+                                <div class="text-left md:text-right flex flex-col justify-between">
+                                     <div class="footer-anim">
+                                         <h3 class="text-lg font-semibold text-cyan-400 mb-4">Social</h3>
+                                         <ul class="space-y-2">
+                                             <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">LinkedIn</a></li>
+                                             <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">Behance</a></li>
+                                         </ul>
+                                         <div class="mt-8">
+                                             <h3 class="text-lg font-semibold text-cyan-400 mb-2">Contact</h3>
+                                             <a href="tel:+917012450190" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">+91 7012 450 190</a>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-left md:text-right flex flex-col justify-between">
-                             <div class="footer-anim">
-                                 <h3 class="text-lg font-semibold text-cyan-400 mb-4">Social</h3>
-                                 <ul class="space-y-2">
-                                     <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">LinkedIn</a></li>
-                                     <li><a href="#" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">Behance</a></li>
-                                 </ul>
-                                 <div class="mt-8">
-                                     <h3 class="text-lg font-semibold text-cyan-400 mb-2">Contact</h3>
-                                     <a href="tel:+917012450190" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">+91 7012 450 190</a>
-                                 </div>
+                    </footer>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Project Page Views -->
+        <div id="project-page-bankiom" class="page-view project-page-view">
+             <!-- Bankiom content goes here -->
+             <div class="content-wrapper">
+                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                    <div class="container mx-auto flex justify-between items-center">
+                        <div class="flex-1 flex justify-start">
+                            <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <div class="flex-1 flex justify-center">
+                            <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                        </div>
+                        <div class="flex-1 flex justify-end">
+                             <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                 <span>Contact Me</span>
+                             </a>
+                        </div>
+                    </div>
+                </header>
+                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                    <img data-src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" src="https://placehold.co/1770x1180/1e1f1f/333333?text=+" alt="Fintech Super-App" class="absolute inset-0 w-full h-full object-cover parallax-bg">
+                    <div class="relative z-20 p-6">
+                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bankiom - Fintech Super-App</h1>
+                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">AI Integration</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Design Systems</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">User Journey Mapping</span>
+                        </div>
+                    </div>
+                </section>
+                <main class="bg-gray-900/90">
+                    <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-3xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Challenge</h2>
+                            <p class="text-xl md:text-2xl text-gray-300 anim-reveal">The client's vision was a revolutionary fintech "super-app" combining budgeting, investments, and AI-powered financial advice. The central UX challenge was immense: how to unify these complex, data-heavy services into a single, cohesive experience that felt simple, empowering, and trustworthy to the average user.</p>
+                        </div>
+                    </section>
+                    <section class="py-20 md:py-32 bg-black/20">
+                        <div class="container mx-auto px-6 max-w-5xl">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Understanding the User</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="bg-gray-800/50 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                    <h3 class="text-xl font-bold text-cyan-400 mb-4">Persona: The Novice Investor</h3>
+                                    <p class="text-gray-300 mb-2"><strong>Age:</strong> 25-35</p>
+                                    <p class="text-gray-300 mb-2"><strong>Goal:</strong> Start investing but is intimidated by complex platforms.</p>
+                                    <p class="text-gray-300 mb-4"><strong>Pain Point:</strong> Fears making a costly mistake due to lack of knowledge.</p>
+                                    <img data-src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x400/1e1f1f/333333?text=+" class="rounded aspect-[2/1] object-cover" alt="A young professional looking thoughtfully at a screen.">
+                                </div>
+                                 <div class="bg-gray-800/50 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                    <h3 class="text-xl font-bold text-cyan-400 mb-4">Persona: The Busy Professional</h3>
+                                    <p class="text-gray-300 mb-2"><strong>Age:</strong> 35-50</p>
+                                    <p class="text-gray-300 mb-2"><strong>Goal:</strong> Optimize finances without spending too much time.</p>
+                                    <p class="text-gray-300 mb-4"><strong>Pain Point:</strong> Uses multiple apps for banking, budgeting, and investing.</p>
+                                    <img data-src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x400/1e1f1f/333333?text=+" class="rounded aspect-[2/1] object-cover" alt="A mature professional working on a laptop in a modern office.">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="h-screen overflow-hidden relative" id="horizontal-scroll-container-bankiom">
+                        <div class="horizontal-scroll-section">
+                            <div class="horizontal-panel">
+                                <div class="text-center p-8">
+                                   <h2 class="text-4xl md:text-6xl font-bold mb-4">From Sketch to Screen</h2>
+                                   <p class="text-xl text-gray-300">Mapping out the user flow and core app structure.</p>
+                                </div>
+                            </div>
+                             <div class="horizontal-panel">
+                                <img data-src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1200&auto=format&fit=crop" src="https://placehold.co/1200x900/1e1f1f/333333?text=+" class="rounded-lg h-3/4 w-auto object-contain" alt="A collection of digital wireframes for a mobile application on a computer screen.">
+                            </div>
+                             <div class="horizontal-panel">
+                                 <img data-src="https://images.unsplash.com/photo-1559028006-44a13675a834?q=80&w=1200&auto=format&fit=crop" src="https://placehold.co/1200x900/1e1f1f/333333?text=+" class="rounded-lg h-3/4 w-auto object-contain" alt="High-fidelity mockups of a financial application displayed on a smartphone.">
+                            </div>
+                        </div>
+                    </section>
+                    <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32 py-20 md:py-32">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                <img data-src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="Fintech app UI screenshot">
+                            </div>
+                            <div class="anim-reveal md:order-1">
+                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">Design & Prototyping</h3>
+                                <p class="text-lg text-gray-300">A modular design system was crucial. We used a clean, card-based UI with clear data visualizations to make complex information digestible. I designed the AI interface to provide recommendations with clear reasoning and sliders for users to adjust risk levels, giving them a sense of control.</p>
                             </div>
                         </div>
                     </div>
-                </div>
-            </footer>
+                     <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-5xl">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Design System</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                                <div class="anim-reveal">
+                                    <h3 class="text-2xl font-bold mb-4">Colors</h3>
+                                    <div class="flex space-x-4 color-palette">
+                                        <div class="w-20 h-20 rounded-full bg-cyan-400 flex items-center justify-center text-black font-mono text-sm">#22D3EE</div>
+                                        <div class="w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center font-mono text-sm">#1F2937</div>
+                                        <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-black font-mono text-sm">#E5E7EB</div>
+                                        <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center text-black font-mono text-sm">#FFFFFF</div>
+                                    </div>
+                                </div>
+                                <div class="anim-reveal">
+                                    <h3 class="text-2xl font-bold mb-4">Typography</h3>
+                                    <div>
+                                        <p class="text-4xl font-bold">Satoshi Bold</p>
+                                        <p class="text-lg">Satoshi Regular</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-4xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The focus on building trust paid off. The app achieved a 35% increase in user retention within six months and was featured on several major tech blogs for its innovative, user-centric approach.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="35">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in User Retention</p>
+                                </div>
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Higher AI Engagement</p>
+                                </div>
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400">Top 10</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Featured on Tech Blogs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
         </div>
-    </main>
+        <div id="project-page-travion" class="page-view project-page-view">
+             <!-- Travion content goes here -->
+             <div class="content-wrapper">
+                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                    <div class="container mx-auto flex justify-between items-center">
+                        <div class="flex-1 flex justify-start">
+                            <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <div class="flex-1 flex justify-center">
+                            <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                        </div>
+                        <div class="flex-1 flex justify-end">
+                             <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                 <span>Contact Me</span>
+                             </a>
+                        </div>
+                    </div>
+                </header>
+                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                    <img data-src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" src="https://placehold.co/2070x1380/1e1f1f/333333?text=+" alt="B2B Travel Platform" class="absolute inset-0 w-full h-full object-cover parallax-bg">
+                    <div class="relative z-20 p-6">
+                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Travion - B2B Travel Platform Redesign</h1>
+                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UX Research</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
+                        </div>
+                    </div>
+                </section>
+                <main class="bg-gray-900/90">
+                     <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-3xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
+                            <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A critical B2B tool for travel agents was failing. User engagement had plummeted by 40%, and 60% of bookings were abandoned due to a convoluted, 12-step workflow that was causing significant frustration.</p>
+                        </div>
+                    </section>
+                    <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
+                                <p class="text-lg text-gray-300">I conducted in-depth interviews with 15 travel agents. The key insight: agents weren't booking linearly; they were constantly juggling multiple client itineraries. The existing system wasn't built for this multi-threaded workflow.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img data-src="https://images.unsplash.com/photo-1579762593175-20226054cad0?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A designer sketching travel app wireframes on a whiteboard.">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                <img data-src="https://images.unsplash.com/photo-1600195077909-46e573870d99?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A polished user interface for a travel booking application.">
+                            </div>
+                            <div class="anim-reveal md:order-1">
+                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
+                                <p class="text-lg text-gray-300">I developed a clean design system and high-fidelity prototypes focused on a task-based layout that mirrored the agents' mental models. We prioritized clear visual hierarchy and reduced cognitive load at every step.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
+                                 <p class="text-lg text-gray-300">Moderated usability tests with agents revealed the initial dashboard felt too cluttered. I iterated on the design, introducing a more streamlined card-based system that tested much better in a second round of testing.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img data-src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop.">
+                            </div>
+                        </div>
+                    </div>
+                     <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-5xl">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">From 12 Steps to 4</h2>
+                            <div class="relative">
+                                <div class="absolute left-1/2 h-full w-1 bg-gray-700 hidden md:block"></div>
+                                <div class="space-y-16">
+                                    <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                        <div class="text-center md:text-right md:pr-8 anim-reveal">
+                                            <h3 class="text-2xl font-bold text-cyan-400">Step 1: Simplified Search</h3>
+                                            <p class="text-gray-300">A clean, intuitive search interface that allows agents to quickly find flights, hotels, and car rentals.</p>
+                                        </div>
+                                        <div class="hidden md:block"></div>
+                                    </div>
+                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                        <div class="hidden md:block"></div>
+                                        <div class="text-center md:text-left md:pl-8 anim-reveal">
+                                            <h3 class="text-2xl font-bold text-cyan-400">Step 2: Itinerary Builder</h3>
+                                            <p class="text-gray-300">A drag-and-drop interface to easily build and manage multiple client itineraries.</p>
+                                        </div>
+                                    </div>
+                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                        <div class="text-center md:text-right md:pr-8 anim-reveal">
+                                            <h3 class="text-2xl font-bold text-cyan-400">Step 3: One-Page Booking</h3>
+                                            <p class="text-gray-300">A single-page booking form that consolidates all necessary information, reducing clicks and confusion.</p>
+                                        </div>
+                                        <div class="hidden md:block"></div>
+                                    </div>
+                                     <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                                        <div class="hidden md:block"></div>
+                                        <div class="text-center md:text-left md:pl-8 anim-reveal">
+                                            <h3 class="text-2xl font-bold text-cyan-400">Step 4: Instant Confirmation</h3>
+                                            <p class="text-gray-300">A clear, concise confirmation page with all booking details and next steps.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-4xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The redesign was a resounding success. By streamlining the booking process from 12 steps down to just 4, we achieved a 70% reduction in booking time, an 80% drop in abandonment, and a 25% increase in completed bookings in Q1.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="70">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Booking Time</p>
+                                </div>
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="80">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Drop in Abandonment</p>
+                                </div>
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Bookings (Q1)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+        <div id="project-page-bhavanam" class="page-view project-page-view">
+            <!-- Bhavanam content goes here -->
+            <div class="content-wrapper">
+                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                     <div class="container mx-auto flex justify-between items-center">
+                         <div class="flex-1 flex justify-start">
+                             <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                 <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                 <span>Back</span>
+                             </button>
+                         </div>
+                         <div class="flex-1 flex justify-center">
+                            <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                         </div>
+                         <div class="flex-1 flex justify-end">
+                              <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                  <span>Contact Me</span>
+                              </a>
+                         </div>
+                     </div>
+                </header>
+                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                    <img data-src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" src="https://placehold.co/1770x1180/1e1f1f/333333?text=+" alt="Real Estate Platform" class="absolute inset-0 w-full h-full object-cover parallax-bg">
+                    <div class="relative z-20 p-6">
+                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bhavanam - Real Estate Platform</h1>
+                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Healthcare UX</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Accessibility (WCAG)</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
+                        </div>
+                    </div>
+                </section>
+                <main class="bg-gray-900/90">
+                      <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-3xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Need</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A leading hospital network was struggling with a clunky, outdated patient management system causing significant administrative overhead. The goal was to build a new platform focused on reducing cognitive load for medical staff and ensuring full accessibility compliance.</p>
+                         </div>
+                     </section>
+                     <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="anim-reveal">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
+                                 <p class="text-lg text-gray-300">I spent two weeks shadowing nurses and doctors on their rounds. This firsthand observation was invaluable. I identified major pain points, such as excessive clicking to access patient vitals and difficulty reading text in poorly lit rooms.</p>
+                             </div>
+                             <div class="rounded-lg overflow-hidden anim-reveal">
+                                 <img data-src="https://images.unsplash.com/photo-1516131206829-1076e5b428d2?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A designer sketching UI concepts on a notepad.">
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                 <img data-src="https://images.unsplash.com/photo-1579684385127-1ef15d50811e?q=80&w=2080&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="Doctor using a tablet">
+                             </div>
+                             <div class="anim-reveal md:order-1">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
+                                 <p class="text-lg text-gray-300">Using Figma, I created high-fidelity, interactive prototypes. Every design choice, from color palettes to font sizes, was vetted against WCAG 2.1 AA guidelines. The design featured a dark mode to reduce eye strain during night shifts, a feature specifically requested by nurses.</p>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                             <div class="anim-reveal">
+                                  <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
+                                  <p class="text-lg text-gray-300">Usability tests with 10 medical professionals confirmed the task-based approach was much faster, but revealed some icons were not immediately intuitive. I iterated on the icon library, adding text labels for clarity, which tested perfectly in the second round.</p>
+                             </div>
+                             <div class="rounded-lg overflow-hidden anim-reveal">
+                                  <img data-src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A team collaborating and reviewing designs on a screen during a usability test.">
+                             </div>
+                         </div>
+                     </div>
+                     <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-5xl">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Key Features</h2>
+                             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card">
+                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">Dark Mode</h3>
+                                     <p class="text-gray-300">A high-contrast dark mode to reduce eye strain for medical staff during long night shifts.</p>
+                                 </div>
+                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card" style="--delay: 0.1s;">
+                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">Task-Based Dashboard</h3>
+                                     <p class="text-gray-300">An intuitive dashboard that surfaces the most critical patient information and tasks upfront.</p>
+                                 </div>
+                                 <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal feature-card" style="--delay: 0.2s;">
+                                     <h3 class="text-xl font-bold text-cyan-400 mb-4">WCAG 2.1 AA Compliance</h3>
+                                     <p class="text-gray-300">Ensuring the platform is usable by people with a wide range of disabilities.</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                     <section class="py-20 md:py-32">
+                         <div class="container mx-auto px-6 max-w-4xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Result & Impact</h2>
+                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new system was a resounding success. We measurably reduced administrative time by 50%, freeing up hundreds of hours per week. This meant medical staff could dedicate more valuable time to what truly matters: patient care.</p>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="50">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Admin Time</p>
+                                 </div>
+                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="100">0%</p>
+                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">WCAG 2.1 AA Compliant</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                </main>
+            </div>
+        </div>
+        <div id="project-page-ourshoppee" class="page-view project-page-view">
+             <!-- OurShoppee content goes here -->
+             <div class="content-wrapper">
+                <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                    <div class="container mx-auto flex justify-between items-center">
+                        <div class="flex-1 flex justify-start">
+                            <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        <div class="flex-1 flex justify-center">
+                           <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                        </div>
+                        <div class="flex-1 flex justify-end">
+                             <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                                 <span>Contact Me</span>
+                             </a>
+                        </div>
+                    </div>
+                </header>
+                <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
+                    <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+                    <img data-src="https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop" src="https://placehold.co/1887x1258/1e1f1f/333333?text=+" alt="E-Commerce Experience" class="absolute inset-0 w-full h-full object-cover parallax-bg">
+                    <div class="relative z-20 p-6">
+                        <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">OurShoppee - E-Commerce Experience</h1>
+                        <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Conversion Optimization</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">A/B Testing</span>
+                            <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">UI Design</span>
+                        </div>
+                    </div>
+                </section>
+                <main class="bg-gray-900/90">
+                    <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-3xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
+                            <p class="text-xl md:text-2xl text-gray-300 anim-reveal">A successful e-commerce brand faced a classic "leaky funnel": high traffic but a low conversion rate of just 1.5%. Analytics pointed to a high cart abandonment rate, with the multi-page checkout process being the primary culprit.</p>
+                        </div>
+                    </section>
+                    <div class="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-32">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Discovery & Research</h3>
+                                <p class="text-lg text-gray-300">Using Hotjar, I analyzed heatmaps and session recordings of over 200 user sessions. I discovered that users were dropping off significantly when asked to create an account and when presented with unexpected shipping costs late in the process.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img data-src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A team looking at analytics and heatmaps on a screen.">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                <img data-src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d5f?q=80&w=2070&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="People shopping on a website">
+                            </div>
+                            <div class="anim-reveal md:order-1">
+                                <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Design & Prototyping</h3>
+                                <p class="text-lg text-gray-300">I designed two primary challengers in Figma for A/B testing: one with a prominent guest checkout and another with a collapsible one-page accordion layout. Both designs brought shipping information forward in the flow.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">03. Testing & Iteration</h3>
+                                 <p class="text-lg text-gray-300">We ran the A/B tests over two weeks. The version with the prominent guest checkout and accordion layout was the clear winner, showing a statistically significant lift in conversions.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img data-src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=800&auto=format&fit=crop" src="https://placehold.co/800x533/1e1f1f/333333?text=+" class="w-full h-full object-cover image-pan" alt="A modern analytics dashboard on a laptop screen showing positive trends.">
+                            </div>
+                        </div>
+                    </div>
+                     <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-5xl">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">User Testimonials</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                    <p class="text-lg text-gray-300 mb-4">"The new checkout is a breeze! I was able to complete my purchase in under a minute."</p>
+                                    <p class="text-cyan-400 font-bold">- User A</p>
+                                </div>
+                                <div class="bg-black/20 p-8 rounded-lg border border-gray-700 anim-reveal">
+                                    <p class="text-lg text-gray-300 mb-4">"I love that I can see the shipping costs upfront. No more surprises at the end!"</p>
+                                    <p class="text-cyan-400 font-bold">- User B</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="py-20 md:py-32">
+                        <div class="container mx-auto px-6 max-w-4xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
+                            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The results were immediate. By implementing the winning design, the site's conversion rate increased by 25%, and average order value saw a 15% uplift in the first quarter, delivering a clear return on investment.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Conversion</p>
+                                </div>
+                                <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
+                                    <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="15">0%</p>
+                                    <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increase in Avg. Order Value</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
     
     <!-- Go To Top Button -->
     <button id="go-to-top-btn" class="fixed bottom-8 right-8 z-50 w-24 h-24 opacity-0 pointer-events-none">
@@ -575,9 +1070,6 @@
         </svg>
     </button>
     
-    <!-- Project Detail Page Transition Overlay -->
-    <div id="project-detail-page"></div>
-
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-[#1e1f1f] bg-opacity-50 z-[9990] hidden" role="dialog" aria-modal="true">
         <div id="mobile-menu-panel" class="absolute top-0 right-0 h-full w-2/3 max-w-sm bg-[#1e1f1f]/95 backdrop-blur-lg shadow-2xl p-8 transform translate-x-full">
@@ -594,204 +1086,189 @@
     </div>
     
     <script>
-        window.addEventListener('load', function() {
-            history.scrollRestoration = 'manual';
+    // --- COMBINED & REFACTORED SCRIPT FOR SINGLE PAGE APP ---
+    window.addEventListener('load', function() {
+        history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
 
-            window.addEventListener('pageshow', (event) => {
-                if (event.persisted) { // Check if the page is from the bfcache
-                    const scrollPos = sessionStorage.getItem('scrollPos');
-                    if (scrollPos) {
-                        window.scrollTo(0, parseInt(scrollPos));
-                    }
-                }
-            });
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        let lastScrollPos = 0;
+        let projectPageScrollTriggers = [];
 
-            const scrollPos = sessionStorage.getItem('scrollPos');
-            if (scrollPos) {
-                // Smooth scroll to the previous position
-                gsap.to(window, { 
-                    scrollTo: { y: parseInt(scrollPos), autoKill: false }, 
-                    duration: 1.5, 
-                    ease: 'power3.inOut',
-                    delay: 0.2 // A little delay to let things settle
-                });
-                sessionStorage.removeItem('scrollPos');
-                if (window.location.hash) {
-                    history.pushState("", document.title, window.location.pathname + window.location.search);
-                }
-            } else {
-                 window.scrollTo(0, 0);
-            }
+        // --- 0. GLOBAL ELEMENTS & UTILS ---
+        const cursor = document.querySelector('.cursor');
+        const cursorText = document.querySelector('.cursor-text');
+        const mainHeader = document.getElementById('main-header');
+        const goToTopBtn = document.getElementById('go-to-top-btn');
 
-            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        // --- 1. PAGE TRANSITION LOGIC ---
+        function switchView(targetId, e) {
+            const currentView = document.querySelector('.page-view.is-active');
+            const targetView = document.getElementById(targetId);
+            const wrapper = document.getElementById('page-content-wrapper');
 
-            // --- 0. GENERAL SETUP ---
-            const progressBar = document.getElementById('scrollbar-progress');
-            gsap.to(progressBar, {
-                width: "100%",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: document.body,
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 0.3
-                }
-            });
+            if (!currentView || !targetView || currentView === targetView || wrapper.classList.contains('is-transitioning')) return;
+            wrapper.classList.add('is-transitioning');
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    const href = this.getAttribute('href');
-                    if (href && href.startsWith('#')) {
-                        e.preventDefault();
-                        let target = document.querySelector(href);
-                        if(target) {
-                            if (document.getElementById('mobile-menu').classList.contains('hidden') === false) {
-                                closeMobileMenu();
-                            }
-                            gsap.to(window, {
-                                scrollTo: { y: target, offsetY: 70 }, // offset for fixed header
-                                duration: 1.5,
-                                ease: 'power3.inOut'
-                            });
+            const isGoingBack = targetId === 'homepage-view';
+
+            const clickX = e ? `${e.clientX}px` : '50%';
+            const clickY = e ? `${e.clientY}px` : '50%';
+            
+            const clipStart = `circle(0% at ${clickX} ${clickY})`;
+            const clipEnd = `circle(150% at ${clickX} ${clickY})`;
+
+            if (isGoingBack) {
+                // --- TRANSITION: PROJECT -> HOME ---
+                // 1. Prepare homepage underneath.
+                gsap.set(targetView, { display: 'block', zIndex: -1 });
+                window.scrollTo(0, lastScrollPos);
+
+                // 2. Animate the current view closing
+                gsap.fromTo(currentView, 
+                    { clipPath: clipEnd }, 
+                    {
+                        clipPath: clipStart,
+                        duration: 1.2,
+                        ease: 'power3.inOut',
+                        onStart: () => {
+                            destroyProjectPageScrollTriggers();
+                            gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.5 });
+                        },
+                        onComplete: () => {
+                            // 3. Cleanup
+                            currentView.classList.remove('is-active');
+                            targetView.classList.add('is-active');
+                            gsap.set(currentView, { clearProps: 'all', display: 'none' });
+                            gsap.set(targetView, { clearProps: 'all' });
+                            wrapper.classList.remove('is-transitioning');
+                            ScrollTrigger.refresh();
                         }
                     }
-                });
-            });
+                );
 
-            // --- 1. PRELOADER & INITIAL PAGE REVEAL ---
-            const preloader = document.querySelector('.preloader');
-            if (preloader) {
-                const preloaderLogo = document.querySelector('.preloader-logo');
-                const header = document.getElementById('header');
-                const tagline = document.getElementById('hero-tagline');
-                const heroCTAs = document.getElementById('hero-ctas');
-                const marqueeContainer = document.querySelector('.name-marquee-container');
-                const taglineWords = gsap.utils.toArray('.tagline-word');
-                const ctaButtons = gsap.utils.toArray('#hero-ctas a');
-            
-                gsap.set([header, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
-                gsap.set([header, marqueeContainer], { y: 80 });
-                gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
-                gsap.set(ctaButtons, { opacity: 0, y: 20 });
+            } else {
+                // --- TRANSITION: HOME -> PROJECT ---
+                lastScrollPos = window.scrollY;
 
-                gsap.to(preloaderLogo, {
-                    scale: 1.1,
-                    duration: 0.8,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'power1.inOut'
+                // 1. Prepare targetView to animate in
+                gsap.set(targetView, {
+                    display: 'block',
+                    clipPath: clipStart,
+                    zIndex: 100 // Ensure it's on top
                 });
-                
-                const tl = gsap.timeline({
+                window.scrollTo(0, 0);
+
+                // 2. Animate reveal
+                gsap.to(targetView, {
+                    clipPath: clipEnd,
+                    duration: 1.2,
+                    ease: 'power3.inOut',
+                    onStart: () => {
+                        gsap.to([mainHeader, goToTopBtn], { autoAlpha: 0, duration: 0.5 });
+                        initializeProjectPageAnimations(targetView);
+                    },
                     onComplete: () => {
-                        setupStorySectionAnimation();
+                        // 3. Cleanup
+                        currentView.classList.remove('is-active');
+                        gsap.set(currentView, { display: 'none' });
+                        targetView.classList.add('is-active');
+                        gsap.set(targetView, { clearProps: 'all' }); 
+                        wrapper.classList.remove('is-transitioning');
                         ScrollTrigger.refresh();
                     }
                 });
+            }
+        }
+        
+        // --- 2. PRELOADER & INITIAL PAGE REVEAL ---
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+            const preloaderLogo = document.querySelector('.preloader-logo');
+            const tagline = document.getElementById('hero-tagline');
+            const heroCTAs = document.getElementById('hero-ctas');
+            const marqueeContainer = document.querySelector('.name-marquee-container');
+            const taglineWords = gsap.utils.toArray('.tagline-word');
+            const ctaButtons = gsap.utils.toArray('#hero-ctas a');
+        
+            gsap.set([mainHeader, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
+            gsap.set([mainHeader, marqueeContainer], { y: 80 });
+            gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
+            gsap.set(ctaButtons, { opacity: 0, y: 20 });
+
+            gsap.to(preloaderLogo, { scale: 1.1, duration: 0.8, repeat: -1, yoyo: true, ease: 'power1.inOut' });
             
-                tl.to(preloader, {
-                    yPercent: -100,
-                    duration: 1.2,
-                    ease: 'power3.inOut',
-                    delay: 0.4
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    initializeHomepageAnimations();
+                    ScrollTrigger.refresh();
+                }
+            });
+        
+            tl.to(preloader, { yPercent: -100, duration: 1.2, ease: 'power3.inOut', delay: 0.4 });
+            tl.to([mainHeader, marqueeContainer, tagline, heroCTAs], { autoAlpha: 1 }, "-=1.0");
+            tl.to([mainHeader, marqueeContainer], { y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.1 }, "-=1.0");
+            tl.to(taglineWords, { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.04, ease: 'power3.out' }, "-=0.8");
+            tl.to(ctaButtons, { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: 'power3.out' }, "-=0.6");
+            tl.call(() => preloader.remove());
+        }
+
+        // --- 3. GLOBAL INTERACTIVITY (CURSOR, GRAIN, ETC) ---
+        if (isTouchDevice) {
+            cursor.style.display = 'none';
+        } else {
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
+            });
+
+            document.querySelectorAll('a, button, .project-item').forEach(el => {
+                el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
+                el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
+            });
+        }
+
+        const grainOverlay = document.getElementById('grain-overlay');
+        if (grainOverlay && !isTouchDevice) {
+            window.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
+                gsap.to(grainOverlay, { x: -moveX, y: -moveY, duration: 0.7, ease: 'power2.out' });
+            });
+        }
+        
+        // --- 4. HOMEPAGE SPECIFIC ANIMATIONS ---
+        function initializeHomepageAnimations() {
+            gsap.to(document.getElementById('scrollbar-progress'), {
+                width: "100%", ease: "none",
+                scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.3 }
+            });
+
+            document.querySelectorAll('#main-header a[href^="#"], #hero-ctas a[href^="#"], #mobile-menu a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    let target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        if (document.getElementById('mobile-menu').classList.contains('hidden') === false) closeMobileMenu();
+                        gsap.to(window, { scrollTo: { y: target, offsetY: 70 }, duration: 1.5, ease: 'power3.inOut' });
+                    }
                 });
-
-                tl.to([header, marqueeContainer, tagline, heroCTAs], {
-                    autoAlpha: 1,
-                }, "-=1.0");
-
-                tl.to([header, marqueeContainer], {
-                    y: 0,
-                    duration: 1.2,
-                    ease: 'power3.out',
-                    stagger: 0.1
-                }, "-=1.0");
-
-                tl.to(taglineWords, {
-                    opacity: 1,
-                    y: 0,
-                    rotationX: 0,
-                    duration: 0.8,
-                    stagger: 0.04,
-                    ease: 'power3.out'
-                }, "-=0.8");
-
-                tl.to(ctaButtons, {
-                    opacity: 1,
-                    y: 0,
-                    stagger: 0.15,
-                    duration: 0.8,
-                    ease: 'power3.out'
-                }, "-=0.6");
-
-                tl.call(() => {
-                    preloader.remove();
-                });
-            }
-
-
-            // --- 2. CUSTOM CURSOR ---
-            const cursor = document.querySelector('.cursor');
-            const cursorText = document.querySelector('.cursor-text');
-            const interactiveElements = document.querySelectorAll('a, button');
-            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            });
             
-            if (isTouchDevice) {
-                cursor.style.display = 'none';
-            } else {
-                window.addEventListener('mousemove', (e) => {
-                    gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
-                });
-
-                interactiveElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
-                    el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
-                });
-            }
-
-            // --- 2.5 INTERACTIVE GRAIN ---
-            const grainOverlay = document.getElementById('grain-overlay');
-            if (grainOverlay && !isTouchDevice) {
-                window.addEventListener('mousemove', (e) => {
-                    // Calculate movement based on cursor position from center
-                    const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
-                    const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
-
-                    gsap.to(grainOverlay, {
-                        x: -moveX, // Move in the opposite direction for a parallax effect
-                        y: -moveY,
-                        duration: 0.7,
-                        ease: 'power2.out'
-                    });
-                });
-            }
-
-            // --- 3. SCROLL & HOVER ANIMATIONS ---
             if (!prefersReducedMotion.matches) {
-
-                // a) Marquee Scroll Speed Animation
                 const marqueeContainer = document.querySelector('.name-marquee-container');
                 if (marqueeContainer) {
                     const contentWrapper = marqueeContainer.querySelector('.marquee-content-wrapper');
                     if (contentWrapper) {
                         marqueeContainer.appendChild(contentWrapper.cloneNode(true));
                         const marqueeParts = gsap.utils.toArray(marqueeContainer.children);
-
                         const marqueeAnimation = gsap.to(marqueeParts, {
-                            xPercent: -100,
-                            repeat: -1,
-                            duration: 20,
-                            ease: "linear",
-                            modifiers: {
-                                xPercent: gsap.utils.wrap(-100, 0)
-                            }
+                            xPercent: -100, repeat: -1, duration: 20, ease: "linear",
+                            modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
                         });
-                        
                         ScrollTrigger.create({
-                            trigger: "body",
-                            start: "top top",
-                            end: "bottom bottom",
+                            trigger: "body", start: "top top", end: "bottom bottom",
                             onUpdate: self => {
                                 let direction = self.direction === 1 ? 1 : -1;
                                 let velocity = self.getVelocity();
@@ -803,301 +1280,17 @@
                         });
                     }
                 }
-                
-                // b) General Reveal Animations
-                gsap.utils.toArray('.reveal').forEach(el => {
-                    gsap.fromTo(el, { opacity: 0, y: 60 }, { 
-                        opacity: 1, y: 0, duration: 1, ease: 'power2.out',
-                        scrollTrigger: { 
-                            trigger: el, 
-                            start: 'top 90%', 
-                            toggleActions: 'play none none none'
-                        }
-                    });
+            }
+
+            gsap.utils.toArray('#homepage-view .reveal').forEach(el => {
+                gsap.fromTo(el, { opacity: 0, y: 60 }, { 
+                    opacity: 1, y: 0, duration: 1, ease: 'power2.out',
+                    scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
                 });
-
-            } else { // Fallback for reduced motion
-                 gsap.utils.toArray('.reveal, .project-item').forEach(el => {
-                     el.style.opacity = 1;
-                     el.style.transform = 'none';
-                 });
-            }
-            
-            function setupStorySectionAnimation() {
-                const storySection = document.getElementById('story');
-                if (!storySection) return;
-                const storyPinContainer = document.getElementById('story-pin-container');
-                const storyTrack = document.getElementById('story-track');
-                const storyPanels = gsap.utils.toArray(".story-panel");
-                const storyTexts = gsap.utils.toArray(".story-text-item");
-                const storySubtitle = document.getElementById("story-subtitle");
-
-                if (!storyTrack || storyPanels.length === 0) return;
-
-                gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
-                
-                let activePanelIndex = -1;
-
-                const xStart = (window.innerWidth - storyPanels[0].offsetWidth) / 2;
-                gsap.set(storyTrack, { x: xStart });
-
-                storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === 0));
-                storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === 0));
-                if (storyPanels[0]) {
-                    storySubtitle.innerText = storyPanels[0].dataset.title;
-                }
-
-                gsap.to(storyTrack, {
-                    x: () => {
-                        const lastPanel = storyPanels[storyPanels.length - 1];
-                        return -(lastPanel.offsetLeft - (window.innerWidth - lastPanel.offsetWidth) / 2);
-                    },
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: storySection,
-                        pin: storyPinContainer,
-                        scrub: 1,
-                        start: "top top",
-                        end: "bottom bottom",
-                        onUpdate: self => {
-                            let centerPoint = window.innerWidth / 2;
-                            let newActiveIndex = -1;
-                            let smallestDistance = Infinity;
-
-                            storyPanels.forEach((panel, index) => {
-                                let panelRect = panel.getBoundingClientRect();
-                                let panelCenter = panelRect.left + panelRect.width / 2;
-                                let distance = Math.abs(panelCenter - centerPoint);
-
-                                if (distance < panelRect.width / 2 && distance < smallestDistance) {
-                                    smallestDistance = distance;
-                                    newActiveIndex = index;
-                                }
-                            });
-
-                            if (newActiveIndex !== -1 && newActiveIndex !== activePanelIndex) {
-                                activePanelIndex = newActiveIndex;
-                                storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePanelIndex));
-                                storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === activePanelIndex));
-                                if(storyPanels[activePanelIndex]){
-                                    storySubtitle.innerText = storyPanels[activePanelIndex].dataset.title;
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            // --- 4. MOBILE MENU LOGIC ---
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-            const openButton = document.getElementById('mobile-menu-button');
-            const closeButton = document.getElementById('mobile-close-button');
-
-            function openMobileMenu() {
-                mobileMenu.classList.remove('hidden');
-                gsap.to(mobileMenuPanel, { x: 0, duration: 0.5, ease: 'power3.out' });
-                gsap.fromTo('.mobile-nav-link, .mobile-nav-link-cta', 
-                    { opacity: 0, x: 50 },
-                    { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, delay: 0.2, ease: 'power3.out' }
-                );
-            }
-
-            function closeMobileMenu() {
-                gsap.to(mobileMenuPanel, { 
-                    x: '100%', 
-                    duration: 0.5, 
-                    ease: 'power3.in',
-                    onComplete: () => {
-                        mobileMenu.classList.add('hidden');
-                        gsap.set('.mobile-nav-link, .mobile-nav-link-cta', { opacity: 0, x: 50 });
-                    }
-                });
-            }
-
-            openButton.addEventListener('click', openMobileMenu);
-            closeButton.addEventListener('click', closeMobileMenu);
-            mobileMenu.addEventListener('click', (e) => {
-                if (e.target === mobileMenu) closeMobileMenu();
             });
 
+            setupStorySectionAnimation();
 
-            // --- 5. THREE.JS GRADIENT BACKGROUND ---
-            let scene, camera, renderer, material;
-            const gradientCanvas = document.getElementById('hero-gradient-background');
-            if(gradientCanvas) {
-                function initGradientBackground() {
-                    scene = new THREE.Scene();
-                    camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-                    renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true });
-                
-                    const geometry = new THREE.PlaneBufferGeometry(2, 2);
-                    material = new THREE.ShaderMaterial({
-                        uniforms: {
-                            u_time: { value: 0 },
-                            u_resolution: { value: new THREE.Vector2() },
-                            u_color1: { value: new THREE.Color(0x0047AB) },
-                            u_color2: { value: new THREE.Color(0x00008B) },
-                        },
-                        vertexShader: `
-                            varying vec2 vUv;
-                            void main() {
-                                vUv = uv;
-                                gl_Position = vec4(position, 1.0);
-                            }
-                        `,
-                        fragmentShader: `
-                            varying vec2 vUv;
-                            uniform float u_time;
-                            uniform vec3 u_color1;
-                            uniform vec3 u_color2;
-                            void main() {
-                                vec2 p = vUv;
-                                float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1;
-                                vec3 color = mix(u_color1, u_color2, blend);
-                                gl_FragColor = vec4(color, 1.0);
-                            }
-                        `,
-                    });
-                
-                    const mesh = new THREE.Mesh(geometry, material);
-                    scene.add(mesh);
-                
-                    onWindowResizeGradient();
-                    window.addEventListener('resize', onWindowResizeGradient);
-                    animateGradient();
-                }
-
-                function animateGradient() {
-                    if (material) {
-                        material.uniforms.u_time.value += 0.01;
-                        renderer.render(scene, camera);
-                    }
-                    requestAnimationFrame(animateGradient);
-                }
-
-                function onWindowResizeGradient() {
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                    if (material) {
-                        material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-                    }
-                }
-            
-                initGradientBackground();
-            }
-
-
-            // --- 6. DYNAMIC PROJECT INJECTION & ANIMATION ---
-            const projects = [
-                 { 
-                    id: 'bankiom', 
-                    title: 'Bankiom - Fintech Super-App', 
-                    tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], 
-                    image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop',
-                    href: 'project-bankiom.html'
-                },
-                { 
-                    id: 'travion', 
-                    title: 'Travion - B2B Travel Platform', 
-                    tags: ['UX Research', 'UI Design', 'Prototyping'], 
-                    image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop',
-                    href: 'project-travion.html'
-                },
-                { 
-                    id: 'bhavanam', 
-                    title: 'Bhavanam - Real Estate Platform', 
-                    tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], 
-                    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop',
-                    href: 'project-bhavanam.html'
-                },
-                { 
-                    id: 'ourshoppee', 
-                    title: 'OurShoppee - E-Commerce Experience', 
-                    tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], 
-                    image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop',
-                    href: 'project-ourshoppee.html'
-                }
-            ];
-
-            const projectsContainer = document.getElementById('projects-container');
-            if (projectsContainer) {
-                projects.forEach((p, index) => {
-                    const projectEl = document.createElement('div');
-                    projectEl.className = 'project-item relative';
-                    
-                    projectEl.dataset.href = p.href; // Store href in data attribute
-                    projectEl.innerHTML = `
-                        <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
-                            <h3 class="text-2xl md:text-4xl font-bold">${p.title}</h3>
-                            <span class="text-sm font-lg text-secondary hidden md:block">${p.tags.join(' / ')}</span>
-                        </div>
-                        <img src="${p.image}" data-src="${p.image}" class="project-image-preview">
-                    `;
-                    projectsContainer.appendChild(projectEl);
-
-                    projectEl.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        sessionStorage.setItem('scrollPos', window.scrollY);
-                        
-                        const mainContent = document.getElementById('main-content');
-                        const projectDetailPage = document.getElementById('project-detail-page');
-
-                        const tl = gsap.timeline({
-                            onComplete: () => {
-                                window.location.href = projectEl.dataset.href;
-                            }
-                        });
-
-                        tl.to(mainContent, { opacity: 0, duration: 0.6, ease: 'power1.in' }, 0);
-                        tl.set(projectDetailPage, { 
-                            display: 'block',
-                            clipPath: `circle(0% at 50% 50%)`
-                        });
-                        tl.to(projectDetailPage, {
-                            clipPath: `circle(150% at 50% 50%)`,
-                            duration: 1.5, // Increased duration for a smoother transition
-                            ease: 'power2.inOut'
-                        }, 0.2); // Start the wipe slightly after the fade begins
-                    });
-
-                    if (!isTouchDevice) {
-                        const previewImage = projectEl.querySelector('.project-image-preview');
-
-                        projectEl.addEventListener('mouseenter', () => {
-                            cursorText.textContent = "View";
-                            gsap.to(cursor, { 
-                                width: '80px', height: '80px',
-                                backgroundColor: 'white', borderWidth: 0,
-                                duration: 0.3 
-                            });
-                            gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
-                        });
-
-                        projectEl.addEventListener('mouseleave', () => {
-                            cursorText.textContent = "";
-                            gsap.to(cursor, { 
-                                width: '24px', height: '24px',
-                                backgroundColor: 'transparent', borderWidth: '1px',
-                                duration: 0.3 
-                            });
-                            gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
-                        });
-
-                        projectEl.addEventListener('mousemove', (e) => {
-                            const rect = projectEl.getBoundingClientRect();
-                            gsap.to(previewImage, {
-                                x: e.clientX - rect.left - (previewImage.width / 2),
-                                y: e.clientY - rect.top - previewImage.height - 20,
-                                duration: 0.8,
-                                ease: 'power3.out'
-                            });
-                        });
-                    }
-                });
-            }
-            
-            // --- 7. TOOLS MARQUEE ---
             const tools = [
                 { name: 'Figma', logo: 'assets/tools/figma.png' }, { name: 'Adobe CC', logo: 'assets/tools/adobe.png' },
                 { name: 'Notion', logo: 'assets/tools/notion.png' }, { name: 'Miro', logo: 'assets/tools/miro.png' },
@@ -1107,89 +1300,396 @@
                 { name: 'Webflow', logo: 'assets/tools/webflow.png' }, { name: 'Sheets', logo: 'assets/tools/sheets.png' }
             ];
             const toolsMarqueeContainer = document.getElementById('tools-marquee-container');
-
             if (toolsMarqueeContainer) {
                 const marqueeContent = document.createElement('div');
                 marqueeContent.className = 'flex items-center flex-shrink-0';
                 marqueeContent.innerHTML = tools.map(tool => 
                     `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/150x40/1e1f1f/ffffff?text=${tool.name.replace(' ', '+')}';" alt="${tool.name} Logo"></div>`
                 ).join('');
-                
                 toolsMarqueeContainer.appendChild(marqueeContent);
                 toolsMarqueeContainer.appendChild(marqueeContent.cloneNode(true));
-
                 if (!prefersReducedMotion.matches) {
-                    let marqueeTween = gsap.to(toolsMarqueeContainer.children, {
-                    xPercent: -100,
-                    repeat: -1,
-                    duration: 25,
-                    ease: "linear",
-                    modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
-                });
-               }
+                    gsap.to(toolsMarqueeContainer.children, {
+                        xPercent: -100, repeat: -1, duration: 25, ease: "linear",
+                        modifiers: { xPercent: gsap.utils.wrap(-100, 0) }
+                    });
+                }
             }
+        }
+
+        function setupStorySectionAnimation() {
+            const storySection = document.getElementById('story');
+            if (!storySection) return;
+            const storyPinContainer = document.getElementById('story-pin-container');
+            const storyTrack = document.getElementById('story-track');
+            const storyPanels = gsap.utils.toArray(".story-panel");
+            const storyTexts = gsap.utils.toArray(".story-text-item");
+            const storySubtitle = document.getElementById("story-subtitle");
+
+            if (!storyTrack || storyPanels.length === 0) return;
+
+            // Preload first story image
+            const firstStoryImg = storyPanels[0].querySelector('img');
+            if(firstStoryImg && firstStoryImg.dataset.src) {
+                firstStoryImg.src = firstStoryImg.dataset.src;
+                delete firstStoryImg.dataset.src;
+            }
+
+            gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
             
-            // --- 8. MAGNETIC EFFECT ---
-            if (!isTouchDevice) {
-                document.querySelectorAll('.magnetic-item').forEach(el => {
-                    el.addEventListener('mousemove', (e) => {
-                        const rect = el.getBoundingClientRect();
-                        const x = e.clientX - rect.left - rect.width / 2;
-                        const y = e.clientY - rect.top - rect.height / 2;
-                        gsap.to(el, {
-                            x: x * 0.4,
-                            y: y * 0.4,
-                            duration: 0.8,
-                            ease: 'power3.out'
+            let activePanelIndex = -1;
+            const xStart = (window.innerWidth - storyPanels[0].offsetWidth) / 2;
+            gsap.set(storyTrack, { x: xStart });
+
+            storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === 0));
+            storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === 0));
+            if (storyPanels[0]) storySubtitle.innerText = storyPanels[0].dataset.title;
+
+            gsap.to(storyTrack, {
+                x: () => {
+                    const lastPanel = storyPanels[storyPanels.length - 1];
+                    return -(lastPanel.offsetLeft - (window.innerWidth - lastPanel.offsetWidth) / 2);
+                },
+                ease: "none",
+                scrollTrigger: {
+                    trigger: storySection,
+                    pin: storyPinContainer,
+                    scrub: 1,
+                    start: "top top",
+                    end: "bottom bottom",
+                    onUpdate: self => {
+                        let centerPoint = window.innerWidth / 2;
+                        let newActiveIndex = -1, smallestDistance = Infinity;
+                        storyPanels.forEach((panel, index) => {
+                            let panelRect = panel.getBoundingClientRect();
+                            let panelCenter = panelRect.left + panelRect.width / 2;
+                            let distance = Math.abs(panelCenter - centerPoint);
+                            if (distance < panelRect.width / 2 && distance < smallestDistance) {
+                                smallestDistance = distance;
+                                newActiveIndex = index;
+                            }
+                        });
+                        if (newActiveIndex !== -1 && newActiveIndex !== activePanelIndex) {
+                            activePanelIndex = newActiveIndex;
+                            storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePanelIndex));
+                            storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === activePanelIndex));
+                            if(storyPanels[activePanelIndex]) {
+                                storySubtitle.innerText = storyPanels[activePanelIndex].dataset.title;
+                                // Lazy load image for the newly active panel
+                                const img = storyPanels[activePanelIndex].querySelector('img');
+                                if (img && img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                    delete img.dataset.src;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // --- 5. DYNAMIC PROJECT INJECTION ---
+        const projects = [
+            { id: 'bankiom', title: 'Bankiom - Fintech Super-App', tags: ['AI Integration', 'Design Systems', 'User Journey Mapping'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
+            { id: 'travion', title: 'Travion - B2B Travel Platform', tags: ['UX Research', 'UI Design', 'Prototyping'], image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', href: '#'},
+            { id: 'bhavanam', title: 'Bhavanam - Real Estate Platform', tags: ['Healthcare UX', 'Accessibility (WCAG)', 'Prototyping'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'},
+            { id: 'ourshoppee', title: 'OurShoppee - E-Commerce Experience', tags: ['Conversion Optimization', 'A/B Testing', 'UI Design'], image: 'https://images.unsplash.com/photo-1555529771-83senvf59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'}
+        ];
+        const projectsContainer = document.getElementById('projects-container');
+        if (projectsContainer) {
+            projects.forEach(p => {
+                const projectEl = document.createElement('div');
+                projectEl.className = 'project-item relative';
+                projectEl.dataset.target = `project-page-${p.id}`;
+                projectEl.innerHTML = `
+                    <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
+                        <h3 class="text-2xl md:text-4xl font-bold pointer-events-none">${p.title}</h3>
+                        <span class="text-sm font-lg text-secondary hidden md:block pointer-events-none">${p.tags.join(' / ')}</span>
+                    </div>
+                    <img src="${p.image}" class="project-image-preview">
+                `;
+                projectsContainer.appendChild(projectEl);
+
+                // Add click listener for page transition
+                projectEl.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchView(projectEl.dataset.target, e);
+                });
+
+                // Image preview hover effect
+                if (!isTouchDevice) {
+                    const previewImage = projectEl.querySelector('.project-image-preview');
+                    projectEl.addEventListener('mouseenter', () => {
+                        cursorText.textContent = "View";
+                        gsap.to(cursor, { width: '80px', height: '80px', backgroundColor: 'white', borderWidth: 0, duration: 0.3 });
+                        gsap.to(previewImage, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+                    });
+                    projectEl.addEventListener('mouseleave', () => {
+                        cursorText.textContent = "";
+                        gsap.to(cursor, { width: '24px', height: '24px', backgroundColor: 'transparent', borderWidth: '1px', duration: 0.3 });
+                        gsap.to(previewImage, { opacity: 0, scale: 0.8, duration: 0.4, ease: 'power2.out' });
+                    });
+                    projectEl.addEventListener('mousemove', (e) => {
+                        const rect = projectEl.getBoundingClientRect();
+                        gsap.to(previewImage, {
+                            x: e.clientX - rect.left - (previewImage.width / 2),
+                            y: e.clientY - rect.top - previewImage.height - 20,
+                            duration: 0.8, ease: 'power3.out'
                         });
                     });
-                    el.addEventListener('mouseleave', () => {
-                        gsap.to(el, {
-                            x: 0,
-                            y: 0,
-                            duration: 1,
-                            ease: 'elastic.out(1, 0.3)'
-                        });
-                    });
-                });
-            }
-
-
-            // --- 9. FOOTER & GO TO TOP ---
-            const goToTopBtn = document.getElementById('go-to-top-btn');
-            if (goToTopBtn) {
-                 ScrollTrigger.create({
-                    start: 200, // Show after scrolling 200px
-                    end: "max",
-                    toggleClass: { targets: goToTopBtn, className: "is-active" }
-                });
-
-                goToTopBtn.addEventListener('click', () => {
-                    gsap.to(window, {
-                        scrollTo: 0,
-                        duration: 1.5,
-                        ease: 'power3.inOut'
-                    });
-                });
-            }
-            
-            // Re-run project reveal animation setup for elements that exist on the page
+                }
+            });
             if (!prefersReducedMotion.matches) {
                 gsap.utils.toArray('.project-item').forEach(item => {
                     gsap.to(item, {
-                        x: 0,
-                        opacity: 1,
-                        duration: 1.2,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: item,
-                            start: 'top 90%',
-                            toggleActions: 'play none none none'
-                        }
+                        x: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                        scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' }
                     });
                 });
             }
+        }
+        
+        // --- 6. PROJECT PAGE ANIMATION LOGIC ---
+        function initializeProjectPageAnimations(pageElement) {
+            destroyProjectPageScrollTriggers(); 
+            let triggers = [];
+
+            // NEW: Hero text parallax effect
+            const heroContent = pageElement.querySelector('section:first-child .relative.z-20');
+            if (heroContent) {
+                triggers.push(gsap.to(heroContent, {
+                    yPercent: 40,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: pageElement.querySelector('section:first-child'),
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                }));
+            }
+
+            // Lazy load images
+            pageElement.querySelectorAll('img[data-src]').forEach(img => {
+                triggers.push(ScrollTrigger.create({
+                    trigger: img,
+                    start: 'top 95%',
+                    once: true,
+                    onEnter: () => {
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            delete img.dataset.src;
+                        }
+                    }
+                }));
+            });
+
+            triggers.push(gsap.from(pageElement.querySelectorAll(".anim-hero-reveal"), { duration: 1.2, y: 50, opacity: 0, stagger: 0.2, ease: "power3.out", delay: 0.5 }));
+            const parallaxBg = pageElement.querySelector(".parallax-bg");
+            if (parallaxBg) {
+               triggers.push(gsap.to(parallaxBg, { yPercent: 30, ease: "none", scrollTrigger: { trigger: parallaxBg, start: "top top", end: "bottom top", scrub: true } }));
+            }
+            
+            // MODIFIED: General reveal animations with new text effect for titles
+            pageElement.querySelectorAll('.anim-reveal').forEach(el => {
+                const isTitle = el.tagName === 'H2' || el.tagName === 'H3';
+                if (isTitle && el.textContent.length > 0 && !prefersReducedMotion.matches) {
+                    const originalText = el.textContent.trim();
+                    // Prevent re-splitting if already done
+                    if(el.querySelector('.char')) return; 
+
+                    el.innerHTML = ''; // Clear existing content
+                    originalText.split('').forEach(char => {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        span.style.display = 'inline-block';
+                        span.style.opacity = '0';
+                        span.style.transform = 'translateY(30px)';
+                        span.innerHTML = char === ' ' ? '&nbsp;' : char;
+                        el.appendChild(span);
+                    });
+                    
+                    triggers.push(gsap.to(el.querySelectorAll('.char'), {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        stagger: 0.02,
+                        ease: 'power2.out',
+                        scrollTrigger: { 
+                            trigger: el, 
+                            start: 'top 90%', 
+                            toggleActions: 'play none none none' 
+                        }
+                    }));
+                } else { // Standard reveal for other elements
+                    let delay = el.style.getPropertyValue('--delay') || 0;
+                    triggers.push(gsap.from(el, { 
+                        opacity: 0, y: 60, duration: 1, ease: 'power3.out', 
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+                        delay: delay
+                    }));
+                }
+            });
+            
+            // Image pan
+            pageElement.querySelectorAll('.image-pan').forEach(img => {
+                triggers.push(gsap.to(img, { scale: 1.15, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: 1.5 } }));
+            });
+
+            const horizontalContainer = pageElement.querySelector('[id^="horizontal-scroll-container"]');
+            if(horizontalContainer){
+                const horizontalSection = horizontalContainer.querySelector('.horizontal-scroll-section');
+                triggers.push(gsap.to(horizontalSection, {
+                    x: () => -(horizontalSection.scrollWidth - window.innerWidth), ease: 'none',
+                    scrollTrigger: {
+                        trigger: horizontalContainer, start: 'top top',
+                        end: () => "+=" + (horizontalSection.scrollWidth - window.innerWidth),
+                        scrub: 1, pin: true, invalidateOnRefresh: true
+                    }
+                }));
+            }
+
+            pageElement.querySelectorAll('.stat-number').forEach(el => {
+                const endValue = parseInt(el.dataset.endValue);
+                if (isNaN(endValue)) return;
+                let counter = { value: 0 };
+                triggers.push(gsap.to(counter, {
+                    value: endValue, duration: 2.5, ease: 'power2.out',
+                    onUpdate: () => { el.textContent = Math.ceil(counter.value) + '%'; },
+                    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+                }));
+            });
+
+            projectPageScrollTriggers = triggers;
+        }
+
+        function destroyProjectPageScrollTriggers() {
+            projectPageScrollTriggers.forEach(st => {
+                if (st.scrollTrigger) st.scrollTrigger.kill();
+                if(st.kill) st.kill();
+            });
+            projectPageScrollTriggers = [];
+        }
+
+
+        // --- 7. MISC & EVENT LISTENERS ---
+        // Back to Home buttons
+        document.querySelectorAll('.back-to-home, .back-to-home-logo').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView('homepage-view', e);
+            });
         });
+        document.querySelectorAll('.go-to-contact').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                switchView('homepage-view');
+                setTimeout(() => {
+                    const contactSection = document.getElementById('contact');
+                    if(contactSection) {
+                         gsap.to(window, { scrollTo: { y: contactSection, offsetY: 70 }, duration: 1.5, ease: 'power3.inOut' });
+                    }
+                }, 100);
+            });
+        });
+
+        ScrollTrigger.create({
+            start: 200, end: "max",
+            toggleClass: { targets: goToTopBtn, className: "is-active" }
+        });
+        goToTopBtn.addEventListener('click', () => {
+            gsap.to(window, { scrollTo: 0, duration: 1.5, ease: 'power3.inOut' });
+        });
+
+        if (!isTouchDevice) {
+            document.querySelectorAll('.magnetic-item').forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(el, { x: x * 0.4, y: y * 0.4, duration: 0.8, ease: 'power3.out' });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.3)' });
+                });
+            });
+        }
+        
+        // --- MOBILE MENU ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+        const openButton = document.getElementById('mobile-menu-button');
+        const closeButton = document.getElementById('mobile-close-button');
+
+        function openMobileMenu() {
+            mobileMenu.classList.remove('hidden');
+            gsap.to(mobileMenuPanel, { x: 0, duration: 0.5, ease: 'power3.out' });
+            gsap.fromTo('.mobile-nav-link, .mobile-nav-link-cta', 
+                { opacity: 0, x: 50 },
+                { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, delay: 0.2, ease: 'power3.out' }
+            );
+        }
+
+        function closeMobileMenu() {
+            gsap.to(mobileMenuPanel, { 
+                x: '100%', duration: 0.5, ease: 'power3.in',
+                onComplete: () => {
+                    mobileMenu.classList.add('hidden');
+                    gsap.set('.mobile-nav-link, .mobile-nav-link-cta', { opacity: 0, x: 50 });
+                }
+            });
+        }
+
+        openButton.addEventListener('click', openMobileMenu);
+        closeButton.addEventListener('click', closeMobileMenu);
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) closeMobileMenu();
+        });
+
+        // --- THREE.JS GRADIENT BACKGROUND ---
+        let scene, camera, renderer, material;
+        const gradientCanvas = document.getElementById('hero-gradient-background');
+        if(gradientCanvas) {
+            function initGradientBackground() {
+                scene = new THREE.Scene();
+                camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true });
+                const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        u_time: { value: 0 },
+                        u_resolution: { value: new THREE.Vector2() },
+                        u_color1: { value: new THREE.Color(0x0047AB) },
+                        u_color2: { value: new THREE.Color(0x00008B) },
+                    },
+                    vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
+                    fragmentShader: `varying vec2 vUv; uniform float u_time; uniform vec3 u_color1; uniform vec3 u_color2; void main() { vec2 p = vUv; float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1; vec3 color = mix(u_color1, u_color2, blend); gl_FragColor = vec4(color, 1.0); }`
+                });
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+                onWindowResizeGradient();
+                window.addEventListener('resize', onWindowResizeGradient);
+                animateGradient();
+            }
+
+            function animateGradient() {
+                if (material) {
+                    material.uniforms.u_time.value += 0.01;
+                    renderer.render(scene, camera);
+                }
+                requestAnimationFrame(animateGradient);
+            }
+
+            function onWindowResizeGradient() {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                if (material) material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+            }
+            initGradientBackground();
+        }
+
+    });
     </script>
 </body>
 </html>
