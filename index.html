@@ -1169,10 +1169,10 @@
                     onStart: () => {
                         gsap.to([mainHeader, goToTopBtn], { autoAlpha: 0, duration: 0.5 });
                         initializeProjectPageAnimations(targetView);
-                        gsap.set(currentView, { display: 'none' });
                     },
                     onComplete: () => {
                         currentView.classList.remove('is-active');
+                        gsap.set(currentView, { display: 'none' });
                         targetView.classList.add('is-active');
                         gsap.set(targetView, { clearProps: 'clipPath,zIndex' }); 
                         wrapper.classList.remove('is-transitioning');
@@ -1656,4 +1656,7 @@
     </script>
 </body>
 </html>
+" selected. I'll make the requested changes.
+
+The projects are not loading up, please fix it.
 
