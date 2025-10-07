@@ -945,7 +945,8 @@
             }
             
             gsap.set(transitionCircle, { attr: { cx: clickPos.x, cy: clickPos.y, r: 0 } });
-            gsap.set(transitionRect, { attr: { fill: isGoingBack ? 'var(--bg-gradient-end)' : 'var(--bg-color-project)' } });
+            const destBgColor = isGoingBack ? getComputedStyle(document.body).getPropertyValue('--bg-gradient-end').trim() : getComputedStyle(document.body).getPropertyValue('--bg-color-project').trim();
+            gsap.set(transitionRect, { attr: { fill: destBgColor } });
 
             const tl = gsap.timeline({
                 onComplete: () => {
@@ -956,81 +957,66 @@
             // 1. Animate OUT current content & expand circle
             tl.to(transitionCircle, {
                 attr: { r: diagonal },
-                duration: 0.9,
-                ease: 'power2.in'
+                duration: 0.7,
+                ease: 'power2.inOut'
             });
 
             if (isGoingBack) {
-                // Custom out-animation for project page
+                // Animate project page content out
                 tl.to(currentView.querySelector('.content-wrapper'), {
                     opacity: 0,
-                    y: 40,
-                    duration: 0.5,
-                    ease: 'power2.in'
+                    duration: 0.3,
+                    ease: 'power1.in'
                 }, 0);
             } else {
-                // Simple fade for homepage
-                tl.to(currentView, {
+                 // Animate homepage content out
+                tl.to('#main-content', {
                     opacity: 0,
-                    duration: 0.5,
+                    duration: 0.3,
                     ease: 'power1.in'
                 }, 0);
             }
-            
 
             // 2. Swap views when screen is covered
             tl.call(() => {
+                // Hide old view, show new one
                 currentView.classList.remove('is-active');
                 targetView.classList.add('is-active');
-                gsap.set(currentView.querySelector('.content-wrapper') || currentView, { opacity: 1, y: 0 }); // Reset for next time
+                
+                // Reset styles of the view we are leaving
+                gsap.set(isGoingBack ? currentView.querySelector('.content-wrapper') : '#main-content', { opacity: 1 });
+
 
                 if (isGoingBack) {
                     destroyProjectPageScrollTriggers();
                     gsap.to(window, { scrollTo: lastScrollPos, duration: 0, overwrite: true });
-                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4 });
+                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4, delay: 0.1 });
+                    ScrollTrigger.refresh(true); // Refresh triggers for the now-visible homepage
                 } else {
                     lastScrollPos = window.scrollY;
                     gsap.to(window, { scrollTo: 0, duration: 0, overwrite: true });
                     gsap.set([mainHeader, goToTopBtn], { autoAlpha: 0 });
                     initializeProjectPageAnimations(targetView);
                 }
-                ScrollTrigger.refresh(true);
             });
-
-            // 3. Animate IN new content & retract circle
-            // Make sure new content starts from a clean state (opacity 0)
+            
+            // 3. Animate IN new content if it's a project page
             if (!isGoingBack) {
-                gsap.set(targetView.querySelector('.content-wrapper'), { opacity: 0, y: 40 });
-                gsap.set(targetView.querySelector('.parallax-bg'), { scale: 1.1 });
-            } else {
-                gsap.set(targetView, { opacity: 0 });
-            }
-
-            tl.to(transitionCircle, {
-                attr: { r: 0 },
-                duration: 0.9,
-                ease: 'power2.out'
-            });
-
-            if (isGoingBack) {
-                tl.to(targetView, {
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: 'power1.out'
-                }, "<");
-            } else {
+                gsap.set(targetView.querySelector('.content-wrapper'), {opacity: 0, y: 30});
                 tl.to(targetView.querySelector('.content-wrapper'), {
                     opacity: 1,
                     y: 0,
-                    duration: 0.7,
-                    ease: 'power2.out'
-                }, "<")
-                .to(targetView.querySelector('.parallax-bg'), {
-                    scale: 1,
-                    duration: 0.9,
-                    ease: 'power2.out'
-                }, "<");
+                    duration: 0.5,
+                    ease: 'power3.out'
+                }, ">-0.2");
             }
+
+            // 4. Retract circle to reveal the new page
+            tl.to(transitionCircle, {
+                attr: { r: 0 },
+                duration: 0.7,
+                ease: 'power2.out'
+            });
         }
         
         // --- 2. PRELOADER & INITIAL PAGE REVEAL ---
