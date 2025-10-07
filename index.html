@@ -67,18 +67,6 @@
             }
         }
         
-        #page-transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-color-project);
-            z-index: 10002;
-            opacity: 0;
-            pointer-events: none;
-        }
-        
         #grain-overlay {
             position: fixed;
             top: -50%;
@@ -401,8 +389,17 @@
     </style>
 </head>
 <body class="antialiased">
+    <!-- SVG for page transitions -->
+    <svg id="page-transition-svg" class="fixed top-0 left-0 w-full h-full z-[10001]" style="pointer-events: none;">
+        <defs>
+            <clipPath id="transition-clip">
+                <circle cx="50%" cy="50%" r="0"></circle>
+            </clipPath>
+        </defs>
+        <rect width="100%" height="100%" fill="var(--bg-color-project)" clip-path="url(#transition-clip)"></rect>
+    </svg>
+
     <!-- Global Elements (Reordered for z-index correctness) -->
-    <div id="page-transition-overlay"></div>
     <div id="grain-overlay"></div>
     <div id="scrollbar-progress" class="fixed top-0 left-0 h-1.5 z-[60]" style="width: 0%; background-color: var(--accent-color);"></div>
     <canvas id="hero-gradient-background"></canvas>
@@ -415,7 +412,7 @@
     <header id="main-header" class="fixed top-6 left-6 right-6 z-50 rounded-full">
         <div class="pl-6 pr-4 py-1 flex justify-between items-center">
             <div class="flex-1 flex justify-start">
-                 <a href="/" class="text-2xl font-bold whitespace-nowrap" style="color: #FFFFFF;">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                <a href="/" class="text-2xl font-bold whitespace-nowrap" style="color: #FFFFFF;">Rinoj<span style="color: var(--accent-color);">.</span></a>
             </div>
             
             <div class="flex-1 hidden md:flex justify-end items-center space-x-8">
@@ -547,16 +544,16 @@
                                     </a>
                                 </div>
                                 <div class="text-left md:text-right flex flex-col justify-between">
-                                     <div class="footer-anim">
-                                         <h3 class="text-lg font-semibold text-cyan-400 mb-4">Social</h3>
-                                         <ul class="space-y-2">
-                                             <li><a href="https://www.linkedin.com/in/rinojhashim" target="_blank" rel="noopener noreferrer" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">LinkedIn</a></li>
-                                             <li><a href="https://www.behance.net/rinoj1020" target="_blank" rel="noopener noreferrer" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">Behance</a></li>
-                                         </ul>
-                                         <div class="mt-8">
-                                             <h3 class="text-lg font-semibold text-cyan-400 mb-2">Contact</h3>
-                                             <a href="tel:+917012450190" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">+91 7012 450 190</a>
-                                         </div>
+                                    <div class="footer-anim">
+                                        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Social</h3>
+                                        <ul class="space-y-2">
+                                            <li><a href="https://www.linkedin.com/in/rinojhashim" target="_blank" rel="noopener noreferrer" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">LinkedIn</a></li>
+                                            <li><a href="https://www.behance.net/rinoj1020" target="_blank" rel="noopener noreferrer" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">Behance</a></li>
+                                        </ul>
+                                        <div class="mt-8">
+                                            <h3 class="text-lg font-semibold text-cyan-400 mb-2">Contact</h3>
+                                            <a href="tel:+917012450190" class="underline-link footer-magnetic-link text-lg inline-block magnetic-item">+91 7012 450 190</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -777,7 +774,7 @@
                               <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new app was a game-changer for the organization. By dramatically improving the user experience, we empowered more people to donate and significantly boosted the organization's fundraising capabilities.</p>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
                                   <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                      <p class="text-6xl font-bold text-cyan-400"> < 5 <span class="text-4xl">min</span></p>
+                                      <p class="text-6xl font-bold text-cyan-400"> &lt; 5 <span class="text-4xl">min</span></p>
                                       <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Donation Process Time</p>
                                   </div>
                                   <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
@@ -923,7 +920,10 @@
         const cursorText = document.querySelector('.cursor-text');
         const mainHeader = document.getElementById('main-header');
         const goToTopBtn = document.getElementById('go-to-top-btn');
-        const transitionOverlay = document.getElementById('page-transition-overlay');
+        const transitionSvg = document.getElementById('page-transition-svg');
+        const transitionCircle = transitionSvg.querySelector('circle');
+        const transitionRect = transitionSvg.querySelector('rect');
+
 
         // --- 1. PAGE TRANSITION LOGIC (REBUILT FOR SMOOTHNESS) ---
         function switchView(targetId, e) {
@@ -932,36 +932,105 @@
             const wrapper = document.getElementById('page-content-wrapper');
 
             if (!currentView || !targetView || currentView === targetView || wrapper.classList.contains('is-transitioning')) return;
-            
+
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
+            const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
+
+            let clickPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            if (e) {
+                 clickPos.x = e.clientX;
+                 clickPos.y = e.clientY;
+            }
+            
+            gsap.set(transitionCircle, { attr: { cx: clickPos.x, cy: clickPos.y, r: 0 } });
+            gsap.set(transitionRect, { attr: { fill: isGoingBack ? 'var(--bg-gradient-end)' : 'var(--bg-color-project)' } });
 
             const tl = gsap.timeline({
-                onComplete: () => wrapper.classList.remove('is-transitioning')
+                onComplete: () => {
+                    wrapper.classList.remove('is-transitioning');
+                }
             });
 
-            tl.to(transitionOverlay, { autoAlpha: 1, duration: 0.5, ease: 'power2.inOut' });
+            // 1. Animate OUT current content & expand circle
+            tl.to(transitionCircle, {
+                attr: { r: diagonal },
+                duration: 0.9,
+                ease: 'power2.in'
+            });
+
+            if (isGoingBack) {
+                // Custom out-animation for project page
+                tl.to(currentView.querySelector('.content-wrapper'), {
+                    opacity: 0,
+                    y: 40,
+                    duration: 0.5,
+                    ease: 'power2.in'
+                }, 0);
+            } else {
+                // Simple fade for homepage
+                tl.to(currentView, {
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power1.in'
+                }, 0);
+            }
+            
+
+            // 2. Swap views when screen is covered
             tl.call(() => {
                 currentView.classList.remove('is-active');
-                gsap.set(currentView, { display: 'none' });
-
                 targetView.classList.add('is-active');
-                gsap.set(targetView, { display: 'block' });
+                gsap.set(currentView.querySelector('.content-wrapper') || currentView, { opacity: 1, y: 0 }); // Reset for next time
 
                 if (isGoingBack) {
                     destroyProjectPageScrollTriggers();
                     gsap.to(window, { scrollTo: lastScrollPos, duration: 0, overwrite: true });
-                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.5 });
+                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4 });
                 } else {
                     lastScrollPos = window.scrollY;
                     gsap.to(window, { scrollTo: 0, duration: 0, overwrite: true });
-                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 0, duration: 0.5 });
+                    gsap.set([mainHeader, goToTopBtn], { autoAlpha: 0 });
                     initializeProjectPageAnimations(targetView);
                 }
-                ScrollTrigger.refresh();
+                ScrollTrigger.refresh(true);
             });
-            tl.to(transitionOverlay, { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' });
+
+            // 3. Animate IN new content & retract circle
+            // Make sure new content starts from a clean state (opacity 0)
+            if (!isGoingBack) {
+                gsap.set(targetView.querySelector('.content-wrapper'), { opacity: 0, y: 40 });
+                gsap.set(targetView.querySelector('.parallax-bg'), { scale: 1.1 });
+            } else {
+                gsap.set(targetView, { opacity: 0 });
+            }
+
+            tl.to(transitionCircle, {
+                attr: { r: 0 },
+                duration: 0.9,
+                ease: 'power2.out'
+            });
+
+            if (isGoingBack) {
+                tl.to(targetView, {
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: 'power1.out'
+                }, "<");
+            } else {
+                tl.to(targetView.querySelector('.content-wrapper'), {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    ease: 'power2.out'
+                }, "<")
+                .to(targetView.querySelector('.parallax-bg'), {
+                    scale: 1,
+                    duration: 0.9,
+                    ease: 'power2.out'
+                }, "<");
+            }
         }
         
         // --- 2. PRELOADER & INITIAL PAGE REVEAL ---
@@ -1075,7 +1144,7 @@
 
             // Tools updated from Resume
             const tools = [
-                 { name: 'Figma', logo: 'assets/tools/figma.png' },
+                { name: 'Figma', logo: 'assets/tools/figma.png' },
                 { name: 'Adobe CC', logo: 'assets/tools/adobe.png' },
                 { name: 'Notion', logo: 'assets/tools/notion.png' },
                 { name: 'Miro', logo: 'assets/tools/miro.png' },
@@ -1236,8 +1305,7 @@
         function initializeProjectPageAnimations(pageElement) {
             destroyProjectPageScrollTriggers(); 
             let triggers = [];
-
-            triggers.push(gsap.from(pageElement.querySelectorAll(".anim-hero-reveal"), { duration: 1.2, y: 50, opacity: 0, stagger: 0.2, ease: "power3.out", delay: 0.5 }));
+            
             const parallaxBg = pageElement.querySelector(".parallax-bg");
             if (parallaxBg) {
                triggers.push(gsap.to(parallaxBg, { yPercent: 30, ease: "none", scrollTrigger: { trigger: parallaxBg.parentElement, start: "top top", end: "bottom top", scrub: true } }));
@@ -1405,5 +1473,3 @@
     </script>
 </body>
 </html>
-
-
