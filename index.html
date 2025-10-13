@@ -459,14 +459,13 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            padding: 8rem 0; /* Increased mobile padding for better spacing */
         }
         @media (min-width: 768px) {
             .phase-text-item {
-                min-height: 100vh;
+                min-height: 150vh; /* Increased significantly for more breathing room */
+                padding: 0; /* Resets padding for desktop sticky scroll */
             }
-        }
-        #project-page-travion .phase-text-item {
-             min-height: 50vh;
         }
 
 
@@ -1604,6 +1603,13 @@
             ScrollTrigger.matchMedia({
                 // Desktop layout: sticky image
                 "(min-width: 768px)": function() {
+                    const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
+                    
+                    // Ensure desktop styles are correct
+                    gsap.set(imageContainer, { display: 'block' });
+                    gsap.set(phaseImages, { position: 'absolute' });
+
+
                     triggers.push(ScrollTrigger.create({
                         trigger: ".phase-image-container",
                         start: "top 20vh",
@@ -1642,23 +1648,29 @@
                 // Mobile layout: normal scroll
                 "(max-width: 767px)": function() {
                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                        gsap.set(phaseImages, { autoAlpha: 0, position: 'relative', height: '40vh', width: '100%', display: 'block' });
                         
-                        phaseTexts.forEach((text, i) => {
-                            // Move the image to be before the text in the DOM for mobile
-                            const imageItem = phaseImages[i];
-                            const textWrapper = pageElement.querySelector("#travion-text-wrapper");
-                            if (imageItem && textWrapper) {
-                                textWrapper.insertBefore(imageItem, text);
-                            }
-                            gsap.set(imageItem, {autoAlpha: 1});
-                        });
-
-                        // Now that DOM is changed, hide the original now-empty container
-                        const desktopImageContainer = pageElement.querySelector('.phase-image-container');
-                        if(desktopImageContainer) {
-                           desktopImageContainer.style.display = 'none';
+                        const imageContainer = pageElement.querySelector('.phase-image-container');
+                        if(imageContainer) {
+                           imageContainer.style.display = 'none';
                         }
+                        
+                        phaseTexts.forEach((textItem, i) => {
+                            const imageItem = phaseImages[i];
+                            // Check if the image hasn't already been moved
+                            if (imageItem && textItem && !textItem.contains(imageItem)) {
+                                gsap.set(imageItem, { 
+                                    autoAlpha: 1, 
+                                    position: 'relative', 
+                                    display: 'block',
+                                    width: '100%', 
+                                    height: 'auto',
+                                    aspectRatio: '5/3',
+                                    marginTop: '2.5rem',
+                                    marginBottom: '2.5rem'
+                                });
+                                textItem.appendChild(imageItem);
+                            }
+                        });
                     }
                 }
             });
