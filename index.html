@@ -431,11 +431,13 @@
         }
         
         .phase-image-container {
-            top: 20vh;
+            position: relative; /* Changed for mobile */
             height: 40vh; /* Mobile height */
         }
         @media (min-width: 768px) {
             .phase-image-container {
+                position: sticky; /* Sticky only on desktop */
+                top: 20vh;
                 height: 60vh; /* Desktop height */
             }
         }
@@ -454,13 +456,17 @@
             border-radius: 1.5rem;
         }
         .phase-text-item {
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
+        @media (min-width: 768px) {
+            .phase-text-item {
+                min-height: 100vh;
+            }
+        }
         #project-page-travion .phase-text-item {
-            min-height: 50vh;
+             min-height: 50vh;
         }
 
 
@@ -1591,9 +1597,12 @@
             const scrollyWrapper = pageElement.querySelector('#travion-scrolly-grid');
             if (!scrollyWrapper) return;
 
+            const phaseImages = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-image-item'));
+            const phaseTexts = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-text-item'));
+
             // Use matchMedia to create responsive ScrollTriggers
             ScrollTrigger.matchMedia({
-                // Desktop layout
+                // Desktop layout: sticky image
                 "(min-width: 768px)": function() {
                     triggers.push(ScrollTrigger.create({
                         trigger: ".phase-image-container",
@@ -1603,62 +1612,71 @@
                         pin: true,
                         pinSpacing: false
                     }));
+
+                    if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                        gsap.set(phaseImages, { autoAlpha: 0 });
+                        gsap.set(phaseImages[0], { autoAlpha: 1 });
+
+                        phaseTexts.forEach((text, i) => {
+                            const trigger = ScrollTrigger.create({
+                                trigger: text,
+                                start: "top center",
+                                end: "bottom center",
+                                onToggle: self => {
+                                    if (self.isActive) {
+                                        gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                        gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
+                                    }
+                                },
+                                onLeaveBack: () => {
+                                    if(i > 0) {
+                                        gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                        gsap.to(phaseImages[i-1], { autoAlpha: 1, duration: 0.3 });
+                                    }
+                                }
+                            });
+                            triggers.push(trigger);
+                        });
+                    }
                 },
-                // Mobile layout
+                // Mobile layout: normal scroll
                 "(max-width: 767px)": function() {
-                    triggers.push(ScrollTrigger.create({
-                        trigger: ".phase-image-container",
-                        start: "top 10vh",
-                        endTrigger: "#travion-text-wrapper",
-                        end: "bottom bottom-=20vh",
-                        pin: true,
-                        pinSpacing: true
-                    }));
+                    if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                        gsap.set(phaseImages, { autoAlpha: 0, position: 'relative', height: '40vh', width: '100%', display: 'block' });
+                        
+                        phaseTexts.forEach((text, i) => {
+                            // Move the image to be before the text in the DOM for mobile
+                            const imageItem = phaseImages[i];
+                            const textWrapper = pageElement.querySelector("#travion-text-wrapper");
+                            if (imageItem && textWrapper) {
+                                textWrapper.insertBefore(imageItem, text);
+                            }
+                            gsap.set(imageItem, {autoAlpha: 1});
+                        });
+
+                        // Now that DOM is changed, hide the original now-empty container
+                        const desktopImageContainer = pageElement.querySelector('.phase-image-container');
+                        if(desktopImageContainer) {
+                           desktopImageContainer.style.display = 'none';
+                        }
+                    }
                 }
             });
-
-            const phaseImages = gsap.utils.toArray('.phase-image-item');
-            const phaseTexts = gsap.utils.toArray('.phase-text-item');
-
-            if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                gsap.set(phaseImages, { autoAlpha: 0 });
-                gsap.set(phaseImages[0], { autoAlpha: 1 });
-
-                phaseTexts.forEach((text, i) => {
-                    const trigger = ScrollTrigger.create({
-                        trigger: text,
-                        start: "top center",
-                        end: "bottom center",
-                        onToggle: self => {
-                            if (self.isActive) {
-                                gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
-                                gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
-                            }
-                        },
-                        onLeaveBack: () => {
-                            if(i > 0) {
-                                gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
-                                gsap.to(phaseImages[i-1], { autoAlpha: 1, duration: 0.3 });
-                            }
-                        }
-                    });
-                    triggers.push(trigger);
-                });
-
-                gsap.utils.toArray('.phase-content').forEach(content => {
-                    triggers.push(gsap.from(content, {
-                        y: 50,
-                        opacity: 0,
-                        duration: 1,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: content.parentElement,
-                            start: 'top 75%',
-                            toggleActions: 'play none none none',
-                        }
-                    }));
-                });
-            }
+            
+            // This animation applies to both mobile and desktop
+            gsap.utils.toArray('.phase-content').forEach(content => {
+                triggers.push(gsap.from(content, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: content.parentElement,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    }
+                }));
+            });
         }
 
         function destroyProjectPageScrollTriggers() {
