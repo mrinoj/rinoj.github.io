@@ -40,11 +40,12 @@
             --accent-color: #22d3ee;
             --bg-color-project: #1e1f1f;
             --animation-easing: cubic-bezier(0.25, 1, 0.5, 1);
+            --app-height: 100vh; /* Fallback */
         }
 
         html, body {
             overflow-x: hidden;
-            min-height: 100dvh;
+            min-height: var(--app-height);
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE and Edge */
         }
@@ -85,12 +86,16 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100dvh;
+            height: var(--app-height);
             z-index: -2; /* FINE-TUNED: Ensure it's behind grain */
         }
 
         #home, #story-pin-container {
-            height: 100dvh;
+            height: var(--app-height);
+        }
+        
+        .min-h-screen-app {
+            min-height: var(--app-height);
         }
 
         #main-header {
@@ -657,7 +662,7 @@
             </header>
             <div class="content-wrapper">
                 <main>
-                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                    <section class="min-h-screen-app w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
                         <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
                         <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=Scenic+Travel+Destination';" alt="Scenic travel destination" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
                         <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
@@ -808,7 +813,7 @@
             </header>
             <div class="content-wrapper">
                 <main>
-                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                    <section class="min-h-screen-app w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
                         <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
                         <img src="https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=E-Commerce+Platform';" alt="E-Commerce Platform" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
                         <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
@@ -912,7 +917,7 @@
             </header>
             <div class="content-wrapper">
                 <main>
-                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                    <section class="min-h-screen-app w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
                         <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
                         <img src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=Fintech+Interface';" alt="Fintech Interface" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
                         <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
@@ -1007,7 +1012,7 @@
             </header>
             <div class="content-wrapper">
                 <main>
-                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                    <section class="min-h-screen-app w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
                         <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
                         <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=Donation+App';" alt="Donation App" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
                         <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
@@ -1118,10 +1123,28 @@
         window.scrollTo(0, 0);
 
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (isTouchDevice) {
+            ScrollTrigger.normalizeScroll(true);
+        }
+        
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let lastScrollPos = 0;
         let projectPageScrollTriggers = [];
+
+        // --- Mobile Viewport Height Fix ---
+        function setAppHeight() {
+            document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+        }
+        window.addEventListener('resize', () => {
+            setAppHeight();
+            // Give GSAP a moment to catch up after resize
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 100);
+        });
+        setAppHeight();
+
 
         // --- 0. GLOBAL ELEMENTS & UTILS ---
         const cursor = document.querySelector('.cursor');
