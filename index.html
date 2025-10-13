@@ -694,7 +694,7 @@
                         </div>
                     </section>
                     <section class="project-section container mx-auto">
-                        <div class="grid md:grid-cols-2 gap-12">
+                        <div id="travion-scrolly-grid" class="grid md:grid-cols-2 gap-12">
                             <div class="md:col-span-1">
                                 <div class="phase-text-item">
                                     <div class="phase-content">
@@ -1588,7 +1588,7 @@
                 triggers.push(ScrollTrigger.create({
                     trigger: '.phase-image-container',
                     start: 'top 20vh',
-                    endTrigger: '#project-page-travion .grid.md\\:grid-cols-2',
+                    endTrigger: '#travion-scrolly-grid',
                     end: 'bottom bottom-=20vh',
                     pin: true,
                     pinSpacing: false
