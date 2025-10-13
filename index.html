@@ -371,12 +371,12 @@
             border: 2px dashed rgba(255,255,255,0.2);
         }
         
-        /* UPDATED STYLES for TRAVION */
-        .travion-section {
+        /* UPDATED STYLES for ALL project pages */
+        .project-section {
             padding: 12vh 1.5rem;
         }
 
-        .stat-card-travion {
+        .stat-card-project {
             background: rgba(34, 211, 238, 0.1);
             border: 1px solid rgba(34, 211, 238, 0.2);
             border-radius: 1rem;
@@ -384,8 +384,45 @@
             text-align: center;
         }
 
-        .travion-hero-title span {
+        .project-hero-title span {
             display: inline-block;
+        }
+        
+        .project-hero-detail-card {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100%;
+        }
+
+        .scroll-indicator-icon {
+            width: 28px;
+            height: 48px;
+            border: 2px solid white;
+            border-radius: 20px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .scroll-indicator-icon::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 4px;
+            height: 8px;
+            background-color: white;
+            border-radius: 2px;
+            animation: scroll-indicator-anim 2s infinite ease-in-out;
+        }
+
+        @keyframes scroll-indicator-anim {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            50% { transform: translate(-50%, 15px); opacity: 0; }
+            51% { transform: translate(-50%, -10px); opacity: 0; }
+            100% { transform: translate(-50%, 0); opacity: 1; }
         }
         
         .phase-image-container {
@@ -598,83 +635,7 @@
             </main>
         </div>
         
-        <!-- Project Page Views (Content updated from Resume) -->
-        <div id="project-page-bankiom" class="page-view project-page-view">
-             <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                 <div class="container mx-auto flex justify-between items-center">
-                     <div class="flex-1 flex justify-start">
-                         <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                             <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                             <span>Back</span>
-                         </button>
-                     </div>
-                     <div class="flex-1 flex justify-center">
-                         <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                     </div>
-                     <div class="flex-1 flex justify-end">
-                          <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                             <span>Contact Me</span>
-                         </a>
-                     </div>
-                 </div>
-             </header>
-             <div class="content-wrapper">
-                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                     <img src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" alt="Hero image for the Bankiom project, showing a digital interface with abstract financial charts." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
-                     <div class="relative z-20 p-6">
-                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Bankiom - FinTech Super-App</h1>
-                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Conversion Rate Optimization</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Usability Testing</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Responsive Web Design</span>
-                         </div>
-                     </div>
-                 </section>
-                 <main>
-                     <section class="py-20 md:py-32">
-                         <div class="container mx-auto px-6 max-w-3xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Challenge</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">Bankiom, a promising fintech startup, faced a major hurdle: their website and web app had a low conversion rate and a high bounce rate. The user experience was unintuitive, failing to effectively engage and convert potential customers.</p>
-                         </div>
-                     </section>
-                     <section class="py-20 md:py-32 bg-black/20">
-                         <div class="container mx-auto px-6 max-w-5xl">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">My Approach</h2>
-                            <div class="grid md:grid-cols-2 gap-8 items-center">
-                                 <div class="anim-reveal">
-                                     <h3 class="text-2xl font-bold text-cyan-400 mb-4">Research & Redesign</h3>
-                                     <p class="text-lg text-gray-300">I conducted comprehensive usability tests to identify user pain points and friction in the existing flows. Based on these insights, I completely redesigned the website and revamped the responsive web app, focusing on creating a seamless, intuitive, and trustworthy user journey from landing page to conversion.</p>
-                                 </div>
-                                 <div class="rounded-lg overflow-hidden anim-reveal">
-                                     <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy" decoding="async">
-                                 </div>
-                             </div>
-                         </div>
-                     </section>
-                     <section class="py-20 md:py-32">
-                         <div class="container mx-auto px-6 max-w-4xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The data-driven redesign delivered transformative results. By focusing on user needs and eliminating friction, we created an experience that resonated with customers and drove significant business growth.</p>
-                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="230">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Conversion Rate Uplift</p>
-                                 </div>
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="45">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Higher User Engagement</p>
-                                 </div>
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                      <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="30">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Bounce Rate</p>
-                                 </div>
-                             </div>
-                         </div>
-                     </section>
-                 </main>
-             </div>
-        </div>
+        <!-- Project Page Views -->
         <div id="project-page-travion" class="page-view project-page-view">
             <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
                 <div class="container mx-auto flex justify-between items-center">
@@ -696,40 +657,38 @@
             </header>
             <div class="content-wrapper">
                 <main>
-                    <!-- Travion: Hero -->
                     <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
-                        <div class="absolute inset-0 bg-black opacity-40 z-10"></div>
-                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop" alt="Scenic travel destination" class="absolute inset-0 w-full h-full object-cover parallax-bg">
-                        <div class="relative z-20 p-6">
-                            <h1 class="text-4xl md:text-8xl font-black travion-hero-title">
+                        <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=Scenic+Travel+Destination';" alt="Scenic travel destination" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
+                        <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
+                        <div class="relative z-30 p-6 hero-content-container" style="will-change: transform, opacity;">
+                            <h1 class="text-4xl md:text-8xl font-black project-hero-title">
                                 <span>T</span><span>r</span><span>a</span><span>v</span><span>i</span><span>o</span><span>n</span>
                             </h1>
                             <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">A comprehensive B2B SaaS platform for travel agencies and DMCs.</p>
-                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
-                                <div><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200">Lead UX Designer & Research Coordinator</p></div>
-                                <div><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200">18 Months</p></div>
-                                <div><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200">B2B SaaS Platform</p></div>
-                                <div><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200">Figma, Miro, JS</p></div>
+                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">Lead UX Designer & Research Coordinator</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">18 Months</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">B2B SaaS Platform</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Miro, JS</p></div>
                             </div>
                         </div>
-                        <div class="absolute bottom-10 text-sm uppercase tracking-widest anim-hero-reveal" style="--delay: 1s;">Scroll to explore</div>
+                        <div class="absolute bottom-10 z-30 w-full anim-hero-reveal scroll-indicator-container" style="--delay: 1s; will-change: transform, opacity;">
+                            <div class="scroll-indicator-icon"></div>
+                        </div>
                     </section>
-                    
-                    <!-- Travion: The Problem -->
-                    <section class="travion-section container mx-auto text-center">
+                    <section class="project-section container mx-auto text-center">
                         <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">An Industry Drowning in <span class="text-cyan-400">Chaos</span></h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">India's $12 billion B2B travel market is booming, yet the people driving it are stuck in the past. My initial research revealed that 78% of travel professionals spend 3-4 hours daily on manual coordination, juggling numerous WhatsApp chats, emails, and phone calls. They were losing money and clients, not because they weren't skilled, but because their tools were fragmented and inefficient. The core problem was clear:</p>
                         <blockquote class="mt-12 text-2xl md:text-3xl font-medium border-l-4 border-cyan-400 pl-8 text-left max-w-4xl mx-auto anim-reveal bg-black/20 py-4">
-                           “Travel professionals in India need a single, unified platform that tames their operational chaos, supports their relationship-based way of doing business, and works as well on the move as it does at their desk.”
+                            “Travel professionals in India need a single, unified platform that tames their operational chaos, supports their relationship-based way of doing business, and works as well on the move as it does at their desk.”
                         </blockquote>
                         <div class="mt-12 anim-reveal">
                             <h3 class="text-2xl font-bold text-cyan-400">How Might We...?</h3>
                             <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mt-2">How might we design a single platform that empowers travel agents to manage their entire workflow—from discovery to happy clients—and build trust within their network, especially from a mobile device?</p>
                         </div>
                     </section>
-                    
-                    <!-- Travion: Phases Scrollytelling Section -->
-                    <section class="travion-section container mx-auto">
+                    <section class="project-section container mx-auto">
                         <div class="grid md:grid-cols-2 gap-12">
                             <div class="md:col-span-1">
                                 <div class="phase-text-item">
@@ -777,44 +736,38 @@
                             </div>
                         </div>
                     </section>
-
-                    <!-- Travion: The Solution -->
-                    <section class="travion-section container mx-auto px-6">
+                    <section class="project-section container mx-auto px-6">
                         <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: Travion 2.0</h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive mobile & Web app anchored by a five-tab bottom navigation, providing instant access to key workflows and allowing users to manage their entire business from anywhere.</p>
                         <div class="rounded-lg overflow-hidden anim-reveal max-w-6xl mx-auto">
                             <img src="https://images.unsplash.com/photo-1618788372246-7b22c0202c3d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="A gallery of final UI screens for the Travion mobile app." loading="lazy" decoding="async">
                         </div>
                     </section>
-                    
-                    <!-- Travion: Impact -->
-                    <section class="travion-section">
+                    <section class="project-section">
                          <div class="container mx-auto px-6 max-w-5xl text-center">
                              <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: Taming Chaos, Driving Growth</h2>
                              <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">The 18-month design journey delivered transformative results, validated by strong metrics from our beta users.</p>
                              <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                                 <div class="anim-reveal stat-card-travion">
+                                 <div class="anim-reveal stat-card-project">
                                      <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="60">0%</p>
                                      <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Faster Task Completion</p>
                                  </div>
-                                 <div class="anim-reveal stat-card-travion" style="--delay: 0.1s;">
+                                 <div class="anim-reveal stat-card-project" style="--delay: 0.1s;">
                                      <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="35">0%</p>
                                      <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Increase in Engagement</p>
                                  </div>
-                                 <div class="anim-reveal stat-card-travion" style="--delay: 0.2s;">
+                                 <div class="anim-reveal stat-card-project" style="--delay: 0.2s;">
                                      <p class="text-5xl font-bold text-cyan-400">88.5</p>
                                      <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">SUS Score (A+)</p>
                                  </div>
-                                  <div class="anim-reveal stat-card-travion" style="--delay: 0.3s;">
+                                  <div class="anim-reveal stat-card-project" style="--delay: 0.3s;">
                                      <p class="text-5xl font-bold text-cyan-400">78</p>
                                      <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Net Promoter Score</p>
                                  </div>
                              </div>
-                        </div>
-                     </section>
-
-                     <!-- Travion: Learnings -->
-                     <section class="travion-section container mx-auto px-6 max-w-5xl">
+                         </div>
+                    </section>
+                     <section class="project-section container mx-auto px-6 max-w-5xl">
                          <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
                          <div class="grid md:grid-cols-3 gap-8">
                              <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
@@ -831,81 +784,211 @@
                              </div>
                          </div>
                      </section>
-                 </main>
+                </main>
+            </div>
+        </div>
+        <div id="project-page-ourshoppee" class="page-view project-page-view">
+            <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
+                <div class="container mx-auto flex justify-between items-center">
+                    <div class="flex-1 flex justify-start">
+                        <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            <span>Back</span>
+                        </button>
+                    </div>
+                    <div class="flex-1 flex justify-center">
+                        <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                    </div>
+                    <div class="flex-1 flex justify-end">
+                        <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                            <span>Contact Me</span>
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <div class="content-wrapper">
+                <main>
+                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                        <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=E-Commerce+Platform';" alt="E-Commerce Platform" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
+                        <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
+                        <div class="relative z-30 p-6 hero-content-container" style="will-change: transform, opacity;">
+                            <h1 class="text-4xl md:text-7xl font-black project-hero-title">OurShoppee</h1>
+                            <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">An internal CRM platform to streamline e-commerce operations.</p>
+                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">Lead Product Designer</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">1 Year</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">Internal CRM</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Shopify</p></div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-10 z-30 w-full anim-hero-reveal scroll-indicator-container" style="--delay: 1s; will-change: transform, opacity;">
+                            <div class="scroll-indicator-icon"></div>
+                        </div>
+                    </section>
+                    <section class="project-section container mx-auto text-center">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">The Challenge: <span class="text-cyan-400">Operational Inefficiency</span></h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">OurShoppee's internal CRM platform, used by over 500 staff, was inefficient and prone to errors. The lack of a consistent design language and convoluted workflows were hampering productivity and impacting the sales process.</p>
+                    </section>
+                    <section class="project-section container mx-auto px-6">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center anim-reveal">The Solution</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                <h3 class="text-cyan-400 font-bold text-3xl mb-4">Building a Design System</h3>
+                                <p class="text-lg text-gray-300">I led the creation and rollout of a comprehensive design system. This established a unified visual language and a library of reusable components, ensuring brand consistency and accelerating future development cycles.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A team analyzing analytics data and website heatmaps on a large screen." loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-24">
+                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
+                                <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d_5f?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person shopping on an e-commerce website on their laptop, showcasing a smooth checkout experience." loading="lazy" decoding="async">
+                            </div>
+                            <div class="anim-reveal md:order-1">
+                                <h3 class="text-cyan-400 font-bold text-3xl mb-4">Streamlining Workflows</h3>
+                                <p class="text-lg text-gray-300">I redesigned the entire CRM platform for both web and mobile, focusing on optimizing critical user tasks. By integrating CRM-Shopify workflows, we streamlined sales processes and dramatically improved data synchronization.</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-section">
+                        <div class="container mx-auto px-6 max-w-5xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: A Boost in Productivity</h2>
+                            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">The new CRM platform transformed internal operations. The focus on efficiency and consistency provided a significant boost to the productivity of the entire sales and support team.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                                <div class="anim-reveal stat-card-project">
+                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Reduction in Task Time</p>
+                                </div>
+                                <div class="anim-reveal stat-card-project" style="--delay: 0.1s;">
+                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Reduction in Errors</p>
+                                </div>
+                                <div class="anim-reveal stat-card-project" style="--delay: 0.2s;">
+                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="20">0%</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Design Efficiency Gains</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-section container mx-auto px-6 max-w-5xl">
+                         <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
+                         <div class="grid md:grid-cols-3 gap-8">
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
+                                 <h3 class="font-bold text-white text-xl mb-2">A Design System is an Investment</h3>
+                                 <p class="text-gray-300">Implementing a design system was a significant upfront effort, but the long-term payoff in development speed and brand consistency was immeasurable. It's a foundational asset, not a one-off project.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.1s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Internal Tools Deserve Great UX</h3>
+                                 <p class="text-gray-300">Employee-facing tools are often neglected, but improving their usability directly translates to higher productivity, fewer errors, and better morale. A great internal UX is a competitive advantage.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.2s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Consistency Breeds Confidence</h3>
+                                 <p class="text-gray-300">By creating predictable patterns and a unified visual language across the platform, users could perform complex tasks with more speed and confidence, leading to a significant reduction in support requests.</p>
+                             </div>
+                         </div>
+                     </section>
+                </main>
+            </div>
+        </div>
+        <div id="project-page-bankiom" class="page-view project-page-view">
+            <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
+                <div class="container mx-auto flex justify-between items-center">
+                    <div class="flex-1 flex justify-start">
+                        <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            <span>Back</span>
+                        </button>
+                    </div>
+                    <div class="flex-1 flex justify-center">
+                        <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                    </div>
+                    <div class="flex-1 flex justify-end">
+                         <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                            <span>Contact Me</span>
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <div class="content-wrapper">
+                <main>
+                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                        <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=Fintech+Interface';" alt="Fintech Interface" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
+                        <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
+                        <div class="relative z-30 p-6 hero-content-container" style="will-change: transform, opacity;">
+                            <h1 class="text-4xl md:text-7xl font-black project-hero-title">Bankiom</h1>
+                            <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">Redesigning a FinTech Super-App to drive conversion and engagement.</p>
+                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">UX/UI Designer</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">6 Months</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">FinTech Web App</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Hotjar</p></div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-10 z-30 w-full anim-hero-reveal scroll-indicator-container" style="--delay: 1s; will-change: transform, opacity;">
+                            <div class="scroll-indicator-icon"></div>
+                        </div>
+                    </section>
+                    <section class="project-section container mx-auto text-center">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">The Challenge: <span class="text-cyan-400">A Leaky Funnel</span></h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">Bankiom, a promising fintech startup, faced a major hurdle: their website and web app had a low conversion rate and a high bounce rate. The user experience was unintuitive, failing to effectively engage and convert potential customers.</p>
+                    </section>
+                    <section class="project-section container mx-auto px-6">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center anim-reveal">The Solution</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                <h3 class="text-cyan-400 font-bold text-3xl mb-4">Data-Driven Redesign</h3>
+                                <p class="text-lg text-gray-300">I conducted comprehensive usability tests and analyzed user behavior with Hotjar to pinpoint exact friction points. These insights guided a complete redesign of the website and web app, focusing on creating a seamless, intuitive, and trustworthy user journey from landing page to conversion.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-section">
+                        <div class="container mx-auto px-6 max-w-5xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: Transforming Results</h2>
+                            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">The data-driven redesign delivered transformative results. By focusing on user needs and eliminating friction, we created an experience that resonated with customers and drove significant business growth.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                                <div class="anim-reveal stat-card-project">
+                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="230">0%</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Conversion Uplift</p>
+                                </div>
+                                <div class="anim-reveal stat-card-project" style="--delay: 0.1s;">
+                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="45">0%</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Higher Engagement</p>
+                                </div>
+                                <div class="anim-reveal stat-card-project" style="--delay: 0.2s;">
+                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="30">0%</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Reduced Bounce Rate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-section container mx-auto px-6 max-w-5xl">
+                         <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
+                         <div class="grid md:grid-cols-3 gap-8">
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
+                                 <h3 class="font-bold text-white text-xl mb-2">Data is a Designer's Best Friend</h3>
+                                 <p class="text-gray-300">Qualitative feedback is great, but quantitative data from tools like Hotjar provides undeniable evidence of user struggles. Combining both is the key to a truly user-centered design.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.1s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Trust is Non-Negotiable in FinTech</h3>
+                                 <p class="text-gray-300">Every design choice, from microcopy to color palette, must contribute to a sense of security and reliability. In finance, users need to feel confident and safe above all else.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.2s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Simplicity Converts</h3>
+                                 <p class="text-gray-300">The biggest wins came from removing steps, clarifying language, and simplifying the user journey. A frictionless path to conversion is the most effective path.</p>
+                             </div>
+                         </div>
+                     </section>
+                </main>
             </div>
         </div>
         <div id="project-page-shanthib" class="page-view project-page-view">
-             <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                 <div class="container mx-auto flex justify-between items-center">
-                      <div class="flex-1 flex justify-start">
-                          <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                              <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                              <span>Back</span>
-                          </button>
-                      </div>
-                      <div class="flex-1 flex justify-center">
-                          <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                      </div>
-                      <div class="flex-1 flex justify-end">
-                           <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                             <span>Contact Me</span>
-                         </a>
-                      </div>
-                 </div>
-             </header>
-             <div class="content-wrapper">
-                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                     <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" alt="Hero image for the Shanthi Bhavan project, showing a medical professional analyzing patient data on a laptop." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
-                     <div class="relative z-20 p-6">
-                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Shanthi Bhavan Donation App</h1>
-                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Mobile-First UX</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Non-Profit</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Prototyping</span>
-                         </div>
-                     </div>
-                 </section>
-                 <main>
-                      <section class="py-20 md:py-32">
-                          <div class="container mx-auto px-6 max-w-3xl text-center">
-                              <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Need</h2>
-                              <p class="text-xl md:text-2xl anim-reveal">Shanthi Bhavan, a non-profit organization, had a donation process that was long and cumbersome, taking 15-20 minutes to complete. This friction was a major barrier for potential donors, limiting the organization's ability to raise funds effectively.</p>
-                          </div>
-                      </section>
-                      <div class="container mx-auto px-6 max-w-5xl space-y-24 py-24 md:space-y-32">
-                          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                              <div class="anim-reveal">
-                                  <h3 class="text-cyan-400 font-bold text-2xl mb-4">A Mobile-First Solution</h3>
-                                  <p class="text-lg">I designed a mobile-first donation application with a clear mission: make giving as easy as possible. The primary focus was on radically simplifying the user flow, reducing the number of steps, and creating a clean, trustworthy interface that encouraged generosity.</p>
-                              </div>
-                              <div class="rounded-lg overflow-hidden anim-reveal">
-                                  <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop during usability testing." loading="lazy" decoding="async">
-                              </div>
-                          </div>
-                      </div>
-                      <section class="py-20 md:py-32">
-                          <div class="container mx-auto px-6 max-w-4xl text-center">
-                              <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Result & Impact</h2>
-                              <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-12 anim-reveal">The new app was a game-changer for the organization. By dramatically improving the user experience, we empowered more people to donate and significantly boosted the organization's fundraising capabilities.</p>
-                              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-                                  <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                      <p class="text-6xl font-bold text-cyan-400"> &lt; 5 <span class="text-4xl">min</span></p>
-                                      <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Donation Process Time</p>
-                                  </div>
-                                  <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                      <p class="text-6xl font-bold text-cyan-400">₹200k+</p>
-                                      <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Increased Donations in 90 Days</p>
-                                  </div>
-                              </div>
-                          </div>
-                      </section>
-                 </main>
-             </div>
-        </div>
-        <div id="project-page-ourshoppee" class="page-view project-page-view">
-             <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                 <div class="container mx-auto flex justify-between items-center">
+            <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
+                <div class="container mx-auto flex justify-between items-center">
                      <div class="flex-1 flex justify-start">
                          <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
                              <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -913,77 +996,86 @@
                          </button>
                      </div>
                      <div class="flex-1 flex justify-center">
-                          <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                         <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
                      </div>
                      <div class="flex-1 flex justify-end">
-                           <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                             <span>Contact Me</span>
-                         </a>
+                          <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                            <span>Contact Me</span>
+                        </a>
                      </div>
-                 </div>
-             </header>
-             <div class="content-wrapper">
-                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                     <img src="https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop" alt="Hero image for the OurShoppee project, showing a person happily shopping online using a laptop." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
-                     <div class="relative z-20 p-6">
-                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">OurShoppee - Internal CRM Platform</h1>
-                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Design Systems</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">E-Commerce UX</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Workflow Optimization</span>
-                         </div>
-                     </div>
-                 </section>
-                 <main>
-                     <section class="py-20 md:py-32">
-                         <div class="container mx-auto px-6 max-w-3xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">OurShoppee's internal CRM platform, used by over 500 staff, was inefficient and prone to errors. The lack of a consistent design language and convoluted workflows were hampering productivity and impacting the sales process.</p>
+                </div>
+            </header>
+            <div class="content-wrapper">
+                <main>
+                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                        <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=Donation+App';" alt="Donation App" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
+                        <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
+                        <div class="relative z-30 p-6 hero-content-container" style="will-change: transform, opacity;">
+                            <h1 class="text-4xl md:text-7xl font-black project-hero-title">Shanthi Bhavan</h1>
+                            <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">A mobile-first donation app designed for impact.</p>
+                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">UX Designer (Pro Bono)</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">3 Months</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">Donation Mobile App</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma</p></div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-10 z-30 w-full anim-hero-reveal scroll-indicator-container" style="--delay: 1s; will-change: transform, opacity;">
+                            <div class="scroll-indicator-icon"></div>
+                        </div>
+                    </section>
+                    <section class="project-section container mx-auto text-center">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">The Need: <span class="text-cyan-400">Friction in Generosity</span></h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">Shanthi Bhavan, a non-profit organization, had a donation process that was long and cumbersome, taking 15-20 minutes to complete. This friction was a major barrier for potential donors, limiting the organization's ability to raise vital funds effectively.</p>
+                    </section>
+                    <section class="project-section container mx-auto px-6">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center anim-reveal">The Solution</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                <h3 class="text-cyan-400 font-bold text-3xl mb-4">A Mobile-First Donation Experience</h3>
+                                <p class="text-lg text-gray-300">I designed a mobile-first donation application with a clear mission: make giving as easy as possible. The primary focus was on radically simplifying the user flow, reducing the number of steps, and creating a clean, trustworthy interface that encouraged generosity and connection to the cause.</p>
+                            </div>
+                            <div class="rounded-lg overflow-hidden anim-reveal">
+                                <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop during usability testing." loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-section">
+                        <div class="container mx-auto px-6 max-w-5xl text-center">
+                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: A Game-Changer for Fundraising</h2>
+                            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">The new app was a game-changer for the organization. By dramatically improving the user experience, we empowered more people to donate and significantly boosted the organization's fundraising capabilities.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
+                                <div class="anim-reveal stat-card-project">
+                                    <p class="text-5xl font-bold text-cyan-400">&lt; 5 <span class="text-3xl">min</span></p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Donation Process Time</p>
+                                </div>
+                                <div class="anim-reveal stat-card-project" style="--delay: 0.1s;">
+                                    <p class="text-5xl font-bold text-cyan-400">₹200k+</p>
+                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Raised in 90 Days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-section container mx-auto px-6 max-w-5xl">
+                         <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
+                         <div class="grid md:grid-cols-3 gap-8">
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
+                                 <h3 class="font-bold text-white text-xl mb-2">Reduce Friction, Increase Impact</h3>
+                                 <p class="text-gray-300">For non-profits, every second of a user's attention is precious. The single biggest factor in increasing donations was aggressively cutting down the time and steps required to contribute.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.1s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Emotion Drives Action</h3>
+                                 <p class="text-gray-300">A clean, professional, and visually compelling interface isn't just about aesthetics; it builds the trust necessary for a user to feel comfortable making a financial contribution to a cause.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.2s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Mobile-First for a Cause</h3>
+                                 <p class="text-gray-300">Meeting donors where they are—on their phones—was critical. A dedicated, optimized mobile experience is no longer a luxury for non-profits; it's essential for modern fundraising.</p>
+                             </div>
                          </div>
                      </section>
-                     <div class="container mx-auto px-6 max-w-5xl space-y-24 py-24 md:space-y-32">
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                             <div class="anim-reveal">
-                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Building a Design System</h3>
-                                 <p class="text-lg text-gray-300">I led the creation and rollout of a comprehensive design system. This established a unified visual language and a library of reusable components, ensuring brand consistency and accelerating future development cycles.</p>
-                             </div>
-                             <div class="rounded-lg overflow-hidden anim-reveal">
-                                 <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A team analyzing analytics data and website heatmaps on a large screen." loading="lazy" decoding="async">
-                             </div>
-                         </div>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                             <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                 <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d_5f?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person shopping on an e-commerce website on their laptop, showcasing a smooth checkout experience." loading="lazy" decoding="async">
-                             </div>
-                             <div class="anim-reveal md:order-1">
-                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. Streamlining Workflows</h3>
-                                 <p class="text-lg text-gray-300">I redesigned the entire CRM platform for both web and mobile, focusing on optimizing critical user tasks. By integrating CRM-Shopify workflows, we streamlined sales processes and dramatically improved data synchronization.</p>
-                             </div>
-                         </div>
-                     </div>
-                     <section class="py-20 md:py-32">
-                         <div class="container mx-auto px-6 max-w-4xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new CRM platform transformed internal operations. The focus on efficiency and consistency provided a significant boost to the productivity of the entire sales and support team.</p>
-                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Task Time</p>
-                                 </div>
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Reduction in Errors</p>
-                                 </div>
-                                  <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="20">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Improvement in Design Efficiency</p>
-                                 </div>
-                             </div>
-                         </div>
-                     </section>
-                 </main>
-             </div>
+                </main>
+            </div>
         </div>
     </div>
     
@@ -1061,8 +1153,8 @@
 
             let clickPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             if (e) {
-                 clickPos.x = e.clientX;
-                 clickPos.y = e.clientY;
+                clickPos.x = e.clientX;
+                clickPos.y = e.clientY;
             }
             
             gsap.set(transitionCircle, { attr: { cx: clickPos.x, cy: clickPos.y, r: 0 } });
@@ -1327,9 +1419,9 @@
 
         // --- 5. DYNAMIC PROJECT INJECTION ---
         const projects = [
-            { id: 'bankiom', title: 'Bankiom - FinTech Super-App', tags: ['Conversion Uplift', 'Usability Testing'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
             { id: 'travion', title: 'Travion - The B2B Solution', tags: ['B2B SaaS', 'UX Research', 'Prototyping'], image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', href: '#'},
             { id: 'ourshoppee', title: 'OurShoppee - Internal CRM Platform', tags: ['Design System', 'Workflow Optimization'], image: 'https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'},
+            { id: 'bankiom', title: 'Bankiom - FinTech Super-App', tags: ['Conversion Uplift', 'Usability Testing'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
             { id: 'shanthib', title: 'Shanthi Bhavan Donation App', tags: ['Mobile-First UX', 'Non-Profit'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'}
         ];
         
@@ -1397,15 +1489,6 @@
             destroyProjectPageScrollTriggers(); 
             let triggers = [];
             
-            if(pageElement.id !== 'project-page-travion') {
-                gsap.from(pageElement.querySelectorAll(".anim-hero-reveal"), { duration: 1, y: 40, opacity: 0, stagger: 0.1, ease: "power3.out", delay: 0.5 });
-            }
-
-            const parallaxBg = pageElement.querySelector(".parallax-bg");
-            if (parallaxBg) {
-               triggers.push(gsap.to(parallaxBg, { yPercent: 30, ease: "none", scrollTrigger: { trigger: parallaxBg.parentElement, start: "top top", end: "bottom top", scrub: true } }));
-            }
-            
             pageElement.querySelectorAll('.anim-reveal').forEach(el => {
                 let delay = parseFloat(el.style.getPropertyValue('--delay')) || 0;
                 triggers.push(gsap.from(el, { 
@@ -1430,32 +1513,55 @@
                     scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
                 }));
             });
+            
+            initializeStandardHeroAnimation(pageElement, triggers); 
 
             if(pageElement.id === 'project-page-travion') {
-                initializeTravionAnimations(triggers);
+                initializeTravionScrollytelling(pageElement, triggers);
             }
 
             projectPageScrollTriggers = triggers;
         }
 
-       function initializeTravionAnimations(triggers) {
-            // Hero Title Animation
-            gsap.fromTo(".travion-hero-title span", 
+        function initializeStandardHeroAnimation(pageElement, triggers) {
+            const heroSection = pageElement.querySelector('section');
+            if (!heroSection) return;
+
+            gsap.fromTo(heroSection.querySelectorAll(".project-hero-title span"), 
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.05, delay: 0.4 }
             );
-            // Hero Mockup Animation
-            gsap.fromTo("#travion-hero-mockup",
-                { transform: 'perspective(1500px) rotateY(-15deg) rotateX(5deg) scale(0.8) translateY(50px)', opacity: 0 },
-                { transform: 'perspective(1500px) rotateY(-15deg) rotateX(5deg) scale(0.9)', opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.6 }
-            );
 
-            // Scrollytelling for Phases
+            gsap.from(heroSection.querySelectorAll('.anim-hero-reveal'), {
+                y: 30, opacity: 0, duration: 1, ease: 'power3.out', stagger: 0.1, delay: 0.6
+            });
+            
+            if (!prefersReducedMotion.matches) {
+                const heroContent = heroSection.querySelector('.hero-content-container');
+                const heroBg = heroSection.querySelector('.hero-bg-image');
+                const scrollIndicator = heroSection.querySelector('.scroll-indicator-container');
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: heroSection,
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: true,
+                    }
+                });
+                
+                if (heroBg) tl.to(heroBg, { yPercent: 20, ease: 'none' }, 0);
+                if (heroContent && scrollIndicator) tl.to([heroContent, scrollIndicator], { yPercent: -50, autoAlpha: 0, ease: 'none' }, 0);
+
+                if(tl.scrollTrigger) triggers.push(tl.scrollTrigger);
+            }
+        }
+        
+        function initializeTravionScrollytelling(pageElement, triggers) {
             const phaseImages = gsap.utils.toArray('.phase-image-item');
             const phaseTexts = gsap.utils.toArray('.phase-text-item');
 
             if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                // Pin the image container
                 triggers.push(ScrollTrigger.create({
                     trigger: '.phase-image-container',
                     start: 'top 20vh',
@@ -1465,11 +1571,9 @@
                     pinSpacing: false
                 }));
 
-                // Set initial state: first image visible
                 gsap.set(phaseImages, { autoAlpha: 0 });
                 gsap.set(phaseImages[0], { autoAlpha: 1 });
 
-                // Create triggers for each text section to change the active image
                 phaseTexts.forEach((text, i) => {
                     const trigger = ScrollTrigger.create({
                         trigger: text,
@@ -1491,7 +1595,6 @@
                     triggers.push(trigger);
                 });
 
-                // Add a reveal animation for the text content itself
                 gsap.utils.toArray('.phase-content').forEach(content => {
                     triggers.push(gsap.from(content, {
                         y: 50,
