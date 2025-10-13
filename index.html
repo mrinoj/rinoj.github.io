@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohamed Rinoj Hashim | UI/UX & Product Designer</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
     
     <!-- SEO Meta Tags (Fine-tuned based on Resume) -->
     <meta name="description" content="Portfolio of Mohamed Rinoj Hashim, a results-driven UI/UX & Product Designer with 5 years of experience in Fintech, E-Commerce, and Travel-Tech. Proven success in driving conversion uplift and revenue growth.">
@@ -355,23 +354,10 @@
         }
 
         /* PROJECT PAGE SPECIFIC STYLES */
-        .project-page-view { background-color: var(--bg-color-project); }
+        .project-page-view {
+             background: linear-gradient(180deg, var(--bg-gradient-start) 0%, #083c83 50%, var(--bg-gradient-start) 100%);
+        }
         .parallax-bg, .image-pan { will-change: transform; }
-        .color-palette div { transition: transform 0.3s ease; }
-        .color-palette div:hover { transform: scale(1.1); }
-        .horizontal-scroll-section {
-            width: 300%;
-            display: flex;
-            flex-wrap: nowrap;
-        }
-        .horizontal-panel {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
         .feature-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -379,6 +365,55 @@
             transform: translateY(-10px);
             box-shadow: 0 20px 25px -5px rgba(34, 211, 238, 0.1), 0 10px 10px -5px rgba(34, 211, 238, 0.04);
         }
+        
+        .placeholder-card {
+            background-color: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.2);
+        }
+        
+        /* UPDATED STYLES for TRAVION */
+        .travion-section {
+            padding: 12vh 1.5rem;
+        }
+
+        .stat-card-travion {
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .travion-hero-title span {
+            display: inline-block;
+        }
+        
+        .phase-image-container {
+            position: sticky;
+            top: 20vh;
+            height: 60vh;
+        }
+        .phase-image-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        .phase-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1.5rem;
+        }
+        .phase-text-item {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
 
         @media (prefers-reduced-motion: reduce) {
             .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
@@ -565,25 +600,25 @@
         
         <!-- Project Page Views (Content updated from Resume) -->
         <div id="project-page-bankiom" class="page-view project-page-view">
-             <div class="content-wrapper">
-                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                     <div class="container mx-auto flex justify-between items-center">
-                         <div class="flex-1 flex justify-start">
-                             <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                 <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                 <span>Back</span>
-                             </button>
-                         </div>
-                         <div class="flex-1 flex justify-center">
-                             <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                         </div>
-                         <div class="flex-1 flex justify-end">
-                              <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                         </div>
+             <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                 <div class="container mx-auto flex justify-between items-center">
+                     <div class="flex-1 flex justify-start">
+                         <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                             <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                             <span>Back</span>
+                         </button>
                      </div>
-                 </header>
+                     <div class="flex-1 flex justify-center">
+                         <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                     </div>
+                     <div class="flex-1 flex justify-end">
+                          <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                             <span>Contact Me</span>
+                         </a>
+                     </div>
+                 </div>
+             </header>
+             <div class="content-wrapper">
                  <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
                      <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
                      <img src="https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop" alt="Hero image for the Bankiom project, showing a digital interface with abstract financial charts." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
@@ -596,7 +631,7 @@
                          </div>
                      </div>
                  </section>
-                 <main class="bg-gray-900/90">
+                 <main>
                      <section class="py-20 md:py-32">
                          <div class="container mx-auto px-6 max-w-3xl text-center">
                              <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Challenge</h2>
@@ -607,14 +642,14 @@
                          <div class="container mx-auto px-6 max-w-5xl">
                              <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">My Approach</h2>
                             <div class="grid md:grid-cols-2 gap-8 items-center">
-                                <div class="anim-reveal">
-                                    <h3 class="text-2xl font-bold text-cyan-400 mb-4">Research & Redesign</h3>
-                                    <p class="text-lg text-gray-300">I conducted comprehensive usability tests to identify user pain points and friction in the existing flows. Based on these insights, I completely redesigned the website and revamped the responsive web app, focusing on creating a seamless, intuitive, and trustworthy user journey from landing page to conversion.</p>
-                                </div>
-                                <div class="rounded-lg overflow-hidden anim-reveal">
-                                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy" decoding="async">
-                                </div>
-                            </div>
+                                 <div class="anim-reveal">
+                                     <h3 class="text-2xl font-bold text-cyan-400 mb-4">Research & Redesign</h3>
+                                     <p class="text-lg text-gray-300">I conducted comprehensive usability tests to identify user pain points and friction in the existing flows. Based on these insights, I completely redesigned the website and revamped the responsive web app, focusing on creating a seamless, intuitive, and trustworthy user journey from landing page to conversion.</p>
+                                 </div>
+                                 <div class="rounded-lg overflow-hidden anim-reveal">
+                                     <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy" decoding="async">
+                                 </div>
+                             </div>
                          </div>
                      </section>
                      <section class="py-20 md:py-32">
@@ -640,78 +675,159 @@
                  </main>
              </div>
         </div>
-        <div id="project-page-travacations" class="page-view project-page-view">
+        <div id="project-page-travion" class="page-view project-page-view">
+            <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
+                <div class="container mx-auto flex justify-between items-center">
+                    <div class="flex-1 flex justify-start">
+                        <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            <span>Back</span>
+                        </button>
+                    </div>
+                    <div class="flex-1 flex justify-center">
+                        <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                    </div>
+                    <div class="flex-1 flex justify-end">
+                         <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                            <span>Contact Me</span>
+                        </a>
+                    </div>
+                </div>
+            </header>
             <div class="content-wrapper">
-                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                     <div class="container mx-auto flex justify-between items-center">
-                         <div class="flex-1 flex justify-start">
-                             <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                 <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                 <span>Back</span>
-                             </button>
-                         </div>
-                         <div class="flex-1 flex justify-center">
-                             <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                         </div>
-                         <div class="flex-1 flex justify-end">
-                              <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                         </div>
-                     </div>
-                 </header>
-                 <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
-                     <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-                     <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop" alt="Hero image for the Travacations project, showing a person with a backpack looking at a scenic mountain landscape." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
-                     <div class="relative z-20 p-6">
-                         <h1 class="text-4xl md:text-7xl font-bold anim-hero-reveal">Travacations - B2B Travel Platform</h1>
-                         <div class="mt-4 flex flex-wrap gap-3 justify-center anim-hero-reveal">
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Lead Generation</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">Competitive Research</span>
-                             <span class="text-sm font-semibold px-4 py-2 rounded-full border border-gray-500">MVP Design</span>
-                         </div>
-                     </div>
-                 </section>
-                 <main class="bg-gray-900/90">
-                      <section class="py-20 md:py-32">
-                         <div class="container mx-auto px-6 max-w-3xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Goal</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 anim-reveal">As a new player in the travel-tech space, Travacations needed to launch a website and lead-generation flow that would immediately engage users and drive significant business growth from a baseline of $50k/month in revenue.</p>
-                         </div>
+                <main>
+                    <!-- Travion: Hero -->
+                    <section class="min-h-screen w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
+                        <div class="absolute inset-0 bg-black opacity-40 z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop" alt="Scenic travel destination" class="absolute inset-0 w-full h-full object-cover parallax-bg">
+                        <div class="relative z-20 p-6">
+                            <h1 class="text-4xl md:text-8xl font-black travion-hero-title">
+                                <span>T</span><span>r</span><span>a</span><span>v</span><span>i</span><span>o</span><span>n</span>
+                            </h1>
+                            <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">A comprehensive B2B SaaS platform for travel agencies and DMCs.</p>
+                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
+                                <div><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200">Lead UX Designer & Research Coordinator</p></div>
+                                <div><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200">18 Months</p></div>
+                                <div><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200">B2B SaaS Platform</p></div>
+                                <div><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200">Figma, Miro, JS</p></div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-10 text-sm uppercase tracking-widest anim-hero-reveal" style="--delay: 1s;">Scroll to explore</div>
+                    </section>
+                    
+                    <!-- Travion: The Problem -->
+                    <section class="travion-section container mx-auto text-center">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">An Industry Drowning in <span class="text-cyan-400">Chaos</span></h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">India's $12 billion B2B travel market is booming, yet the people driving it are stuck in the past. My initial research revealed that 78% of travel professionals spend 3-4 hours daily on manual coordination, juggling numerous WhatsApp chats, emails, and phone calls. They were losing money and clients, not because they weren't skilled, but because their tools were fragmented and inefficient. The core problem was clear:</p>
+                        <blockquote class="mt-12 text-2xl md:text-3xl font-medium border-l-4 border-cyan-400 pl-8 text-left max-w-4xl mx-auto anim-reveal bg-black/20 py-4">
+                           “Travel professionals in India need a single, unified platform that tames their operational chaos, supports their relationship-based way of doing business, and works as well on the move as it does at their desk.”
+                        </blockquote>
+                        <div class="mt-12 anim-reveal">
+                            <h3 class="text-2xl font-bold text-cyan-400">How Might We...?</h3>
+                            <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mt-2">How might we design a single platform that empowers travel agents to manage their entire workflow—from discovery to happy clients—and build trust within their network, especially from a mobile device?</p>
+                        </div>
+                    </section>
+                    
+                    <!-- Travion: Phases Scrollytelling Section -->
+                    <section class="travion-section container mx-auto">
+                        <div class="grid md:grid-cols-2 gap-12">
+                            <div class="md:col-span-1">
+                                <div class="phase-text-item">
+                                    <div class="phase-content">
+                                        <span class="text-cyan-400 font-bold text-7xl">01</span>
+                                        <h2 class="text-4xl md:text-6xl font-bold my-4">Foundational Research</h2>
+                                        <p class="text-lg text-gray-200 mb-4">I designed a mixed-methods research plan to get both hard data and human stories. We surveyed over 200 professionals across India. The data was stark: <span class="font-bold text-white">67% had lost bookings</span> due to slow response times, and a massive <span class="font-bold text-white">84% were using WhatsApp</span> for primary business communication.</p>
+                                        <p class="text-lg text-gray-200">This quantified the inefficiency, but shadowing agents in their offices revealed the true chaos. I watched them switch between over 7 different tools to manage one booking.</p>
+                                        <blockquote class="mt-6 border-l-2 border-cyan-400 pl-4 text-gray-300 italic">"I have the client on the phone, the hotel in a WhatsApp chat, and the driver on another call. It's incredibly stressful." <br><span class="text-white not-italic">- Priya, DMC Operations Manager</span></blockquote>
+                                    </div>
+                                </div>
+                                <div class="phase-text-item">
+                                    <div class="phase-content">
+                                        <span class="text-cyan-400 font-bold text-7xl">02</span>
+                                        <h2 class="text-4xl md:text-6xl font-bold my-4">Defining the MVP & Core Features</h2>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Defining the User & Their Journey</h3>
+                                        <p class="text-lg text-gray-200 mb-4">I synthesized the research into two key personas—<span class="font-bold text-white">Rajesh (Agency Owner)</span> and <span class="font-bold text-white">Priya (DMC Manager)</span>. To truly empathize, I mapped Priya's journey of handling a flight cancellation. Her current process was a chaotic, 2-hour scramble. This map became a powerful tool to show stakeholders exactly where our product could make the biggest impact.</p>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4 mt-8">Ideation & Designing the Core Pillars</h3>
+                                        <p class="text-lg text-gray-200">I led the team through ideation workshops, which led to three core design pillars for Travion. These pillars directly translate into the key features of the application: A Single Source of Truth, a Digital Trust Network, and an On-the-Go Command Center.</p>
+                                    </div>
+                                </div>
+                                <div class="phase-text-item">
+                                    <div class="phase-content">
+                                        <span class="text-cyan-400 font-bold text-7xl">03</span>
+                                        <h2 class="text-4xl md:text-6xl font-bold my-4">Prototyping, Testing & Evolution</h2>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Prototyping with Purpose</h3>
+                                        <p class="text-lg text-gray-200 mb-4">I made a strategic decision to build our high-fidelity prototype using <span class="font-bold text-white">HTML/CSS/JS</span>. This was critical. A static Figma prototype wouldn't have allowed us to test the complex, data-driven interactions that were core to Travion's value, such as the real-time countdown timers, dynamic profit calculations in the Itinerary Builder, and the real user experience of interacting with the AI features.</p>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4 mt-8">Usability Testing & Key Iterations</h3>
+                                        <p class="text-lg text-gray-200">I conducted 25 moderated usability tests, which led to crucial, data-driven iterations. A confusing Floating Action Button was simplified to the two most essential tasks. After users wanted immediate feedback on their rank in the Trust Hub, I added a direct link to the Leaderboard, which <span class="font-bold text-white">increased engagement by 30%</span>. The positive feedback on AI features validated our investment in AI-powered assistance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md:col-span-1">
+                                <div class="phase-image-container">
+                                    <div class="phase-image-item">
+                                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="A team collaborating around a whiteboard full of sticky notes, representing user research affinity mapping." loading="lazy" decoding="async">
+                                    </div>
+                                    <div class="phase-image-item">
+                                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop" alt="A detailed user journey map and persona cards laid out on a desk." loading="lazy" decoding="async">
+                                    </div>
+                                    <div class="phase-image-item">
+                                        <img src="https://images.unsplash.com/photo-1559028006-448665bd7c2f?q=80&w=1924&auto=format&fit=crop" alt="A user's hand interacting with a mobile phone displaying a prototype during a usability test." loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Travion: The Solution -->
+                    <section class="travion-section container mx-auto px-6">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: Travion 2.0</h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive mobile & Web app anchored by a five-tab bottom navigation, providing instant access to key workflows and allowing users to manage their entire business from anywhere.</p>
+                        <div class="rounded-lg overflow-hidden anim-reveal max-w-6xl mx-auto">
+                            <img src="https://images.unsplash.com/photo-1618788372246-7b22c0202c3d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="A gallery of final UI screens for the Travion mobile app." loading="lazy" decoding="async">
+                        </div>
+                    </section>
+                    
+                    <!-- Travion: Impact -->
+                    <section class="travion-section">
+                         <div class="container mx-auto px-6 max-w-5xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: Taming Chaos, Driving Growth</h2>
+                             <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">The 18-month design journey delivered transformative results, validated by strong metrics from our beta users.</p>
+                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                                 <div class="anim-reveal stat-card-travion">
+                                     <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="60">0%</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Faster Task Completion</p>
+                                 </div>
+                                 <div class="anim-reveal stat-card-travion" style="--delay: 0.1s;">
+                                     <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="35">0%</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Increase in Engagement</p>
+                                 </div>
+                                 <div class="anim-reveal stat-card-travion" style="--delay: 0.2s;">
+                                     <p class="text-5xl font-bold text-cyan-400">88.5</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">SUS Score (A+)</p>
+                                 </div>
+                                  <div class="anim-reveal stat-card-travion" style="--delay: 0.3s;">
+                                     <p class="text-5xl font-bold text-cyan-400">78</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Net Promoter Score</p>
+                                 </div>
+                             </div>
+                        </div>
                      </section>
-                     <div class="container mx-auto px-6 max-w-5xl space-y-24 py-24 md:space-y-32">
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                             <div class="anim-reveal">
-                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">01. Competitive Research</h3>
-                                 <p class="text-lg text-gray-300">I conducted a deep-dive competitive analysis of 14 industry players to identify market gaps, best practices, and opportunities for differentiation. This research formed the strategic foundation for our design.</p>
+
+                     <!-- Travion: Learnings -->
+                     <section class="travion-section container mx-auto px-6 max-w-5xl">
+                         <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
+                         <div class="grid md:grid-cols-3 gap-8">
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
+                                 <h3 class="font-bold text-white text-xl mb-2">Prototype for the Problem</h3>
+                                 <p class="text-gray-300">Building a functional prototype was more work, but it was the right choice. It allowed us to test complex interactions like the AI features and swipe gestures, leading to far richer insights than a static mockup ever could.</p>
                              </div>
-                             <div class="rounded-lg overflow-hidden anim-reveal">
-                                 <img src="https://images.unsplash.com/photo-1579762593175-20226054cad0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A designer sketching travel app wireframes and user flows on a whiteboard." loading="lazy" decoding="async">
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.1s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Solve the "Unseen" Problems</h3>
+                                 <p class="text-gray-300">Users didn't explicitly ask for an "AI-powered Smart Feed," but by observing their daily struggles, I identified a need for proactive assistance. Solving these unarticulated needs is what separates a good product from a great one.</p>
                              </div>
-                         </div>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                             <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                 <img src="https://images.unsplash.com/photo-1600195077909-46e573870d99?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A polished user interface for a travel booking application, showing flights and hotels." loading="lazy" decoding="async">
-                             </div>
-                             <div class="anim-reveal md:order-1">
-                                 <h3 class="text-cyan-400 font-bold text-2xl mb-4">02. MVP & Prototyping</h3>
-                                 <p class="text-lg text-gray-300">I designed the MVP user experience, creating scalable user flows and interactive prototypes. My focus was on a streamlined, intuitive lead-generation process that minimized friction and maximized user engagement from the first click.</p>
-                             </div>
-                         </div>
-                     </div>
-                     <section class="py-20 md:py-32">
-                         <div class="container mx-auto px-6 max-w-4xl text-center">
-                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Outcome & Impact</h2>
-                             <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new website and lead-generation flow were a massive success, establishing a strong market presence and becoming a primary driver of business growth. I partnered closely with engineering and product to ensure a flawless rollout.</p>
-                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-6xl font-bold text-cyan-400 stat-number" data-end-value="300">0%</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">Revenue Growth</p>
-                                 </div>
-                                 <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
-                                     <p class="text-4xl md:text-6xl font-bold text-cyan-400">Successful</p>
-                                     <p class="text-sm text-gray-400 mt-2 uppercase tracking-widest">MVP Launch</p>
-                                 </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.2s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Enhance Relationships</h3>
+                                 <p class="text-gray-300">In a market built on trust, our most successful feature wasn't a tool, but the Trust Hub—a feature designed to digitally replicate and strengthen real-world relationships. This was the key to unlocking user adoption and delight.</p>
                              </div>
                          </div>
                      </section>
@@ -719,25 +835,25 @@
             </div>
         </div>
         <div id="project-page-shanthib" class="page-view project-page-view">
+             <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                 <div class="container mx-auto flex justify-between items-center">
+                      <div class="flex-1 flex justify-start">
+                          <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                              <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                              <span>Back</span>
+                          </button>
+                      </div>
+                      <div class="flex-1 flex justify-center">
+                          <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                      </div>
+                      <div class="flex-1 flex justify-end">
+                           <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                             <span>Contact Me</span>
+                         </a>
+                      </div>
+                 </div>
+             </header>
              <div class="content-wrapper">
-                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                     <div class="container mx-auto flex justify-between items-center">
-                          <div class="flex-1 flex justify-start">
-                              <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                  <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                  <span>Back</span>
-                              </button>
-                          </div>
-                          <div class="flex-1 flex justify-center">
-                              <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                          </div>
-                          <div class="flex-1 flex justify-end">
-                               <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                          </div>
-                     </div>
-                 </header>
                  <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
                      <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
                      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop" alt="Hero image for the Shanthi Bhavan project, showing a medical professional analyzing patient data on a laptop." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
@@ -750,18 +866,18 @@
                          </div>
                      </div>
                  </section>
-                 <main class="bg-gray-900/90">
+                 <main>
                       <section class="py-20 md:py-32">
                           <div class="container mx-auto px-6 max-w-3xl text-center">
                               <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Need</h2>
-                              <p class="text-xl md:text-2xl text-gray-300 anim-reveal">Shanthi Bhavan, a non-profit organization, had a donation process that was long and cumbersome, taking 15-20 minutes to complete. This friction was a major barrier for potential donors, limiting the organization's ability to raise funds effectively.</p>
+                              <p class="text-xl md:text-2xl anim-reveal">Shanthi Bhavan, a non-profit organization, had a donation process that was long and cumbersome, taking 15-20 minutes to complete. This friction was a major barrier for potential donors, limiting the organization's ability to raise funds effectively.</p>
                           </div>
                       </section>
                       <div class="container mx-auto px-6 max-w-5xl space-y-24 py-24 md:space-y-32">
                           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                               <div class="anim-reveal">
                                   <h3 class="text-cyan-400 font-bold text-2xl mb-4">A Mobile-First Solution</h3>
-                                  <p class="text-lg text-gray-300">I designed a mobile-first donation application with a clear mission: make giving as easy as possible. The primary focus was on radically simplifying the user flow, reducing the number of steps, and creating a clean, trustworthy interface that encouraged generosity.</p>
+                                  <p class="text-lg">I designed a mobile-first donation application with a clear mission: make giving as easy as possible. The primary focus was on radically simplifying the user flow, reducing the number of steps, and creating a clean, trustworthy interface that encouraged generosity.</p>
                               </div>
                               <div class="rounded-lg overflow-hidden anim-reveal">
                                   <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop during usability testing." loading="lazy" decoding="async">
@@ -771,7 +887,7 @@
                       <section class="py-20 md:py-32">
                           <div class="container mx-auto px-6 max-w-4xl text-center">
                               <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Result & Impact</h2>
-                              <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 anim-reveal">The new app was a game-changer for the organization. By dramatically improving the user experience, we empowered more people to donate and significantly boosted the organization's fundraising capabilities.</p>
+                              <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-12 anim-reveal">The new app was a game-changer for the organization. By dramatically improving the user experience, we empowered more people to donate and significantly boosted the organization's fundraising capabilities.</p>
                               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
                                   <div class="anim-reveal p-8 rounded-lg bg-black/20 border border-gray-700">
                                       <p class="text-6xl font-bold text-cyan-400"> &lt; 5 <span class="text-4xl">min</span></p>
@@ -788,25 +904,25 @@
              </div>
         </div>
         <div id="project-page-ourshoppee" class="page-view project-page-view">
-             <div class="content-wrapper">
-                 <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-                     <div class="container mx-auto flex justify-between items-center">
-                         <div class="flex-1 flex justify-start">
-                             <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                                 <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                 <span>Back</span>
-                             </button>
-                         </div>
-                         <div class="flex-1 flex justify-center">
-                              <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                         </div>
-                         <div class="flex-1 flex justify-end">
-                               <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                                 <span>Contact Me</span>
-                             </a>
-                         </div>
+             <header class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+                 <div class="container mx-auto flex justify-between items-center">
+                     <div class="flex-1 flex justify-start">
+                         <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                             <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                             <span>Back</span>
+                         </button>
                      </div>
-                 </header>
+                     <div class="flex-1 flex justify-center">
+                          <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                     </div>
+                     <div class="flex-1 flex justify-end">
+                           <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                             <span>Contact Me</span>
+                         </a>
+                     </div>
+                 </div>
+             </header>
+             <div class="content-wrapper">
                  <section class="h-screen w-full relative flex items-center justify-center text-center text-white overflow-hidden">
                      <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
                      <img src="https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop" alt="Hero image for the OurShoppee project, showing a person happily shopping online using a laptop." class="absolute inset-0 w-full h-full object-cover parallax-bg" loading="lazy" decoding="async">
@@ -819,7 +935,7 @@
                          </div>
                      </div>
                  </section>
-                 <main class="bg-gray-900/90">
+                 <main>
                      <section class="py-20 md:py-32">
                          <div class="container mx-auto px-6 max-w-3xl text-center">
                              <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">The Problem</h2>
@@ -936,6 +1052,11 @@
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
+             if (!isGoingBack) {
+                 lastScrollPos = window.scrollY || document.documentElement.scrollTop;
+            }
+
+
             const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
 
             let clickPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -945,7 +1066,7 @@
             }
             
             gsap.set(transitionCircle, { attr: { cx: clickPos.x, cy: clickPos.y, r: 0 } });
-            const destBgColor = isGoingBack ? getComputedStyle(document.body).getPropertyValue('--bg-gradient-end').trim() : getComputedStyle(document.body).getPropertyValue('--bg-color-project').trim();
+            const destBgColor = isGoingBack ? getComputedStyle(document.body).getPropertyValue('--bg-gradient-end').trim() : 'black';
             gsap.set(transitionRect, { attr: { fill: destBgColor } });
 
             const tl = gsap.timeline({
@@ -954,69 +1075,53 @@
                 }
             });
 
-            // 1. Animate OUT current content & expand circle
+            // 1. Expand circle and fade out current view
             tl.to(transitionCircle, {
                 attr: { r: diagonal },
                 duration: 0.7,
                 ease: 'power2.inOut'
-            });
+            })
+            .to(currentView, {
+                opacity: 0,
+                duration: 0.35,
+                ease: 'power1.in'
+            }, 0);
 
-            if (isGoingBack) {
-                // Animate project page content out
-                tl.to(currentView.querySelector('.content-wrapper'), {
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: 'power1.in'
-                }, 0);
-            } else {
-                 // Animate homepage content out
-                tl.to('#main-content', {
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: 'power1.in'
-                }, 0);
-            }
-
-            // 2. Swap views when screen is covered
+            // 2. Swap views mid-transition
             tl.call(() => {
-                // Hide old view, show new one
                 currentView.classList.remove('is-active');
                 targetView.classList.add('is-active');
-                
-                // Reset styles of the view we are leaving
-                gsap.set(isGoingBack ? currentView.querySelector('.content-wrapper') : '#main-content', { opacity: 1 });
-
 
                 if (isGoingBack) {
                     destroyProjectPageScrollTriggers();
-                    gsap.to(window, { scrollTo: lastScrollPos, duration: 0, overwrite: true });
-                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4, delay: 0.1 });
-                    ScrollTrigger.refresh(true); // Refresh triggers for the now-visible homepage
+                    // Use a slight delay before scrolling to ensure the DOM is ready
+                    gsap.delayedCall(0.01, () => {
+                         window.scrollTo(0, lastScrollPos);
+                    });
+                    gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4 });
+                    ScrollTrigger.refresh();
                 } else {
-                    lastScrollPos = window.scrollY;
-                    gsap.to(window, { scrollTo: 0, duration: 0, overwrite: true });
+                    gsap.set(window, { scrollTo: 0 });
                     gsap.set([mainHeader, goToTopBtn], { autoAlpha: 0 });
                     initializeProjectPageAnimations(targetView);
                 }
             });
-            
-            // 3. Animate IN new content if it's a project page
-            if (!isGoingBack) {
-                gsap.set(targetView.querySelector('.content-wrapper'), {opacity: 0, y: 30});
-                tl.to(targetView.querySelector('.content-wrapper'), {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.5,
-                    ease: 'power3.out'
-                }, ">-0.2");
-            }
 
-            // 4. Retract circle to reveal the new page
+            // 3. Retract circle and fade in new view
             tl.to(transitionCircle, {
                 attr: { r: 0 },
                 duration: 0.7,
                 ease: 'power2.out'
-            });
+            })
+            .from(targetView, {
+                opacity: 0,
+                duration: 0.35,
+                ease: 'power1.out'
+            }, "<");
+            
+            // Reset the opacity of the view we are leaving AFTER the transition is complete,
+            // so it's ready for the next time.
+            tl.set(currentView, { opacity: 1 });
         }
         
         // --- 2. PRELOADER & INITIAL PAGE REVEAL ---
@@ -1223,7 +1328,7 @@
         // --- 5. DYNAMIC PROJECT INJECTION ---
         const projects = [
             { id: 'bankiom', title: 'Bankiom - FinTech Super-App', tags: ['Conversion Uplift', 'Usability Testing'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
-            { id: 'travacations', title: 'Travacations - B2B Travel Platform', tags: ['Revenue Growth', 'Lead Generation', 'MVP'], image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', href: '#'},
+            { id: 'travion', title: 'Travion - The B2B Solution', tags: ['B2B SaaS', 'UX Research', 'Prototyping'], image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', href: '#'},
             { id: 'ourshoppee', title: 'OurShoppee - Internal CRM Platform', tags: ['Design System', 'Workflow Optimization'], image: 'https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'},
             { id: 'shanthib', title: 'Shanthi Bhavan Donation App', tags: ['Mobile-First UX', 'Non-Profit'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'}
         ];
@@ -1292,13 +1397,17 @@
             destroyProjectPageScrollTriggers(); 
             let triggers = [];
             
+            if(pageElement.id !== 'project-page-travion') {
+                gsap.from(pageElement.querySelectorAll(".anim-hero-reveal"), { duration: 1, y: 40, opacity: 0, stagger: 0.1, ease: "power3.out", delay: 0.5 });
+            }
+
             const parallaxBg = pageElement.querySelector(".parallax-bg");
             if (parallaxBg) {
                triggers.push(gsap.to(parallaxBg, { yPercent: 30, ease: "none", scrollTrigger: { trigger: parallaxBg.parentElement, start: "top top", end: "bottom top", scrub: true } }));
             }
             
             pageElement.querySelectorAll('.anim-reveal').forEach(el => {
-                let delay = el.style.getPropertyValue('--delay') || 0;
+                let delay = parseFloat(el.style.getPropertyValue('--delay')) || 0;
                 triggers.push(gsap.from(el, { 
                     opacity: 0, y: 60, duration: 1, ease: 'power3.out', 
                     scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
@@ -1314,14 +1423,89 @@
                 const endValue = parseInt(el.dataset.endValue);
                 if (isNaN(endValue)) return;
                 let counter = { value: 0 };
+                let suffix = el.innerText.includes('%') ? '%' : '';
                 triggers.push(gsap.to(counter, {
                     value: endValue, duration: 2.5, ease: 'power2.out',
-                    onUpdate: () => { el.textContent = Math.ceil(counter.value) + '%'; },
+                    onUpdate: () => { el.textContent = Math.ceil(counter.value) + suffix; },
                     scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
                 }));
             });
 
+            if(pageElement.id === 'project-page-travion') {
+                initializeTravionAnimations(triggers);
+            }
+
             projectPageScrollTriggers = triggers;
+        }
+
+       function initializeTravionAnimations(triggers) {
+            // Hero Title Animation
+            gsap.fromTo(".travion-hero-title span", 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.05, delay: 0.4 }
+            );
+            // Hero Mockup Animation
+            gsap.fromTo("#travion-hero-mockup",
+                { transform: 'perspective(1500px) rotateY(-15deg) rotateX(5deg) scale(0.8) translateY(50px)', opacity: 0 },
+                { transform: 'perspective(1500px) rotateY(-15deg) rotateX(5deg) scale(0.9)', opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.6 }
+            );
+
+            // Scrollytelling for Phases
+            const phaseImages = gsap.utils.toArray('.phase-image-item');
+            const phaseTexts = gsap.utils.toArray('.phase-text-item');
+
+            if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                // Pin the image container
+                triggers.push(ScrollTrigger.create({
+                    trigger: '.phase-image-container',
+                    start: 'top 20vh',
+                    endTrigger: '#project-page-travion .grid.md\\:grid-cols-2',
+                    end: 'bottom bottom-=20vh',
+                    pin: true,
+                    pinSpacing: false
+                }));
+
+                // Set initial state: first image visible
+                gsap.set(phaseImages, { autoAlpha: 0 });
+                gsap.set(phaseImages[0], { autoAlpha: 1 });
+
+                // Create triggers for each text section to change the active image
+                phaseTexts.forEach((text, i) => {
+                    const trigger = ScrollTrigger.create({
+                        trigger: text,
+                        start: "top center",
+                        end: "bottom center",
+                        onToggle: self => {
+                            if (self.isActive) {
+                                gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
+                            }
+                        },
+                        onLeaveBack: () => {
+                            if(i > 0) {
+                                gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                gsap.to(phaseImages[i-1], { autoAlpha: 1, duration: 0.3 });
+                            }
+                        }
+                    });
+                    triggers.push(trigger);
+                });
+
+                // Add a reveal animation for the text content itself
+                gsap.utils.toArray('.phase-content').forEach(content => {
+                    triggers.push(gsap.from(content, {
+                        y: 50,
+                        opacity: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: content.parentElement,
+                            start: 'top 75%',
+                            toggleActions: 'play none none none',
+                        }
+                    }));
+                });
+            }
         }
 
         function destroyProjectPageScrollTriggers() {
@@ -1459,3 +1643,4 @@
     </script>
 </body>
 </html>
+
