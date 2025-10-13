@@ -431,9 +431,13 @@
         }
         
         .phase-image-container {
-            position: sticky;
             top: 20vh;
-            height: 60vh;
+            height: 40vh; /* Mobile height */
+        }
+        @media (min-width: 768px) {
+            .phase-image-container {
+                height: 60vh; /* Desktop height */
+            }
         }
         .phase-image-item {
             position: absolute;
@@ -454,6 +458,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+        #project-page-travion .phase-text-item {
+            min-height: 50vh;
         }
 
 
@@ -694,8 +701,8 @@
                         </div>
                     </section>
                     <section class="project-section container mx-auto">
-                        <div id="travion-scrolly-grid" class="grid md:grid-cols-2 gap-12">
-                            <div class="md:col-span-1">
+                        <div id="travion-scrolly-grid" class="flex flex-col md:flex-row md:gap-12">
+                            <div id="travion-text-wrapper" class="w-full md:w-1/2 order-2 md:order-1">
                                 <div class="phase-text-item">
                                     <div class="phase-content">
                                         <span class="text-cyan-400 font-bold text-7xl">01</span>
@@ -726,8 +733,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="md:col-span-1">
-                                <div class="phase-image-container">
+                            <div class="w-full md:w-1/2 order-1 md:order-2">
+                                <div class="phase-image-container mb-12 md:mb-0">
                                     <div class="phase-image-item">
                                         <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="A team collaborating around a whiteboard full of sticky notes, representing user research affinity mapping." loading="lazy" decoding="async">
                                     </div>
@@ -1581,19 +1588,39 @@
         }
         
         function initializeTravionScrollytelling(pageElement, triggers) {
+            const scrollyWrapper = pageElement.querySelector('#travion-scrolly-grid');
+            if (!scrollyWrapper) return;
+
+            // Use matchMedia to create responsive ScrollTriggers
+            ScrollTrigger.matchMedia({
+                // Desktop layout
+                "(min-width: 768px)": function() {
+                    triggers.push(ScrollTrigger.create({
+                        trigger: ".phase-image-container",
+                        start: "top 20vh",
+                        endTrigger: "#travion-scrolly-grid",
+                        end: "bottom bottom-=20vh",
+                        pin: true,
+                        pinSpacing: false
+                    }));
+                },
+                // Mobile layout
+                "(max-width: 767px)": function() {
+                    triggers.push(ScrollTrigger.create({
+                        trigger: ".phase-image-container",
+                        start: "top 10vh",
+                        endTrigger: "#travion-text-wrapper",
+                        end: "bottom bottom-=20vh",
+                        pin: true,
+                        pinSpacing: true
+                    }));
+                }
+            });
+
             const phaseImages = gsap.utils.toArray('.phase-image-item');
             const phaseTexts = gsap.utils.toArray('.phase-text-item');
 
             if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                triggers.push(ScrollTrigger.create({
-                    trigger: '.phase-image-container',
-                    start: 'top 20vh',
-                    endTrigger: '#travion-scrolly-grid',
-                    end: 'bottom bottom-=20vh',
-                    pin: true,
-                    pinSpacing: false
-                }));
-
                 gsap.set(phaseImages, { autoAlpha: 0 });
                 gsap.set(phaseImages[0], { autoAlpha: 1 });
 
