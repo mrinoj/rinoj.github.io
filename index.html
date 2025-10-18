@@ -570,7 +570,7 @@
                             </p>
                             <div id="hero-ctas" class="mt-10 flex flex-row items-center justify-center gap-10 pointer-events-auto">
                                 <a href="#contact" class="clean-cta cta-primary font-semibold text-sm sm:text-base px-8 sm:px-10 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">Let's Talk</a>
-                                <a id="resume-button" href="assets/Mohamed_Rinoj_Hashim_Resume.pdf" target="_blank" rel="noopener noreferrer" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">
+                                <a id="resume-button" href="assets/Rinoj_Hashim.pdf" target="_blank" rel="noopener noreferrer" class="clean-cta cta-secondary font-semibold text-sm sm:text-base px-6 sm:px-8 py-2 sm:py-2.5 rounded-full whitespace-nowrap magnetic-item">
                                     Resume
                                 </a>
                             </div>
@@ -831,7 +831,7 @@
                                  <p class="text-gray-300">In a market built on trust, our most successful feature wasn't a tool, but the Trust Hub—a feature designed to digitally replicate and strengthen real-world relationships. This was the key to unlocking user adoption and delight.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -935,7 +935,7 @@
                                  <p class="text-gray-300">By creating predictable patterns and a unified visual language across the platform, users could perform complex tasks with more speed and confidence, leading to a significant reduction in support requests.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -1030,7 +1030,7 @@
                                  <p class="text-gray-300">The biggest wins came from removing steps, clarifying language, and simplifying the user journey. A frictionless path to conversion is the most effective path.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -1121,14 +1121,14 @@
                                  <p class="text-gray-300">Meeting donors where they are—on their phones—was critical. A dedicated, optimized mobile experience is no longer a luxury for non-profits; it's essential for modern fundraising.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
     </div>
     
     <!-- Go To Top Button -->
-    <button id="go-to-top-btn" class="fixed bottom-8 right-8 z-50 w-24 h-24 opacity-0 pointer-events-none">
+    <button id="go-to-top-btn" class="fixed bottom-8 right-8 z-[70] w-24 h-24 opacity-0 pointer-events-none">
         <svg viewBox="0 0 100 100">
             <defs>
                 <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"/>
@@ -1211,8 +1211,8 @@
             
             const isGoingBack = targetId === 'homepage-view';
                  if (!isGoingBack) {
-                      lastScrollPos = window.scrollY || document.documentElement.scrollTop;
-                 }
+                       lastScrollPos = window.scrollY || document.documentElement.scrollTop;
+                   }
 
 
             const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
@@ -1427,7 +1427,7 @@
         function setupStorySectionAnimation() {
             const storySection = document.getElementById('story');
             if (!storySection) return;
-    
+        
             if (isTouchDevice) {
                 // --- MOBILE/TOUCH DEVICE LOGIC ---
                 const storyPinContainer = document.getElementById('story-pin-container');
@@ -1435,7 +1435,7 @@
                 // Prevent this from running multiple times
                 if (storyPinContainer.dataset.layout === 'mobile') return;
                 storyPinContainer.dataset.layout = 'mobile';
-    
+        
                 const storyPanels = gsap.utils.toArray(".story-panel");
                 const storyTexts = gsap.utils.toArray(".story-text-item");
                 
@@ -1446,21 +1446,21 @@
                 if (originalTrack) originalTrack.style.display = 'none';
                 storySection.style.height = 'auto';
                 storyPinContainer.style.height = 'auto';
-    
+        
                 const mobileWrapper = document.createElement('div');
                 mobileWrapper.className = 'pt-24 pb-12 px-6';
-    
+        
                 storyTexts.forEach((textEl, i) => {
                     const panelEl = storyPanels[i];
                     if (!textEl || !panelEl) return;
                     
                     const itemWrapper = document.createElement('div');
                     itemWrapper.className = 'mb-12';
-    
+        
                     const title = document.createElement('h3');
                     title.className = 'text-3xl font-bold mb-4';
                     title.textContent = panelEl.dataset.title;
-    
+        
                     const image = panelEl.querySelector('img');
                     image.style.filter = 'none';
                     image.style.transform = 'none';
@@ -1477,34 +1477,34 @@
                     itemWrapper.appendChild(textEl);
                     mobileWrapper.appendChild(itemWrapper);
                 });
-    
+        
                 storyPinContainer.appendChild(mobileWrapper);
                 
             } else {
                 // --- DESKTOP (NON-TOUCH) DEVICE LOGIC ---
                 const storyPinContainer = document.getElementById('story-pin-container');
-    
+        
                 // Prevent this from running multiple times
                 if (storyPinContainer.dataset.layout === 'desktop') return;
                 storyPinContainer.dataset.layout = 'desktop';
-    
+        
                 const storyTrack = document.getElementById('story-track');
                 const storyPanels = gsap.utils.toArray(".story-panel");
                 const storyTexts = gsap.utils.toArray(".story-text-item");
                 const storySubtitle = document.getElementById("story-subtitle");
-    
+        
                 if (!storyTrack || storyPanels.length === 0) return;
-    
+        
                 gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
                 
                 let activePanelIndex = -1;
                 const xStart = (window.innerWidth - storyPanels[0].offsetWidth) / 2;
                 gsap.set(storyTrack, { x: xStart });
-    
+        
                 storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === 0));
                 storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === 0));
                 if (storyPanels[0]) storySubtitle.innerText = storyPanels[0].dataset.title;
-    
+        
                 gsap.to(storyTrack, {
                     x: () => {
                         const lastPanel = storyPanels[storyPanels.length - 1];
@@ -1918,5 +1918,3 @@
     </script>
 </body>
 </html>
-
-
