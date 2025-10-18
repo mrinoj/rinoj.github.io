@@ -1,4 +1,4 @@
-User-agent: *
-Allow: /
+user-agent: *
+disallow:
 
-Sitemap:  https://www.rinoj.in/sitemap.xml
+sitemap: https://www.rinoj.in/sitemap.xml
