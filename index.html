@@ -1399,59 +1399,120 @@
         function setupStorySectionAnimation() {
             const storySection = document.getElementById('story');
             if (!storySection) return;
-            const storyPinContainer = document.getElementById('story-pin-container');
-            const storyTrack = document.getElementById('story-track');
-            const storyPanels = gsap.utils.toArray(".story-panel");
-            const storyTexts = gsap.utils.toArray(".story-text-item");
-            const storySubtitle = document.getElementById("story-subtitle");
-
-            if (!storyTrack || storyPanels.length === 0) return;
-
-            gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
-            
-            let activePanelIndex = -1;
-            const xStart = (window.innerWidth - storyPanels[0].offsetWidth) / 2;
-            gsap.set(storyTrack, { x: xStart });
-
-            storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === 0));
-            storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === 0));
-            if (storyPanels[0]) storySubtitle.innerText = storyPanels[0].dataset.title;
-
-            gsap.to(storyTrack, {
-                x: () => {
-                    const lastPanel = storyPanels[storyPanels.length - 1];
-                    return -(lastPanel.offsetLeft - (window.innerWidth - lastPanel.offsetWidth) / 2);
-                },
-                ease: "none",
-                scrollTrigger: {
-                    trigger: storySection,
-                    pin: storyPinContainer,
-                    scrub: 1,
-                    start: "top top",
-                    end: "bottom bottom",
-                    onUpdate: self => {
-                        let centerPoint = window.innerWidth / 2;
-                        let newActiveIndex = -1, smallestDistance = Infinity;
-                        storyPanels.forEach((panel, index) => {
-                            let panelRect = panel.getBoundingClientRect();
-                            let panelCenter = panelRect.left + panelRect.width / 2;
-                            let distance = Math.abs(panelCenter - centerPoint);
-                            if (distance < panelRect.width / 2 && distance < smallestDistance) {
-                                smallestDistance = distance;
-                                newActiveIndex = index;
-                            }
-                        });
-                        if (newActiveIndex !== -1 && newActiveIndex !== activePanelIndex) {
-                            activePanelIndex = newActiveIndex;
-                            storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePanelIndex));
-                            storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === activePanelIndex));
-                            if(storyPanels[activePanelIndex]) {
-                                storySubtitle.innerText = storyPanels[activePanelIndex].dataset.title;
+    
+            if (isTouchDevice) {
+                // --- MOBILE/TOUCH DEVICE LOGIC ---
+                const storyPinContainer = document.getElementById('story-pin-container');
+                
+                // Prevent this from running multiple times
+                if (storyPinContainer.dataset.layout === 'mobile') return;
+                storyPinContainer.dataset.layout = 'mobile';
+    
+                const storyPanels = gsap.utils.toArray(".story-panel");
+                const storyTexts = gsap.utils.toArray(".story-text-item");
+                
+                // Hide original containers and set heights for natural flow
+                const originalHeader = storyPinContainer.querySelector('.absolute.top-0');
+                const originalTrack = storyPinContainer.querySelector('.absolute.bottom-0');
+                if (originalHeader) originalHeader.style.display = 'none';
+                if (originalTrack) originalTrack.style.display = 'none';
+                storySection.style.height = 'auto';
+                storyPinContainer.style.height = 'auto';
+    
+                const mobileWrapper = document.createElement('div');
+                mobileWrapper.className = 'pt-24 pb-12 px-6';
+    
+                storyTexts.forEach((textEl, i) => {
+                    const panelEl = storyPanels[i];
+                    if (!textEl || !panelEl) return;
+                    
+                    const itemWrapper = document.createElement('div');
+                    itemWrapper.className = 'mb-12';
+    
+                    const title = document.createElement('h3');
+                    title.className = 'text-3xl font-bold mb-4';
+                    title.textContent = panelEl.dataset.title;
+    
+                    const image = panelEl.querySelector('img');
+                    image.style.filter = 'none';
+                    image.style.transform = 'none';
+                    image.classList.add('rounded-xl', 'mb-4', 'w-full');
+                    
+                    // Make text visible and flow naturally
+                    textEl.style.position = 'relative';
+                    textEl.style.opacity = 1;
+                    textEl.style.transform = 'none';
+                    textEl.classList.remove('is-active');
+                    
+                    itemWrapper.appendChild(title);
+                    itemWrapper.appendChild(image);
+                    itemWrapper.appendChild(textEl);
+                    mobileWrapper.appendChild(itemWrapper);
+                });
+    
+                storyPinContainer.appendChild(mobileWrapper);
+                
+            } else {
+                // --- DESKTOP (NON-TOUCH) DEVICE LOGIC ---
+                const storyPinContainer = document.getElementById('story-pin-container');
+    
+                // Prevent this from running multiple times
+                if (storyPinContainer.dataset.layout === 'desktop') return;
+                storyPinContainer.dataset.layout = 'desktop';
+    
+                const storyTrack = document.getElementById('story-track');
+                const storyPanels = gsap.utils.toArray(".story-panel");
+                const storyTexts = gsap.utils.toArray(".story-text-item");
+                const storySubtitle = document.getElementById("story-subtitle");
+    
+                if (!storyTrack || storyPanels.length === 0) return;
+    
+                gsap.set(storySection, { height: storyPanels.length * 100 + "vh" });
+                
+                let activePanelIndex = -1;
+                const xStart = (window.innerWidth - storyPanels[0].offsetWidth) / 2;
+                gsap.set(storyTrack, { x: xStart });
+    
+                storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === 0));
+                storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === 0));
+                if (storyPanels[0]) storySubtitle.innerText = storyPanels[0].dataset.title;
+    
+                gsap.to(storyTrack, {
+                    x: () => {
+                        const lastPanel = storyPanels[storyPanels.length - 1];
+                        return -(lastPanel.offsetLeft - (window.innerWidth - lastPanel.offsetWidth) / 2);
+                    },
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: storySection,
+                        pin: storyPinContainer,
+                        scrub: 1,
+                        start: "top top",
+                        end: "bottom bottom",
+                        onUpdate: self => {
+                            let centerPoint = window.innerWidth / 2;
+                            let newActiveIndex = -1, smallestDistance = Infinity;
+                            storyPanels.forEach((panel, index) => {
+                                let panelRect = panel.getBoundingClientRect();
+                                let panelCenter = panelRect.left + panelRect.width / 2;
+                                let distance = Math.abs(panelCenter - centerPoint);
+                                if (distance < panelRect.width / 2 && distance < smallestDistance) {
+                                    smallestDistance = distance;
+                                    newActiveIndex = index;
+                                }
+                            });
+                            if (newActiveIndex !== -1 && newActiveIndex !== activePanelIndex) {
+                                activePanelIndex = newActiveIndex;
+                                storyPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePanelIndex));
+                                storyTexts.forEach((text, i) => text.classList.toggle('is-active', i === activePanelIndex));
+                                if(storyPanels[activePanelIndex]) {
+                                    storySubtitle.innerText = storyPanels[activePanelIndex].dataset.title;
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
         }
 
 
@@ -1829,4 +1890,3 @@
     </script>
 </body>
 </html>
-
