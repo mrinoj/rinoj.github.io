@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohamed Rinoj Hashim | UX & Product Designer in Dubai, UAE</title>
-    <link rel="icon" href="assets/favicon.ico" sizes="48x48">
+    <link rel="icon" href="assets/favicon.ico" sizes="48x48" type="image/x-icon">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     
@@ -1913,11 +1913,21 @@
             }
             initGradientBackground();
         }
-
+        // --- TITLE MARQUEE ---
+        const originalTitle = document.title;
+        let marqueeTitle = originalTitle + " ••• ";
+        
+        setInterval(() => {
+            if (!document.hidden) { // Only animate if the tab is active
+                marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
+                document.title = marqueeTitle;
+            }
+        }, 300); // Adjust scroll speed (milliseconds)                                                                                    
     });
     </script>
 </body>
 </html>
+
 
 
 
