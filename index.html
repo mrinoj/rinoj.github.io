@@ -82,12 +82,16 @@
         }
 
         html, body {
-            overflow-x: hidden;
+            /* * =================================================================
+             * THE FIX - PART 1: Removed 'overflow-x: hidden;' from this rule.
+             * =================================================================
+             */
+            /* overflow-x: hidden; */
             min-height: var(--app-height);
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE and Edge */
         }
-        html::-webkit-scrollbar, body::-webkit-scrollbar { 
+        html::-webkit-scrollbar, body::-webkit-scrollbar {  
             display: none; /* Safari and Chrome */
         }
 
@@ -146,6 +150,17 @@
         #page-content-wrapper {
             position: relative;
             z-index: 10;
+        }
+
+        /* * =================================================================
+         * THE FIX - PART 2: Added this new rule.
+         * This applies the overflow hiding *only* to the homepage,
+         * which contains the sliding project animations, and leaves
+         * the project pages (like Ourshopee) unaffected.
+         * =================================================================
+         */
+        #homepage-view {
+            overflow-x: hidden;
         }
 
         .preloader {
@@ -416,7 +431,11 @@
         
         /* UPDATED STYLES for ALL project pages */
         .project-section {
-            padding: 12vh 1.5rem;
+            padding: 12vh 1.5rem; /* Standard padding */
+        }
+         /* Specific adjustments for detailed case study sections */
+        .project-section.case-study-section {
+             padding: 8vh 1.5rem; /* Slightly less vertical padding for dense content */
         }
 
         .stat-card-project {
@@ -468,15 +487,16 @@
             100% { transform: translate(-50%, 0); opacity: 1; }
         }
         
+        /* Scrollytelling adjustments (if needed, otherwise keep as is) */
         .phase-image-container {
-            position: relative; /* Changed for mobile */
-            height: 40vh; /* Mobile height */
+            position: relative;  
+            height: 40vh;  
         }
         @media (min-width: 768px) {
             .phase-image-container {
-                position: sticky; /* Sticky only on desktop */
+                position: sticky;  
                 top: 20vh;
-                height: 60vh; /* Desktop height */
+                height: 60vh;  
             }
         }
         .phase-image-item {
@@ -497,19 +517,37 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 8rem 0; /* Adds vertical spacing for mobile */
+            padding: 8rem 0; /* Mobile spacing */
         }
         @media (min-width: 768px) {
             .phase-text-item {
-                min-height: 150vh; /* Increased significantly for more breathing room */
-                padding: 0; /* Resets padding for desktop sticky scroll */
+                 /* Adjust min-height based on content length if needed */
+                min-height: 100vh; /* Was 150vh, might be too much for less text */
+                padding: 0;  
             }
+        }
+
+        /* Styles for the detailed case study text */
+        .case-study-content h3 {
+            @apply text-2xl font-bold text-cyan-400 mt-8 mb-4;
+        }
+         .case-study-content h4 {
+            @apply text-xl font-semibold text-white mt-6 mb-2;
+         }
+        .case-study-content p {
+            @apply text-lg text-gray-300 mb-4 leading-relaxed;
+        }
+        .case-study-content ul {
+            @apply list-disc list-inside text-lg text-gray-300 mb-4 pl-4 space-y-2;
+        }
+        .case-study-content blockquote {
+            @apply mt-6 border-l-2 border-cyan-400 pl-4 text-gray-300 italic;
         }
 
 
         @media (prefers-reduced-motion: reduce) {
             .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
-                transition: none !important; 
+                transition: none !important;  
                 animation: none !important;
             }
         }
@@ -615,7 +653,7 @@
                                             <div class="story-text-item"><p class="text-base md:text-xl text-white">Graduated Engineering in Computer Science in 2020, but somewhere along the way, I realised my future wasn’t just lines of code. Late-night college projects introduced me to something I didn’t expect: User Experience Design. It was everything I loved rolled into one—people, pixels, and problem-solving. From that moment, I knew I was all in.</p></div>
                                             <div class="story-text-item"><p class="text-base md:text-xl text-white">Like many others, my career began at home during the pandemic. While the world slowed down, I doubled down on learning—UX Design, Psychology, and Visual Design became my foundation. My very first gig came from a client in the US, which meant late-night calls, endless revisions, and a lot of caffeine. Oddly enough, I enjoyed every moment of it.</p></div>
                                             <div class="story-text-item"><p class="text-base md:text-xl text-white">In 2022, the UAE’s tech scene was booming, and I couldn’t resist being a part of it. Having studied in Abu Dhabi and with family already there, the move felt natural. I joined Bankiom, a promising fintech startup backed by 500 Global, where I got to design at the intersection of finance and innovation.</p></div>
-                                            <div class="story-text-item"><p class="text-base md:text-xl text-white">The following year, something unexpected happened. One of my freelance clients, Ourshopee, returned with a full-time offer. It was a hybrid role—the best of both worlds. I took the leap and explored the B2B e-commerce landscape, helping shape their platform and user experience.</p></div>
+                                            <div class="story-text-item"><p class="text-base md:text-xl text-white">The following year, something unexpected happened. One of my freelance clients, OurShopee, returned with a full-time offer. It was a hybrid role—the best of both worlds. I took the leap and explored the B2B e-commerce landscape, helping shape their platform and user experience.</p></div>
                                             <div class="story-text-item"><p class="text-base md:text-xl text-white">In 2024, a friend pitched a bold idea in travel tech. I couldn’t ignore the excitement (or the FOMO), so I jumped in. Together, we built a B2B travel app from scratch—transforming a vision into a real product that could redefine how travel works in India. The adrenaline of startup life? Unmatched.</p></div>
                                             <div class="story-text-item"><p class="text-base md:text-xl text-white">The startup journey taught me more than I could have imagined—about design, business, and resilience. Now, I’m ready to bring that experience back to the UAE’s dynamic ecosystem. Dubai’s energy and innovation inspire me, and I can’t wait to be part of building what comes next.</p></div>
                                         </div>
@@ -646,10 +684,6 @@
                                 <!-- Projects will be dynamically inserted here -->
                             </div>
                             
-                            <div id="more-projects-container" class="text-center mt-12 reveal">
-                                <!-- Behance link updated from attached docx -->
-                                <a href="https://www.behance.net/rinoj1020" target="_blank" rel="noopener noreferrer" class="clean-cta cta-secondary font-semibold text-base px-8 py-2.5 rounded-full magnetic-item">More Projects</a>
-                            </div>
                         </div>
                     </section>
 
@@ -781,13 +815,13 @@
                             <div class="w-full md:w-1/2 order-1 md:order-2">
                                 <div class="phase-image-container mb-12 md:mb-0">
                                     <div class="phase-image-item">
-                                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="A team collaborating around a whiteboard full of sticky notes, representing user research affinity mapping." loading="lazy" decoding="async">
+                                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Research+Session';" alt="A team collaborating around a whiteboard full of sticky notes, representing user research affinity mapping." loading="lazy" decoding="async">
                                     </div>
                                     <div class="phase-image-item">
-                                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop" alt="A detailed user journey map and persona cards laid out on a desk." loading="lazy" decoding="async">
+                                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=User+Journey+Map';" alt="A detailed user journey map and persona cards laid out on a desk." loading="lazy" decoding="async">
                                     </div>
                                     <div class="phase-image-item">
-                                        <img src="https://images.unsplash.com/photo-1559028006-448665bd7c2f?q=80&w=1924&auto=format&fit=crop" alt="A user's hand interacting with a mobile phone displaying a prototype during a usability test." loading="lazy" decoding="async">
+                                        <img src="https://images.unsplash.com/photo-1559028006-448665bd7c2f?q=80&w=1924&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Usability+Test';" alt="A user's hand interacting with a mobile phone displaying a prototype during a usability test." loading="lazy" decoding="async">
                                     </div>
                                 </div>
                             </div>
@@ -797,7 +831,7 @@
                         <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: Travion 2.0</h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive mobile & Web app anchored by a five-tab bottom navigation, providing instant access to key workflows and allowing users to manage their entire business from anywhere.</p>
                         <div class="rounded-lg overflow-hidden anim-reveal max-w-6xl mx-auto">
-                            <img src="https://images.unsplash.com/photo-1618788372246-7b22c0202c3d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="A gallery of final UI screens for the Travion mobile app." loading="lazy" decoding="async">
+                            <img src="https://images.unsplash.com/photo-1618788372246-7b22c0202c3d?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Travion+Final+UI';" class="w-full h-full object-cover" alt="A gallery of final UI screens for the Travion mobile app." loading="lazy" decoding="async">
                         </div>
                     </section>
                     <section class="project-section">
@@ -844,129 +878,209 @@
                 </main>
             </div>
         </div>
+        
+        <!-- ================================================================= -->
+        <!-- START: UPDATED OURSHOPEE PROJECT PAGE -->
+        <!-- ================================================================= -->
         <div id="project-page-ourshoppee" class="page-view project-page-view">
-            <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
-                <div class="container mx-auto flex justify-between items-center">
-                    <div class="flex-1 flex justify-start">
-                        <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                            <span>Back</span>
-                        </button>
-                    </div>
-                    <div class="flex-1 flex justify-center">
-                        <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                    </div>
-                    <div class="flex-1 flex justify-end">
-                        <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                            <span>Contact Me</span>
-                        </a>
-                    </div>
-                </div>
-            </header>
-            <div class="content-wrapper">
-                <main>
+             <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
+                 <div class="container mx-auto flex justify-between items-center">
+                     <div class="flex-1 flex justify-start">
+                         <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                             <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                             <span>Back</span>
+                         </button>
+                     </div>
+                     <div class="flex-1 flex justify-center">
+                         <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                     </div>
+                     <div class="flex-1 flex justify-end">
+                         <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                             <span>Contact Me</span>
+                         </a>
+                     </div>
+                 </div>
+             </header>
+             <div class="content-wrapper">
+                 <main>
+                     <!-- Hero Section -->
                     <section class="min-h-screen-app w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
                         <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
-                        <img src="https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=E-Commerce+Platform';" alt="E-Commerce Platform" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
+                        <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/2070x1380/0C56B7/EAEAEA?text=E-Commerce+Operations';" alt="Busy e-commerce warehouse or sophisticated CRM dashboard" class="absolute inset-0 w-full h-full object-cover hero-bg-image" loading="lazy" decoding="async">
                         <div class="absolute inset-0 z-20" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);"></div>
                         <div class="relative z-30 p-6 hero-content-container" style="will-change: transform, opacity;">
-                            <h1 class="text-4xl md:text-7xl font-black project-hero-title">OurShoppee</h1>
-                            <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">An internal CRM platform to streamline e-commerce operations.</p>
+                            <h1 class="text-4xl md:text-7xl font-black project-hero-title">
+                                <span>O</span><span>u</span><span>r</span><span>S</span><span>h</span><span>o</span><span>p</span><span>e</span><span>e</span>
+                            </h1>
+                             <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">Untangling complexity: Redesigning an internal CRM for peak efficiency.</p>
                             <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
-                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">Lead Product Designer</p></div>
-                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">1 Year</p></div>
-                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">Internal CRM</p></div>
-                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Shopify</p></div>
+                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">Lead Product Designer</p></div>
+                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">1 Year</p></div>
+                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">Internal CRM (Web & Mobile)</p></div>
+                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Shopify, User Surveys</p></div>
                             </div>
                         </div>
                         <div class="absolute bottom-10 z-30 w-full anim-hero-reveal scroll-indicator-container" style="--delay: 1s; will-change: transform, opacity;">
                             <div class="scroll-indicator-icon"></div>
                         </div>
                     </section>
+
+                    <!-- Problem Section -->
                     <section class="project-section container mx-auto text-center">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">The Challenge: <span class="text-cyan-400">Operational Inefficiency</span></h2>
-                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">OurShoppee's internal CRM platform, used by over 500 staff, was inefficient and prone to errors. The lack of a consistent design language and convoluted workflows were hampering productivity and impacting the sales process.</p>
+                        <h2 class="text-4xl md:text-6xl font-bold mb-6 anim-reveal">A System Drowning in <span class="text-cyan-400">Complexity</span></h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto anim-reveal">OurShopee's internal CRM was a major bottleneck. Teams across marketing, sales, and HR were struggling with a cluttered, one-size-fits-all interface that was inefficient and lacked mobile support. Key workflows were slow, data was hard to find, and user frustration was high. The system was hindering growth, not enabling it.</p>
+                        <blockquote class="mt-12 text-2xl md:text-3xl font-medium border-l-4 border-cyan-400 pl-8 text-left max-w-4xl mx-auto anim-reveal bg-black/20 py-4">
+                            "Users don't need more features, they need the *right* features. The current CRM overwhelms everyone with information that isn't relevant to their role."
+                        </blockquote>
+                        <div class="mt-12 anim-reveal">
+                            <h3 class="text-2xl font-bold text-cyan-400">How Might We...?</h3>
+                            <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mt-2">How might we redesign the internal CRM to be role-based, efficient, and mobile-friendly, empowering each team to perform their tasks without friction?</p>
+                        </div>
                     </section>
+
+                    <!-- Scrollytelling Section -->
+                    <section class="project-section container mx-auto">
+                        <div id="ourshoppee-scrolly-grid" class="flex flex-col md:flex-row md:gap-12">
+                            <div id="ourshoppee-text-wrapper" class="w-full md:w-1/2 order-2 md:order-1">
+                                <!-- Phase 1: Research -->
+                                <div class="phase-text-item">
+                                    <div class="phase-content">
+                                        <span class="text-cyan-400 font-bold text-7xl">01</span>
+                                        <h2 class="text-4xl md:text-6xl font-bold my-4">Research & Discovery</h2>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Understanding the Users</h3>
+                                        <p class="text-lg text-gray-200 mb-4">To understand the core issues, I conducted stakeholder interviews, user surveys, and observational studies. This mixed-methods approach provided both quantitative data on usage patterns and qualitative insights into user frustrations.</p>
+                                        <h4 class="text-xl font-semibold text-white mt-6 mb-2">Key Findings:</h4>
+                                        <ul class="list-disc list-inside text-lg text-gray-300 mb-4 pl-4 space-y-2">
+                                            <li><strong class="text-white">Cluttered Interface:</strong> Multiple teams expressed a need for streamlined interfaces showing only fields relevant to their tasks.</li>
+                                            <li><strong class="text-white">Mobile Desperation:</strong> The sales team was desperate for mobile access for quick information retrieval, not complex editing.</li>
+                                            <li><strong class="text-white">Workflow Inefficiencies:</strong> HR personnel identified major workflow bottlenecks and collaboration challenges within the existing system.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Phase 2: Synthesis -->
+                                <div class="phase-text-item">
+                                    <div class="phase-content">
+                                        <span class="text-cyan-400 font-bold text-7xl">02</span>
+                                        <h2 class="text-4xl md:text-6xl font-bold my-4">Synthesis & Definition</h2>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Finding the Structure</h3>
+                                        <p class="text-lg text-gray-200 mb-4">Common themes from the research were clear: <strong class="text-white">Personalization, Efficiency, and Collaboration</strong> were the top needs. A card sorting exercise with users from marketing, sales, and HR helped define an intuitive, user-generated information architecture.</p>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4 mt-8">Defining the Personas</h3>
+                                        <p class="text-lg text-gray-200">I synthesized this research into three key personas to guide all design decisions:</p>
+                                        <ul class="list-disc list-inside text-lg text-gray-300 mb-4 pl-4 space-y-2">
+                                            <li><strong>Maria (Marketing):</strong> Needs a custom dashboard for campaign metrics.</li>
+                                            <li><strong>Ahmed (Sales):</strong> Needs quick mobile access to customer & order info.</li>
+                                            <li><strong>Fatima (HR):</strong> Needs a task-oriented layout for managing workflows.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Phase 3: Architecture & Prototyping -->
+                                <div class="phase-text-item">
+                                    <div class="phase-content">
+                                        <span class="text-cyan-400 font-bold text-7xl">03</span>
+                                        <h2 class="text-4xl md:text-6xl font-bold my-4">Architecture & Prototyping</h2>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Building the Blueprints</h3>
+                                        <p class="text-lg text-gray-200 mb-4">The new design was built on four key architectural pillars: <strong class="text-white">1) Role-Based Architecture</strong> (personalized dashboards), <strong class="text-white">2) Mobile-First App</strong> (quick access for sales), <strong class="text-white">3) Efficient HR Workflow</strong> (task-oriented section), and <strong class="text-white">4) Responsive Web App</strong> (detailed view for power users).</p>
+                                        <h3 class="text-2xl font-bold text-cyan-400 mb-4 mt-8">Testing & Iteration</h3>
+                                        <p class="text-lg text-gray-200">High-fidelity prototypes were created for both web and mobile. Usability testing with representative users was crucial, leading to key iterations that simplified the mobile app's navigation and clarified information hierarchy on the web app for faster task completion.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Image Wrapper -->
+                            <div class="w-full md:w-1/2 order-1 md:order-2">
+                                <div class="phase-image-container mb-12 md:mb-0">
+                                    <div class="phase-image-item">
+                                        <img src="https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Research+&+Affinity+Mapping" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Research+Session';" alt="Affinity mapping session for user research" loading="lazy" decoding="async">
+                                    </div>
+                                    <div class="phase-image-item">
+                                        <img src="https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Card+Sorting+&+Personas" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=User+Personas';" alt="User personas and card sorting results" loading="lazy" decoding="async">
+                                    </div>
+                                    <div class="phase-image-item">
+                                        <img src="https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Prototyping+&+Usability+Testing" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Prototype+Testing';" alt="Figma prototypes being tested" loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Solution Section -->
                     <section class="project-section container mx-auto px-6">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-12 text-center anim-reveal">The Solution</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                            <div class="anim-reveal">
-                                <h3 class="text-cyan-400 font-bold text-3xl mb-4">Building a Design System</h3>
-                                <p class="text-lg text-gray-300">I led the creation and rollout of a comprehensive design system. This established a unified visual language and a library of reusable components, ensuring brand consistency and accelerating future development cycles.</p>
-                            </div>
-                            <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A team analyzing analytics data and website heatmaps on a large screen." loading="lazy" decoding="async">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-24">
-                            <div class="rounded-lg overflow-hidden anim-reveal md:order-2">
-                                <img src="https://images.unsplash.com/photo-1522204523234-872Aaa6e3d_5f?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person shopping on an e-commerce website on their laptop, showcasing a smooth checkout experience." loading="lazy" decoding="async">
-                            </div>
-                            <div class="anim-reveal md:order-1">
-                                <h3 class="text-cyan-400 font-bold text-3xl mb-4">Streamlining Workflows</h3>
-                                <p class="text-lg text-gray-300">I redesigned the entire CRM platform for both web and mobile, focusing on optimizing critical user tasks. By integrating CRM-Shopify workflows, we streamlined sales processes and dramatically improved data synchronization.</p>
-                            </div>
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: A Role-Based CRM</h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, responsive, and role-based platform. Each user (Marketing, Sales, or HR) now gets a personalized dashboard with only the tools they need, dramatically simplifying workflows. The new mobile-first app empowers the sales team to manage customer relations on the go.</p>
+                        <div class="rounded-lg overflow-hidden anim-reveal max-w-6xl mx-auto">
+                            <img src="https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Final+OurShopee+CRM+Dashboard+UI" onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Final+UI';" class="w-full h-full object-cover" alt="Final UI of the OurShopee CRM dashboard" loading="lazy" decoding="async">
                         </div>
                     </section>
+                    
+                    <!-- Impact Section -->
                     <section class="project-section">
-                        <div class="container mx-auto px-6 max-w-5xl text-center">
-                            <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: A Boost in Productivity</h2>
-                            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">The new CRM platform transformed internal operations. The focus on efficiency and consistency provided a significant boost to the productivity of the entire sales and support team.</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                                <div class="anim-reveal stat-card-project">
-                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
-                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Reduction in Task Time</p>
-                                </div>
-                                <div class="anim-reveal stat-card-project" style="--delay: 0.1s;">
-                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="25">0%</p>
-                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Reduction in Errors</p>
-                                </div>
-                                <div class="anim-reveal stat-card-project" style="--delay: 0.2s;">
-                                    <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="20">0%</p>
-                                    <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Design Efficiency Gains</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="project-section container mx-auto px-6 max-w-5xl">
-                         <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
-                         <div class="grid md:grid-cols-3 gap-8">
-                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
-                                 <h3 class="font-bold text-white text-xl mb-2">A Design System is an Investment</h3>
-                                 <p class="text-gray-300">Implementing a design system was a significant upfront effort, but the long-term payoff in development speed and brand consistency was immeasurable. It's a foundational asset, not a one-off project.</p>
-                             </div>
-                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.1s;">
-                                 <h3 class="font-bold text-white text-xl mb-2">Internal Tools Deserve Great UX</h3>
-                                 <p class="text-gray-300">Employee-facing tools are often neglected, but improving their usability directly translates to higher productivity, fewer errors, and better morale. A great internal UX is a competitive advantage.</p>
-                             </div>
-                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.2s;">
-                                 <h3 class="font-bold text-white text-xl mb-2">Consistency Breeds Confidence</h3>
-                                 <p class="text-gray-300">By creating predictable patterns and a unified visual language across the platform, users could perform complex tasks with more speed and confidence, leading to a significant reduction in support requests.</p>
+                         <div class="container mx-auto px-6 max-w-5xl text-center">
+                             <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: Efficiency & Clarity Restored</h2>
+                             <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 anim-reveal">By focusing on role-based personalization and mobile access, the redesigned CRM transformed internal operations, turning user frustration into empowerment.</p>
+                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                                 <div class="anim-reveal stat-card-project">
+                                     <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="40">0%</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Faster Task Completion</p>
+                                 </div>
+                                 <div class="anim-reveal stat-card-project" style="--delay: 0.1s;">
+                                     <p class="text-5xl font-bold text-cyan-400 stat-number" data-end-value="90">0%</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Positive User Feedback</p>
+                                 </div>
+                                 <div class="anim-reveal stat-card-project" style="--delay: 0.2s;">
+                                     <p class="text-5xl font-bold text-cyan-400">100%</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Role-Based Dashboards</p>
+                                 </div>
+                                  <div class="anim-reveal stat-card-project" style="--delay: 0.3s;">
+                                     <p class="text-5xl font-bold text-cyan-400">Mobile</p>
+                                     <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Sales Team Access</p>
+                                 </div>
                              </div>
                          </div>
                     </section>
-                </main>
-            </div>
+                    
+                     <!-- Learnings Section -->
+                     <section class="project-section container mx-auto px-6 max-w-5xl">
+                         <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
+                         <div class="grid md:grid-cols-3 gap-8">
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
+                                 <h3 class="font-bold text-white text-xl mb-2">Roles Define the Experience</h3>
+                                 <p class="text-gray-300">Personalization isn't just a feature; it's the foundation. Building truly role-based dashboards was the number one key to user adoption and efficiency.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.1s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Mobile Isn't an Afterthought</h3>
+                                 <p class="text-gray-300">For the sales team, the mobile app wasn't a 'nice-to-have,' it was the entire product. Solving their on-the-go needs was the biggest win for their workflow.</p>
+                             </div>
+                             <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700" style="--delay: 0.2s;">
+                                 <h3 class="font-bold text-white text-xl mb-2">Untangle Workflows First</h3>
+                                 <p class="text-gray-300">Before designing any UI, the card sorting and research helped untangle years of complex, overlapping workflows. A clear process is the prerequisite for a clear interface.</p>
+                             </div>
+                         </div>
+                    </section>
+                 </main>
+             </div>
         </div>
+        <!-- ================================================================= -->
+        <!-- END: UPDATED OURSHOPEE PROJECT PAGE -->
+        <!-- ================================================================= -->
+
         <div id="project-page-bankiom" class="page-view project-page-view">
-            <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
-                <div class="container mx-auto flex justify-between items-center">
-                    <div class="flex-1 flex justify-start">
-                        <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
-                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                            <span>Back</span>
-                        </button>
-                    </div>
-                    <div class="flex-1 flex justify-center">
-                        <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
-                    </div>
-                    <div class="flex-1 flex justify-end">
-                         <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                            <span>Contact Me</span>
-                        </a>
-                    </div>
-                </div>
-            </header>
+             <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
+                 <div class="container mx-auto flex justify-between items-center">
+                     <div class="flex-1 flex justify-start">
+                         <button data-target="homepage-view" class="back-to-home text-sm font-semibold flex items-center space-x-2 group bg-black/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 transition-colors duration-300 clean-cta">
+                             <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                             <span>Back</span>
+                         </button>
+                     </div>
+                     <div class="flex-1 flex justify-center">
+                         <a href="#" class="text-xl font-bold back-to-home-logo">Rinoj<span style="color: var(--accent-color);">.</span></a>
+                     </div>
+                     <div class="flex-1 flex justify-end">
+                          <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
+                             <span>Contact Me</span>
+                         </a>
+                     </div>
+                 </div>
+             </header>
             <div class="content-wrapper">
                 <main>
                     <section class="min-h-screen-app w-full relative flex flex-col items-center justify-center text-center text-white overflow-hidden">
@@ -999,7 +1113,7 @@
                                 <p class="text-lg text-gray-300">I conducted comprehensive usability tests and analyzed user behavior with Hotjar to pinpoint exact friction points. These insights guided a complete redesign of the website and web app, focusing on creating a seamless, intuitive, and trustworthy user journey from landing page to conversion.</p>
                             </div>
                             <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy" decoding="async">
+                                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Fintech+Redesign';" class="w-full h-full object-cover image-pan" alt="A person interacting with a fintech application on a tablet, focused on budgeting." loading="lazy" decoding="async">
                             </div>
                         </div>
                     </section>
@@ -1023,7 +1137,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="project-section container mx-auto px-6 max-w-5xl">
+                     <section class="project-section container mx-auto px-6 max-w-5xl">
                          <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
                          <div class="grid md:grid-cols-3 gap-8">
                              <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
@@ -1094,7 +1208,7 @@
                                 <p class="text-lg text-gray-300">I designed a mobile-first donation application with a clear mission: make giving as easy as possible. The primary focus was on radically simplifying the user flow, reducing the number of steps, and creating a clean, trustworthy interface that encouraged generosity and connection to the cause.</p>
                             </div>
                             <div class="rounded-lg overflow-hidden anim-reveal">
-                                <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop during usability testing." loading="lazy" decoding="async">
+                                <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=800&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Donation+App+UI';" class="w-full h-full object-cover image-pan" alt="A user interacting with a card-based dashboard on a laptop during usability testing." loading="lazy" decoding="async">
                             </div>
                         </div>
                     </section>
@@ -1114,7 +1228,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="project-section container mx-auto px-6 max-w-5xl">
+                     <section class="project-section container mx-auto px-6 max-w-5xl">
                          <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center anim-reveal">Learnings & Reflections</h2>
                          <div class="grid md:grid-cols-3 gap-8">
                              <div class="p-8 rounded-lg anim-reveal feature-card bg-black/20 border border-gray-700">
@@ -1219,8 +1333,8 @@
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
-                 if (!isGoingBack) {
-                       lastScrollPos = window.scrollY || document.documentElement.scrollTop;
+                     if (!isGoingBack) {
+                         lastScrollPos = window.scrollY || document.documentElement.scrollTop;
                    }
 
 
@@ -1263,7 +1377,7 @@
                     destroyProjectPageScrollTriggers();
                     // Use a slight delay before scrolling to ensure the DOM is ready
                     gsap.delayedCall(0.01, () => {
-                         window.scrollTo(0, lastScrollPos);
+                        window.scrollTo(0, lastScrollPos);
                     });
                     gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4 });
                     ScrollTrigger.refresh();
@@ -1383,7 +1497,7 @@
                                 let velocity = self.getVelocity();
                                 const sensitivity = direction === 1 ? 260 : 1300;
                                 let timeScale = 1 + (Math.abs(velocity) / sensitivity) * direction;
-                                timeScale = gsap.utils.clamp(-3, 5, timeScale); 
+                                timeScale = gsap.utils.clamp(-3, 5, timeScale);  
                                 gsap.to(marqueeAnimation, { timeScale: timeScale, duration: 0.5, ease: "power2.out" });
                             }
                         });
@@ -1392,7 +1506,7 @@
             }
 
             gsap.utils.toArray('#homepage-view .reveal').forEach(el => {
-                gsap.fromTo(el, { opacity: 0, y: 60 }, { 
+                gsap.fromTo(el, { opacity: 0, y: 60 }, {  
                     opacity: 1, y: 0, duration: 1, ease: 'power2.out',
                     scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
                 });
@@ -1419,7 +1533,7 @@
             if (toolsMarqueeContainer) {
                 const marqueeContent = document.createElement('div');
                 marqueeContent.className = 'flex items-center flex-shrink-0';
-                marqueeContent.innerHTML = tools.map(tool => 
+                marqueeContent.innerHTML = tools.map(tool =>  
                     `<div class="tool-logo-item" title="${tool.name}"><img src="${tool.logo}" onerror="this.onerror=null;this.src='https://placehold.co/160x80/1e1f1f/aaaaaa?text=${encodeURIComponent(tool.name)}';" alt="${tool.name} Logo" loading="lazy" decoding="async"></div>`
                 ).join('');
                 toolsMarqueeContainer.appendChild(marqueeContent);
@@ -1556,9 +1670,8 @@
         // --- 5. DYNAMIC PROJECT INJECTION ---
         const projects = [
             { id: 'travion', title: 'Travion - The B2B Solution', tags: ['B2B SaaS', 'UX Research', 'Prototyping'], image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2070&auto=format&fit=crop', href: '#'},
-            { id: 'ourshoppee', title: 'OurShoppee - Internal CRM Platform', tags: ['Design System', 'Workflow Optimization'], image: 'https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'},
-            { id: 'bankiom', title: 'Bankiom - FinTech Super-App', tags: ['Conversion Uplift', 'Usability Testing'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
-            { id: 'shanthib', title: 'Shanthi Bhavan Donation App', tags: ['Mobile-First UX', 'Non-Profit'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'}
+            { id: 'ourshoppee', title: 'OurShopee - Internal CRM Platform', tags: ['Design System', 'Workflow Optimization'], image: 'https://images.unsplash.com/photo-1555529771-83f59fc5efe?q=80&w=1887&auto=format&fit=crop', href: '#'},
+            { id: 'more', title: 'More Projects', tags: ['View on Behance'], image: 'https://images.unsplash.com/photo-1522199670076-2852f80289c3?q=80&w=2072&auto=format&fit=crop', href: 'https://www.behance.net/rinoj1020'}
         ];
         
         function preloadProjectImages() {
@@ -1571,22 +1684,34 @@
         const projectsContainer = document.getElementById('projects-container');
         if (projectsContainer) {
             projects.forEach(p => {
-                const projectEl = document.createElement('div');
+                // Check if it's a special 'more' link or a standard project
+                const isExternalLink = p.id === 'more';
+                const projectEl = isExternalLink ? document.createElement('a') : document.createElement('div');
                 projectEl.className = 'project-item relative';
-                projectEl.dataset.target = `project-page-${p.id}`;
+                
+                if (isExternalLink) {
+                    projectEl.href = p.href;
+                    projectEl.target = '_blank';
+                    projectEl.rel = 'noopener noreferrer';
+                } else {
+                    projectEl.dataset.target = `project-page-${p.id}`;
+                }
+
                 projectEl.innerHTML = `
                     <div class="py-10 flex justify-between items-center relative z-10 px-6 md:px-0">
                         <h3 class="text-2xl md:text-4xl font-bold pointer-events-none">${p.title}</h3>
                         <span class="text-sm font-lg text-secondary hidden md:block pointer-events-none">${p.tags.join(' / ')}</span>
                     </div>
-                    <img src="${p.image}" class="project-image-preview" alt="Preview image for ${p.title}" loading="lazy" decoding="async">
+                    <img src="${p.image}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/1e1f1f/aaaaaa?text=${encodeURIComponent(p.title)}';" class="project-image-preview" alt="Preview image for ${p.title}" loading="lazy" decoding="async">
                 `;
                 projectsContainer.appendChild(projectEl);
 
-                projectEl.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    switchView(projectEl.dataset.target, e);
-                });
+                if (!isExternalLink) {
+                    projectEl.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        switchView(projectEl.dataset.target, e);
+                    });
+                }
 
                 if (!isTouchDevice) {
                     const previewImage = projectEl.querySelector('.project-image-preview');
@@ -1625,53 +1750,89 @@
             destroyProjectPageScrollTriggers(); 
             let triggers = [];
             
+            // General reveal animation for elements with .anim-reveal
             pageElement.querySelectorAll('.anim-reveal').forEach(el => {
                 let delay = parseFloat(el.style.getPropertyValue('--delay')) || 0;
-                triggers.push(gsap.from(el, { 
-                    opacity: 0, y: 60, duration: 1, ease: 'power3.out', 
+                triggers.push(gsap.from(el, {  
+                    opacity: 0, y: 60, duration: 1, ease: 'power3.out',  
                     scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
                     delay: delay
                 }));
             });
             
+            // Parallax effect for images with .image-pan
             pageElement.querySelectorAll('.image-pan').forEach(img => {
                 triggers.push(gsap.to(img, { scale: 1.15, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: 1.5 } }));
             });
 
+            // Number counting animation for elements with .stat-number
             pageElement.querySelectorAll('.stat-number').forEach(el => {
                 const endValue = parseInt(el.dataset.endValue);
-                if (isNaN(endValue)) return;
+                 // Check if endValue is a valid number before proceeding
+                if (isNaN(endValue)) {
+                     // If data-end-value is not a number, ensure the element is visible
+                     gsap.set(el.closest('.anim-reveal') || el, { opacity: 1, y: 0 }); // Reveal parent or self immediately
+                     return; // Skip animation for non-numeric or missing data-end-value
+                }
+
                 let counter = { value: 0 };
-                let suffix = el.innerText.includes('%') ? '%' : '';
-                triggers.push(gsap.to(counter, {
-                    value: endValue, duration: 2.5, ease: 'power2.out',
-                    onUpdate: () => { el.textContent = Math.ceil(counter.value) + suffix; },
-                    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-                }));
+                const specialChars = /[^\d.,%]/; 
+                const containsSpecial = specialChars.test(el.textContent);
+                let suffix = el.textContent.includes('%') ? '%' : '';
+
+                if (!containsSpecial || !isNaN(parseInt(el.textContent))) { // Only animate if it starts as a number (or 0%)
+                    triggers.push(gsap.to(counter, {
+                        value: endValue, duration: 2.5, ease: 'power2.out',
+                        onUpdate: () => { el.textContent = Math.ceil(counter.value) + suffix; },
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+                    }));
+                } else {
+                     // If it contains special non-numeric chars initially (like '< 5 min'), reveal it directly
+                     gsap.set(el.closest('.anim-reveal') || el, { opacity: 1, y: 0 });
+                }
             });
             
-            initializeStandardHeroAnimation(pageElement, triggers); 
+            // Initialize Hero animations (title stagger, content fade-in, parallax)
+            initializeStandardHeroAnimation(pageElement, triggers);  
 
+            // Initialize Scrollytelling specific to the project page
             if(pageElement.id === 'project-page-travion') {
                 initializeTravionScrollytelling(pageElement, triggers);
             }
+             if(pageElement.id === 'project-page-ourshoppee') {
+                 // Check if the scrolly grid exists before initializing
+                 if (pageElement.querySelector('#ourshoppee-scrolly-grid')) {
+                      initializeOurShopeeScrollytelling(pageElement, triggers);
+                 } else {
+                     // If no scrolly grid, ensure all content reveals normally
+                     pageElement.querySelectorAll('.case-study-content > *').forEach(el => {
+                         triggers.push(gsap.from(el, {
+                             opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
+                             scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                         }));
+                     });
+                 }
+             }
 
-            projectPageScrollTriggers = triggers;
+
+            projectPageScrollTriggers = triggers; // Store triggers for cleanup
         }
 
         function initializeStandardHeroAnimation(pageElement, triggers) {
-            const heroSection = pageElement.querySelector('section');
+            const heroSection = pageElement.querySelector('section:first-of-type'); // Target the first section as hero
             if (!heroSection) return;
 
-            gsap.fromTo(heroSection.querySelectorAll(".project-hero-title span"), 
+             // Animate Hero Title spans
+            gsap.fromTo(heroSection.querySelectorAll(".project-hero-title span"),  
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.05, delay: 0.4 }
             );
-
+            // Animate other hero elements like description and detail cards
             gsap.from(heroSection.querySelectorAll('.anim-hero-reveal'), {
                 y: 30, opacity: 0, duration: 1, ease: 'power3.out', stagger: 0.1, delay: 0.6
             });
             
+            // Apply parallax scroll effect if not reduced motion
             if (!prefersReducedMotion.matches) {
                 const heroContent = heroSection.querySelector('.hero-content-container');
                 const heroBg = heroSection.querySelector('.hero-bg-image');
@@ -1681,18 +1842,22 @@
                     scrollTrigger: {
                         trigger: heroSection,
                         start: 'top top',
-                        end: 'bottom top',
+                        end: 'bottom top', // End parallax when bottom of hero reaches top of viewport
                         scrub: true,
                     }
                 });
                 
+                // Parallax background image (move slower than scroll)
                 if (heroBg) tl.to(heroBg, { yPercent: 20, ease: 'none' }, 0);
+                 // Parallax hero content and scroll indicator (move faster and fade out)
                 if (heroContent && scrollIndicator) tl.to([heroContent, scrollIndicator], { yPercent: -50, autoAlpha: 0, ease: 'none' }, 0);
 
+                // Add the ScrollTrigger instance to the triggers array for cleanup
                 if(tl.scrollTrigger) triggers.push(tl.scrollTrigger);
             }
         }
         
+        // --- Specific Scrollytelling for Travion ---
         function initializeTravionScrollytelling(pageElement, triggers) {
             const scrollyWrapper = pageElement.querySelector('#travion-scrolly-grid');
             if (!scrollyWrapper) return;
@@ -1700,109 +1865,217 @@
             const phaseImages = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-image-item'));
             const phaseTexts = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-text-item'));
 
-            // Use matchMedia to create responsive ScrollTriggers
+            // Use matchMedia for responsive animations
             ScrollTrigger.matchMedia({
-                // Desktop layout: sticky image
+                // Desktop layout: sticky image, text triggers image change
                 "(min-width: 768px)": function() {
                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
                     
-                    // Ensure desktop styles are correct
-                    gsap.set(imageContainer, { display: 'block' });
-                    gsap.set(phaseImages, { position: 'absolute' });
+                    // Ensure desktop styles are applied
+                    gsap.set(imageContainer, { display: 'block' }); // Make sure container is visible
+                    gsap.set(phaseImages, { position: 'absolute' }); // Position images absolutely within container
 
-
+                     // Pin the image container while scrolling through the text sections
                     triggers.push(ScrollTrigger.create({
-                        trigger: ".phase-image-container",
-                        start: "top 20vh",
-                        endTrigger: "#travion-scrolly-grid",
-                        end: "bottom bottom-=20vh",
+                        trigger: ".phase-image-container",  
+                        start: "top 20vh", // Start pinning when top hits 20% from viewport top
+                        endTrigger: "#travion-scrolly-grid", // End pinning at the bottom of the grid
+                        end: "bottom bottom-=20vh", // End pinning 20% before the bottom
                         pin: true,
-                        pinSpacing: false
+                        pinSpacing: false // Prevent extra space after pinning
                     }));
 
+                    // Animate image transitions based on text scroll position
                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                        gsap.set(phaseImages, { autoAlpha: 0 });
-                        gsap.set(phaseImages[0], { autoAlpha: 1 });
+                        gsap.set(phaseImages, { autoAlpha: 0 }); // Hide all images initially
+                        gsap.set(phaseImages[0], { autoAlpha: 1 }); // Show the first image
 
+                        // Create a ScrollTrigger for each text section
                         phaseTexts.forEach((text, i) => {
                             const trigger = ScrollTrigger.create({
                                 trigger: text,
-                                start: "top center",
-                                end: "bottom center",
+                                start: "top center", // Activate when the top of the text hits the center
+                                end: "bottom center", // Deactivate when the bottom of the text hits the center
                                 onToggle: self => {
                                     if (self.isActive) {
+                                        // Fade out all images, then fade in the corresponding one
                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
                                         gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
                                     }
                                 },
+                                // Handle scrolling back up: show the previous image
                                 onLeaveBack: () => {
-                                    if(i > 0) {
+                                    if(i > 0) { // Ensure we don't go before the first image
                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
                                         gsap.to(phaseImages[i-1], { autoAlpha: 1, duration: 0.3 });
                                     }
                                 }
                             });
-                            triggers.push(trigger);
+                            triggers.push(trigger); // Add trigger for cleanup
                         });
                     }
+                     // Add reveal animation for the text content on desktop
+                    gsap.utils.toArray('#travion-text-wrapper .phase-content').forEach(content => {
+                         triggers.push(gsap.from(content, {
+                             y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+                             scrollTrigger: { trigger: content.parentElement, start: 'top 85%', toggleActions: 'play none none none' }
+                         }));
+                    });
                 },
-                // Mobile layout: normal scroll
+                // Mobile layout: normal scroll, images appear within text flow
                 "(max-width: 767px)": function() {
-                    if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                        
-                        const imageContainer = pageElement.querySelector('.phase-image-container');
-                        if(imageContainer) {
-                           imageContainer.style.display = 'none';
-                        }
-                        
-                        phaseTexts.forEach((textItem, i) => {
-                            const imageItem = phaseImages[i];
-                            // Check if the image hasn't already been moved
-                            if (imageItem && textItem && !textItem.contains(imageItem)) {
-                                gsap.set(imageItem, { 
-                                    autoAlpha: 1, 
-                                    position: 'relative', 
-                                    display: 'block',
-                                    width: '100%', 
-                                    height: 'auto',
-                                    aspectRatio: '5/3',
-                                    marginTop: '2.5rem',
-                                    marginBottom: '2.5rem'
-                                });
-                                textItem.appendChild(imageItem);
-                            }
-                        });
-                    }
+                     // Hide the sticky image container on mobile
+                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
+                     if(imageContainer) imageContainer.style.display = 'none';
+
+                     // Move images into their respective text sections and apply reveal animations
+                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                         phaseTexts.forEach((textItem, i) => {
+                             const imageItem = phaseImages[i];
+                             // Check if image exists and hasn't already been moved
+                             if (imageItem && textItem && !textItem.contains(imageItem.querySelector('img'))) {
+                                 // Style the image item container for mobile flow
+                                 gsap.set(imageItem, {
+                                     autoAlpha: 1, position: 'relative', display: 'block',
+                                     width: '100%', height: 'auto', aspectRatio: '5/3',
+                                     marginTop: '2.5rem', marginBottom: '2.5rem'
+                                 });
+                                 // Insert image *before* the text content
+                                 const contentDiv = textItem.querySelector('.phase-content');
+                                 if (contentDiv) {
+                                     contentDiv.parentNode.insertBefore(imageItem, contentDiv);
+                                 } else {
+                                     textItem.appendChild(imageItem); // Fallback
+                                 }
+                             }
+                             // Add reveal animations for mobile content (text + image)
+                             gsap.utils.toArray(textItem.querySelectorAll('.phase-content > *, .phase-image-item')).forEach(el => {
+                                 triggers.push(gsap.from(el, {
+                                     y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+                                     scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                                 }));
+                             });
+                         });
+                     }
                 }
-            });
-            
-            // This animation applies to both mobile and desktop
-            gsap.utils.toArray('.phase-content').forEach(content => {
-                triggers.push(gsap.from(content, {
-                    y: 50,
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: content.parentElement,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none',
-                    }
-                }));
             });
         }
 
+         // --- Specific Scrollytelling for OurShopee ---
+         function initializeOurShopeeScrollytelling(pageElement, triggers) {
+             // This function is identical to initializeTravionScrollytelling but targets OurShopee IDs
+             const scrollyWrapper = pageElement.querySelector('#ourshoppee-scrolly-grid');
+             if (!scrollyWrapper) return; // Exit if the grid isn't found
+
+             const phaseImages = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-image-item'));
+             const phaseTexts = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-text-item'));
+
+             ScrollTrigger.matchMedia({
+                 // Desktop layout: sticky image
+                 "(min-width: 768px)": function() {
+                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
+                     gsap.set(imageContainer, { display: 'block' });
+                     gsap.set(phaseImages, { position: 'absolute' });
+
+                     triggers.push(ScrollTrigger.create({
+                         trigger: ".phase-image-container",
+                         start: "top 20vh",
+                         endTrigger: "#ourshoppee-scrolly-grid",
+                         end: "bottom bottom-=20vh",
+                         pin: true,
+                         pinSpacing: false
+                     }));
+
+                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                         gsap.set(phaseImages, { autoAlpha: 0 });
+                         gsap.set(phaseImages[0], { autoAlpha: 1 });
+
+                         phaseTexts.forEach((text, i) => {
+                             const trigger = ScrollTrigger.create({
+                                 trigger: text,
+                                 start: "top center",
+                                 end: "bottom center",
+                                 onToggle: self => {
+                                     if (self.isActive) {
+                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                         gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
+                                     }
+                                 },
+                                 onLeaveBack: () => {
+                                     if (i > 0) {
+                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                         gsap.to(phaseImages[i - 1], { autoAlpha: 1, duration: 0.3 });
+                                     }
+                                 }
+                             });
+                             triggers.push(trigger);
+                         });
+                     }
+                      // Add reveal animation for the text content on desktop
+                     gsap.utils.toArray('#ourshoppee-text-wrapper .phase-content').forEach(content => {
+                         triggers.push(gsap.from(content, {
+                             y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+                             scrollTrigger: { trigger: content.parentElement, start: 'top 85%', toggleActions: 'play none none none' }
+                         }));
+                     });
+                 },
+                 // Mobile layout: normal scroll
+                 "(max-width: 767px)": function() {
+                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
+                     if(imageContainer) imageContainer.style.display = 'none'; // Hide the sticky container
+
+                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                         phaseTexts.forEach((textItem, i) => {
+                             const imageItem = phaseImages[i];
+                             if (imageItem && textItem && !textItem.contains(imageItem.querySelector('img'))) {
+                                 gsap.set(imageItem, {
+                                     autoAlpha: 1, position: 'relative', display: 'block',
+                                     width: '100%', height: 'auto', aspectRatio: '5/3',
+                                     marginTop: '2.5rem', marginBottom: '2.5rem'
+                                 });
+                                 const contentDiv = textItem.querySelector('.phase-content');
+                                 if (contentDiv) {
+                                     contentDiv.parentNode.insertBefore(imageItem, contentDiv);
+                                 } else {
+                                     textItem.appendChild(imageItem);  
+                                 }
+                             }
+                             // Add reveal animations for mobile content
+                             gsap.utils.toArray(textItem.querySelectorAll('.phase-content > *, .phase-image-item')).forEach(el => {
+                                 triggers.push(gsap.from(el, {
+                                     y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+                                     scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                                 }));
+                             });
+                         });
+                     }
+                 }
+             });
+         }
+
+
         function destroyProjectPageScrollTriggers() {
             projectPageScrollTriggers.forEach(st => {
-                if (st.scrollTrigger) st.scrollTrigger.kill();
-                if(st.kill) st.kill();
+                 // Check if it's a ScrollTrigger instance or a GSAP animation/timeline
+                if (st instanceof ScrollTrigger) {
+                    st.kill();
+                 } else if (st.scrollTrigger) { // It's a GSAP animation with an associated ScrollTrigger
+                     st.scrollTrigger.kill();
+                     st.kill(); // Kill the animation itself
+                 } else if(st.kill) { // It's a GSAP animation without a separate ScrollTrigger instance variable
+                     st.kill();
+                 }
             });
-            projectPageScrollTriggers = [];
+            projectPageScrollTriggers = []; // Clear the array
+
+            // Extra check to kill any orphaned ScrollTriggers within inactive project pages
             ScrollTrigger.getAll().forEach(t => {
                 if(t.trigger && t.trigger.closest && t.trigger.closest('.project-page-view:not(.is-active)')) {
                     t.kill();
                 }
             });
+            // Refresh ScrollTrigger after cleanup might be needed if layout shifts occurred
+            // ScrollTrigger.refresh(); // Use cautiously, might cause jumps if not needed
         }
 
 
@@ -1817,34 +2090,40 @@
         document.querySelectorAll('.go-to-contact').forEach(btn => {
             btn.addEventListener('click', e => {
                 e.preventDefault();
-                switchView('homepage-view', e); 
+                switchView('homepage-view', e);  
                 // Delay scroll until after transition
                 setTimeout(() => {
                     const contactSection = document.getElementById('contact');
                     if(contactSection) {
                          gsap.to(window, { scrollTo: { y: contactSection, offsetY: 70 }, duration: 1.5, ease: 'power3.inOut' });
                     }
-                }, 600);
+                }, 600); // Adjust delay to match transition time
             });
         });
 
+        // Go to Top Button visibility
         ScrollTrigger.create({
-            start: 200, end: "max",
+            start: 200, // Show button after scrolling 200px
+            end: "max",
             toggleClass: { targets: goToTopBtn, className: "is-active" }
         });
+        // Go to Top Button click action
         goToTopBtn.addEventListener('click', () => {
             gsap.to(window, { scrollTo: 0, duration: 1.5, ease: 'power3.inOut' });
         });
 
+        // Magnetic effect for specific items on non-touch devices
         if (!isTouchDevice) {
             document.querySelectorAll('.magnetic-item').forEach(el => {
                 el.addEventListener('mousemove', (e) => {
                     const rect = el.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
+                    // Apply magnetic pull effect
                     gsap.to(el, { x: x * 0.4, y: y * 0.4, duration: 0.8, ease: 'power3.out' });
                 });
                 el.addEventListener('mouseleave', () => {
+                    // Return element to original position smoothly
                     gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.3)' });
                 });
             });
@@ -1857,94 +2136,120 @@
         const closeButton = document.getElementById('mobile-close-button');
 
         function openMobileMenu() {
-            mobileMenu.classList.remove('hidden');
-            gsap.to(mobileMenuPanel, { x: 0, duration: 0.5, ease: 'power3.out' });
-            gsap.fromTo('.mobile-nav-link, .mobile-nav-link-cta', 
+            mobileMenu.classList.remove('hidden'); // Show overlay
+            gsap.to(mobileMenuPanel, { x: 0, duration: 0.5, ease: 'power3.out' }); // Slide panel in
+            // Animate nav links appearing
+            gsap.fromTo('.mobile-nav-link, .mobile-nav-link-cta',  
                 { opacity: 0, x: 50 },
                 { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, delay: 0.2, ease: 'power3.out' }
             );
         }
 
         function closeMobileMenu() {
-            gsap.to(mobileMenuPanel, { 
-                x: '100%', duration: 0.5, ease: 'power3.in',
+             // Animate nav links disappearing first (optional, for smoother feel)
+             gsap.to('.mobile-nav-link, .mobile-nav-link-cta', {
+                 opacity: 0, x: 50, duration: 0.3, stagger: 0.05, ease: 'power3.in'
+             });
+             // Slide panel out
+            gsap.to(mobileMenuPanel, {  
+                x: '100%', duration: 0.5, ease: 'power3.in', delay: 0.1, // Slight delay after links start fading
                 onComplete: () => {
-                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.add('hidden'); // Hide overlay after animation
+                     // Reset link positions for next open
                     gsap.set('.mobile-nav-link, .mobile-nav-link-cta', { opacity: 0, x: 50 });
                 }
             });
         }
-
+         // Event Listeners for mobile menu
         openButton.addEventListener('click', openMobileMenu);
         closeButton.addEventListener('click', closeMobileMenu);
+        // Close menu if clicking outside the panel
         mobileMenu.addEventListener('click', (e) => {
             if (e.target === mobileMenu) closeMobileMenu();
         });
+        // Close menu when a nav link is clicked (for single-page navigation)
+         document.querySelectorAll('.mobile-nav-link, .mobile-nav-link-cta').forEach(link => {
+             link.addEventListener('click', closeMobileMenu);
+         });
+
 
         // --- THREE.JS GRADIENT BACKGROUND ---
         let scene, camera, renderer, material;
         const gradientCanvas = document.getElementById('hero-gradient-background');
+        // Initialize only if canvas exists and no preference for reduced motion
         if(gradientCanvas && !prefersReducedMotion.matches) {
             function initGradientBackground() {
                 scene = new THREE.Scene();
+                // Orthographic camera covers the entire screen space
                 camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
                 renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true, alpha: true });
+                // A simple plane geometry that fills the screen
                 const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                // Shader material for custom gradient effect
                 material = new THREE.ShaderMaterial({
                     uniforms: {
-                        u_time: { value: 0 },
-                        u_resolution: { value: new THREE.Vector2() },
-                        u_color1: { value: new THREE.Color(0x0047AB) }, // Blue
-                        u_color2: { value: new THREE.Color(0x00008B) }, // Darker Blue
+                        u_time: { value: 0 }, // Time uniform for animation
+                        u_resolution: { value: new THREE.Vector2() }, // Screen resolution
+                        u_color1: { value: new THREE.Color(0x0047AB) }, // Start color (Blue)
+                        u_color2: { value: new THREE.Color(0x00008B) }, // End color (Darker Blue)
                     },
+                     // Vertex shader positions the vertices
                     vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
-                    fragmentShader: `varying vec2 vUv; uniform float u_time; uniform vec3 u_color1; uniform vec3 u_color2; void main() { vec2 p = vUv; float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1; vec3 color = mix(u_color1, u_color2, blend); gl_FragColor = vec4(color, 1.0); }`
+                     // Fragment shader calculates the color for each pixel
+                    fragmentShader: `
+                        varying vec2 vUv; 
+                        uniform float u_time; 
+                        uniform vec3 u_color1; 
+                        uniform vec3 u_color2; 
+                        void main() { 
+                            vec2 p = vUv; 
+                            // Create a vertical blend factor with a subtle sine wave distortion based on time and x-position
+                            float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1; 
+                            // Mix the two colors based on the blend factor
+                            vec3 color = mix(u_color1, u_color2, blend); 
+                            gl_FragColor = vec4(color, 1.0); 
+                        }`
                 });
                 const mesh = new THREE.Mesh(geometry, material);
-                scene.add(mesh);
-                onWindowResizeGradient();
-                window.addEventListener('resize', onWindowResizeGradient);
-                animateGradient();
+                scene.add(mesh); // Add the plane to the scene
+                onWindowResizeGradient(); // Set initial size
+                window.addEventListener('resize', onWindowResizeGradient); // Adjust size on resize
+                animateGradient(); // Start the animation loop
             }
 
+            // Animation loop function
             function animateGradient() {
                 if (material) {
-                    material.uniforms.u_time.value += 0.01;
-                    renderer.render(scene, camera);
+                     // Update time uniform for shader animation
+                    material.uniforms.u_time.value += 0.01;  
+                    renderer.render(scene, camera); // Render the scene
                 }
-                requestAnimationFrame(animateGradient);
+                requestAnimationFrame(animateGradient); // Request next frame
             }
 
+             // Handle window resize for the gradient canvas
             function onWindowResizeGradient() {
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize(window.innerWidth, window.innerHeight); // Update renderer size
+                 // Set pixel ratio for sharp rendering on high-DPI displays
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                 // Update shader resolution uniform
                 if (material) material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
             }
-            initGradientBackground();
+            initGradientBackground(); // Initialize the gradient
         }
         // --- TITLE MARQUEE ---
         const originalTitle = document.title;
-        let marqueeTitle = originalTitle + " ••• ";
+        let marqueeTitle = originalTitle + " ••• "; // Add separator
         
         setInterval(() => {
-            if (!document.hidden) { // Only animate if the tab is active
+            // Only animate the title if the tab is visible
+            if (!document.hidden) {  
+                 // Rotate the title string
                 marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
-                document.title = marqueeTitle;
+                document.title = marqueeTitle; // Update the document title
             }
-        }, 300); // Adjust scroll speed (milliseconds)                                                                                    
+        }, 300); // Adjust scroll speed (lower value = faster)                                                 
     });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
