@@ -588,9 +588,58 @@
             @apply mt-6 border-l-2 border-cyan-400 pl-4 text-gray-300 italic;
         }
 
+        /* NEW: Travion Carousel Styles */
+        .travion-carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Fixes flickering on slide */
+        }
+        .travion-carousel-slider {
+            display: flex;
+            width: 300%; /* 3 slides */
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .travion-carousel-slide {
+            width: 100%; /* Each slide takes 1/3 of the slider's width */
+            flex-shrink: 0;
+            /* aspect-ratio: 21 / 9; */ /* <<< REMOVED THIS */
+            height: 60vh;             /* <<< ADDED THIS. You can change 60vh to 50vh or 70vh */
+            background-color: #000; 
+        }
+        .travion-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* CHANGE THIS: from 'cover' to 'contain' */
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.75rem;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        .carousel-dot:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            transform: scale(1.1);
+        }
+        .carousel-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+
 
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g {
+            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g, .travion-carousel-slider {
                 transition: none !important;  
                 animation: none !important;
             }
@@ -770,7 +819,9 @@
             </main>
         </div>
         
-        <!-- Project Page Views -->
+        <!-- ================================================================= -->
+        <!-- START: TRAVION PROJECT PAGE (WITH NEW IMAGES) -->
+        <!-- ================================================================= -->
         <div id="project-page-travion" class="page-view project-page-view">
             <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
                 <div class="container mx-auto flex justify-between items-center">
@@ -871,13 +922,46 @@
                             </div>
                         </div>
                     </section>
+                    
+                    <!-- MODIFIED Solution Section -->
                     <section class="project-section container mx-auto px-6">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: Travion 2.0</h2>
-                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive mobile & Web app anchored by a five-tab bottom navigation, providing instant access to key workflows and allowing users to manage their entire business from anywhere.</p>
-                        <div class="rounded-lg overflow-hidden anim-reveal max-w-6xl mx-auto">
-                            <img src="https://images.unsplash.com/photo-1618788372246-7b22c0202c3d?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Travion+Final+UI';" class="w-full h-full object-cover" alt="A gallery of final UI screens for the Travion mobile app." loading="lazy" decoding="async">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: A Unified Platform</h2>
+                        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive web app that unifies all tasks—from managing bookings to tracking financials—into one role-based dashboard.</p>
+                        
+                        <!-- NEW Auto-sliding Carousel -->
+                        <div class="anim-reveal max-w-6xl mx-auto">
+                            <div id="travion-carousel" class="travion-carousel-container">
+                                <div class="travion-carousel-slider">
+                                    <div class="travion-carousel-slide">
+                                        <img src="assets/mockup19.webp" alt="Travion Dashboard UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Dashboard.png';">
+                                    </div>
+                                    <div class="travion-carousel-slide">
+                                        <img src="assets/mockup16.webp" alt="Travion Bookings Pipeline UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Pipeline.png';">
+                                    </div>
+                                    <div class="travion-carousel-slide">
+                                        <img src="assets/mockup20.webp" alt="Travion Create Booking Modal UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Modal.png';">
+                                    </div>
+                                </div>
+                                <div class="carousel-dots">
+                                    <!-- Dots will be injected by JS -->
+                                </div>
+                            </div>
                         </div>
                     </section>
+
+                    <!-- NEW Feature Spotlight Section -->
+                    <section class="project-section bg-black/10">
+                        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                            <div class="anim-reveal">
+                                <h3 class="text-4xl md:text-5xl font-bold mb-4">On-the-Go Command Center</h3>
+                                <p class="text-xl md:text-2xl text-gray-200 leading-relaxed">A key insight was that 84% of agents used WhatsApp for business. They weren't tied to their desks. We built a mobile-first app that wasn't just a "lite" version, but a powerful tool to manage their entire workflow, from AI-powered opportunities to client management, from anywhere.</p>
+                            </div>
+                            <div class="anim-reveal" style="--delay: 0.2s;">
+                                <img src="assets/mockup8.webp" alt="Travion Mobile App UI" class="rounded-xl shadow-2xl w-full max-w-md mx-auto" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-600x1200-1e1f1f-aaaaaa-text-Travion+Mobile.png';">
+                            </div>
+                        </div>
+                    </section>
+
                     <section class="project-section">
                          <div class="container mx-auto px-6 max-w-5xl text-center">
                              <h2 class="text-3xl md:text-5xl font-bold mb-6 anim-reveal">Impact: Taming Chaos, Driving Growth</h2>
@@ -918,13 +1002,16 @@
                                  <p class="text-gray-300">In a market built on trust, our most successful feature wasn't a tool, but the Trust Hub—a feature designed to digitally replicate and strengthen real-world relationships. This was the key to unlocking user adoption and delight.</p>
                              </div>
                          </div>
-                    </section>
+                     </section>
                 </main>
             </div>
         </div>
-        
         <!-- ================================================================= -->
-        <!-- START: UPDATED OURSHOPEE PROJECT PAGE -->
+        <!-- END: TRAVION PROJECT PAGE -->
+        <!-- ================================================================= -->
+
+        <!-- ================================================================= -->
+        <!-- START: OURSHOPEE PROJECT PAGE -->
         <!-- ================================================================= -->
         <div id="project-page-ourshoppee" class="page-view project-page-view">
              <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
@@ -1098,12 +1185,12 @@
                                  <p class="text-gray-300">Before designing any UI, the card sorting and research helped untangle years of complex, overlapping workflows. A clear process is the prerequisite for a clear interface.</p>
                              </div>
                          </div>
-                    </section>
+                     </section>
                  </main>
              </div>
         </div>
         <!-- ================================================================= -->
-        <!-- END: UPDATED OURSHOPEE PROJECT PAGE -->
+        <!-- END: OURSHOPEE PROJECT PAGE -->
         <!-- ================================================================= -->
 
         <div id="project-page-bankiom" class="page-view project-page-view">
@@ -1197,7 +1284,7 @@
                                  <p class="text-gray-300">The biggest wins came from removing steps, clarifying language, and simplifying the user journey. A frictionless path to conversion is the most effective path.</p>
                              </div>
                          </div>
-                    </section>
+                     </section>
                 </main>
             </div>
         </div>
@@ -1288,7 +1375,7 @@
                                  <p class="text-gray-300">Meeting donors where they are—on their phones—was critical. A dedicated, optimized mobile experience is no longer a luxury for non-profits; it's essential for modern fundraising.</p>
                              </div>
                          </div>
-                    </section>
+                     </section>
                 </main>
             </div>
         </div>
@@ -1328,11 +1415,18 @@
     
     <script>
     // --- COMBINED & REFACTORED SCRIPT FOR SINGLE PAGE APP ---
+    
+    // FIX: Register plugins immediately.
+    // By the time this inline script at the end of <body> runs,
+    // the blocking scripts in <head> should have loaded.
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
     window.addEventListener('load', function() {
         history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
 
-        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        // GSAP plugins are already registered outside this listener
+        
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         if (isTouchDevice) {
             ScrollTrigger.normalizeScroll(true);
@@ -1377,9 +1471,9 @@
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
-                     if (!isGoingBack) {
-                         lastScrollPos = window.scrollY || document.documentElement.scrollTop;
-                   }
+                          if (!isGoingBack) {
+                                lastScrollPos = window.scrollY || document.documentElement.scrollTop;
+                          }
 
 
             const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
@@ -1842,6 +1936,7 @@
             // Initialize Scrollytelling specific to the project page
             if(pageElement.id === 'project-page-travion') {
                 initializeTravionScrollytelling(pageElement, triggers);
+                initializeTravionCarousel(pageElement, triggers); // NEW: Initialize Carousel
             }
              if(pageElement.id === 'project-page-ourshoppee') {
                  // Check if the scrolly grid exists before initializing
@@ -2004,6 +2099,80 @@
                 }
             });
         }
+
+         // --- NEW: Travion Carousel Logic ---
+        function initializeTravionCarousel(pageElement, triggers) {
+            const carousel = pageElement.querySelector('#travion-carousel');
+            if (!carousel || prefersReducedMotion.matches) return;
+
+            const slider = carousel.querySelector('.travion-carousel-slider');
+            const slides = gsap.utils.toArray(carousel.querySelectorAll('.travion-carousel-slide'));
+            const dotsContainer = carousel.querySelector('.carousel-dots');
+            if (slides.length <= 1) return;
+
+            let currentSlide = 0;
+            let dots = [];
+            let autoPlayInterval;
+
+            // Create dots
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot';
+                dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    goToSlide(index, true); // User initiated
+                });
+                dotsContainer.appendChild(dot);
+                dots.push(dot);
+            });
+            
+            // Function to change slide
+            function goToSlide(index, userInitiated = false) {
+                if (index === currentSlide) return;
+                currentSlide = (index + slides.length) % slides.length; // Loop
+                
+                gsap.to(slider, {
+                    xPercent: -100 * currentSlide,
+                    duration: 0.8,
+                    ease: 'power3.inOut'
+                });
+
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+
+                // Reset autoplay if user clicked
+                if (userInitiated) {
+                    resetAutoPlay();
+                }
+            }
+
+            // Autoplay logic
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(() => {
+                    goToSlide(currentSlide + 1);
+                }, 5000); // Change slide every 5 seconds
+            }
+
+            function resetAutoPlay() {
+                clearInterval(autoPlayInterval);
+                startAutoPlay();
+            }
+
+            // Start autoplay when carousel is in view
+            triggers.push(ScrollTrigger.create({
+                trigger: carousel,
+                start: 'top bottom',
+                end: 'bottom top',
+                onEnter: startAutoPlay,
+                onLeave: () => clearInterval(autoPlayInterval),
+                onEnterBack: startAutoPlay,
+                onLeaveBack: () => clearInterval(autoPlayInterval)
+            }));
+        }
+
 
          // --- Specific Scrollytelling for OurShopee ---
          function initializeOurShopeeScrollytelling(pageElement, triggers) {
@@ -2292,14 +2461,8 @@
                 marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
                 document.title = marqueeTitle; // Update the document title
             }
-        }, 300); // Adjust scroll speed (lower value = faster)                                                 
+        }, 300); // Adjust scroll speed (lower value = faster)                                                    
     });
     </script>
 </body>
 </html>
-
-
-
-
-
-
