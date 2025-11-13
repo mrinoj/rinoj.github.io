@@ -589,12 +589,14 @@
         }
 
         /* NEW: Travion Carousel Styles */
-        .travion-carousel-container {
+       .travion-carousel-container {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 2rem;
+            margin-left: auto; /* ADDED */
+            margin-right: auto; /* ADDED */
             position: relative;
             overflow: hidden;
-            width: 60%;
-            border-radius: 1rem;
-            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Fixes flickering on slide */
         }
           .travion-carousel-slider {
             display: flex;
@@ -607,6 +609,7 @@
             /* aspect-ratio: 21 / 9; */ /* <<< REMOVED THIS */
             /* height: 100vh;             /* <<< ADDED THIS. You can change 60vh to 50vh or 70vh */
             background-color: #000; 
+            display: block; /* ADDED - Good practice for images */
         }
         .travion-carousel-slide img {
             width: 100%;
@@ -917,7 +920,7 @@
                                         <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=User+Journey+Map';" alt="A detailed user journey map and persona cards laid out on a desk." loading="lazy" decoding="async">
                                     </div>
                                     <div class="phase-image-item">
-                                        <img src="https://images.unsplash.com/photo-1559028006-448665bd7c2f?q=80&w=1924&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Usability+Test';" alt="A user's hand interacting with a mobile phone displaying a prototype during a usability test." loading="lazy" decoding="async">
+                                        <img src="assets/usability.webp" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Usability+Test';" alt="Usability text sticky note in hand." loading="lazy" decoding="async">
                                     </div>
                                 </div>
                             </div>
@@ -2467,6 +2470,7 @@
     </script>
 </body>
 </html>
+
 
 
 
