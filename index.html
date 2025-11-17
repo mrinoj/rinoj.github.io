@@ -565,7 +565,7 @@
         }
         @media (min-width: 768px) {
             .phase-text-item {
-                 /* Adjust min-height based on content length if needed */
+             /* Adjust min-height based on content length if needed */
                 min-height: 100vh; /* Was 150vh, might be too much for less text */
                 padding: 0;  
             }
@@ -589,14 +589,14 @@
         }
 
         /* ================================================================= */
-        /* NEW: Travion 3D Perspective Carousel Styles */
+        /* MODIFIED: Travion 3D Perspective Carousel Styles */
         /* ================================================================= */
         .perspective-carousel-container {
             position: relative;
             width: 100%;
             max-width: 1000px; /* Increased max-width */
             margin: 2rem auto;
-            height: 500px; /* Give it a fixed height */
+            height: 600px; /* Give it a fixed height - INCREASED from 500px */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -605,7 +605,7 @@
         .perspective-viewport {
             width: 100%;
             height: 100%;
-            perspective: 1500px; /* Increased perspective for a deeper 3D effect */
+            perspective: 1200px; /* DECREASED from 1500px for a stronger 3D effect */
             position: relative;
         }
 
@@ -622,9 +622,9 @@
             position: absolute;
             left: calc(50% - 28vw / 2); /* Center the slide */
             top: calc(50% - 350px / 2); /* Center the slide */
-            width: 28vw; /* Use viewport-width for responsiveness */
-            max-width: 450px;
-            min-width: 300px;
+            width: 30vw; /* Use viewport-width for responsiveness - INCREASED from 28vw */
+            max-width: 500px; /* INCREASED from 450px */
+            min-width: 320px; /* INCREASED from 300px */
             height: auto;
             aspect-ratio: 16 / 10;
             border-radius: 1rem;
@@ -632,7 +632,7 @@
             backface-visibility: hidden;
             transition: transform 0.8s var(--animation-easing), opacity 0.8s var(--animation-easing);
             cursor: pointer;
-            opacity: 0.6;
+            opacity: 0.7; /* INCREASED from 0.6 */
             transform-origin: center center;
             /* The 'transform' (rotateY + translateZ) will be set by JavaScript */
         }
@@ -646,13 +646,13 @@
 
         .perspective-slide.is-active {
             opacity: 1;
-            transform: scale(1.1) !important; /* Make active slide slightly larger */
+            transform: scale(1.15) !important; /* Make active slide slightly larger - INCREASED from 1.1 */
             z-index: 10;
         }
         
         .perspective-slide:not(.is-active):hover {
             opacity: 0.8;
-            transform: scale(1.05) !important; /* Slight grow on hover for side slides */
+            transform: scale(1.1) !important; /* Slight grow on hover for side slides - INCREASED from 1.05 */
         }
 
         .carousel-nav-btn {
@@ -689,11 +689,11 @@
         
         @media (max-width: 768px) {
             .perspective-carousel-container {
-                height: 400px;
+                height: 450px; /* INCREASED from 400px */
             }
             .perspective-slide {
-                width: 50vw; /* Make slides wider on mobile */
-                min-width: 250px;
+                width: 60vw; /* Make slides wider on mobile - INCREASED from 50vw */
+                min-width: 280px; /* INCREASED from 250px */
             }
              .carousel-nav-btn {
                 width: 40px;
@@ -1063,7 +1063,7 @@
                                      <p class="text-5xl font-bold text-cyan-400">88.5</p>
                                      <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">SUS Score (A+)</p>
                                  </div>
-                                  <div class="anim-reveal stat-card-project" style="--delay: 0.3s;">
+                                 <div class="anim-reveal stat-card-project" style="--delay: 0.3s;">
                                      <p class="text-5xl font-bold text-cyan-400">78</p>
                                      <p class="text-sm text-gray-300 mt-2 uppercase tracking-widest">Net Promoter Score</p>
                                  </div>
@@ -1555,9 +1555,9 @@
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
-                          if (!isGoingBack) {
+                           if (!isGoingBack) {
                                 lastScrollPos = window.scrollY || document.documentElement.scrollTop;
-                          }
+                           }
 
 
             const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
@@ -1772,7 +1772,7 @@
         function setupStorySectionAnimation() {
             const storySection = document.getElementById('story');
             if (!storySection) return;
-        
+            
             if (isTouchDevice) {
                 // --- MOBILE/TOUCH DEVICE LOGIC ---
                 const storyPinContainer = document.getElementById('story-pin-container');
@@ -2023,19 +2023,19 @@
                 initializePerspectiveCarousel(pageElement); // MODIFIED: Call new carousel function
             }
              if(pageElement.id === 'project-page-ourshoppee') {
-                   // Check if the scrolly grid exists before initializing
-                 if (pageElement.querySelector('#ourshoppee-scrolly-grid')) {
-                     initializeOurShopeeScrollytelling(pageElement, triggers);
-                 } else {
-                     // If no scrolly grid, ensure all content reveals normally
-                     pageElement.querySelectorAll('.case-study-content > *').forEach(el => {
-                         triggers.push(gsap.from(el, {
-                             opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
-                             scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
-                         }));
-                     });
-                 }
-             }
+                 // Check if the scrolly grid exists before initializing
+               if (pageElement.querySelector('#ourshoppee-scrolly-grid')) {
+                    initializeOurShopeeScrollytelling(pageElement, triggers);
+               } else {
+                   // If no scrolly grid, ensure all content reveals normally
+                   pageElement.querySelectorAll('.case-study-content > *').forEach(el => {
+                       triggers.push(gsap.from(el, {
+                           opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
+                           scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                       }));
+                   });
+               }
+           }
 
 
             projectPageScrollTriggers = triggers; // Store triggers for cleanup
@@ -2200,10 +2200,10 @@
             let angle = 360 / totalSlides;
             let currentSlide = 0;
             // Calculate a responsive radius, but clamp it.
-            let radius = Math.max(300, Math.min(350, window.innerWidth / 3)); 
+            let radius = Math.max(350, Math.min(400, window.innerWidth / 3)); /* ADJUSTED */
             
             if(window.innerWidth < 768) {
-                 radius = Math.max(200, Math.min(250, window.innerWidth / 2.2));
+                 radius = Math.max(220, Math.min(280, window.innerWidth / 2.2)); /* ADJUSTED */
             }
 
 
@@ -2228,9 +2228,7 @@
                 // Update active state for opacity/scaling
                 slides.forEach((slide, i) => {
                     slide.classList.toggle('is-active', i === currentSlide);
-                     // Re-apply individual transform to counteract parent rotation and keep it facing "out"
-                     // This is a bit complex, let's try a simpler opacity/scale method first.
-                     // The .is-active CSS handles the scaling.
+                    // The .is-active CSS handles the scaling.
                 });
             }
 
@@ -2255,9 +2253,9 @@
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
                     if (pageElement.classList.contains('is-active')) {
-                        radius = Math.max(300, Math.min(350, window.innerWidth / 3));
+                        radius = Math.max(350, Math.min(400, window.innerWidth / 3)); /* ADJUSTED */
                          if(window.innerWidth < 768) {
-                             radius = Math.max(200, Math.min(250, window.innerWidth / 2.2));
+                             radius = Math.max(220, Math.min(280, window.innerWidth / 2.2)); /* ADJUSTED */
                         }
                         slides.forEach((slide, i) => {
                             gsap.set(slide, {
@@ -2558,7 +2556,7 @@
                 marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
                 document.title = marqueeTitle; // Update the document title
             }
-        }, 300); // Adjust scroll speed (lower value = faster)                                        
+        }, 300); // Adjust scroll speed (lower value = faster)                           
     });
     </script>
 </body>
