@@ -588,62 +588,129 @@
             @apply mt-6 border-l-2 border-cyan-400 pl-4 text-gray-300 italic;
         }
 
-        /* NEW: Travion Carousel Styles */
-       .travion-carousel-container {
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 2rem;
-            margin-left: auto; /* ADDED */
-            margin-right: auto; /* ADDED */
+        /* ================================================================= */
+        /* NEW: Travion 3D Perspective Carousel Styles */
+        /* ================================================================= */
+        .perspective-carousel-container {
             position: relative;
-            overflow: hidden;
-        }
-          .travion-carousel-slider {
-            display: flex;
-            width: 100%; /* 3 slides */
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .travion-carousel-slide {
-            width: 100%; /* Each slide takes 1/3 of the slider's width */
-            flex-shrink: 0;
-            /* aspect-ratio: 21 / 9; */ /* <<< REMOVED THIS */
-            /* height: 100vh;             /* <<< ADDED THIS. You can change 60vh to 50vh or 70vh */
-            background-color: #000; 
-            display: block; /* ADDED - Good practice for images */
-        }
-        .travion-carousel-slide img {
             width: 100%;
-            height: auto;
-            /*object-fit: contain; /* CHANGE THIS: from 'cover' to 'contain' */
-        }
-        .carousel-dots {
-            position: absolute;
-            bottom: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
+            max-width: 1000px; /* Increased max-width */
+            margin: 2rem auto;
+            height: 500px; /* Give it a fixed height */
             display: flex;
-            gap: 0.75rem;
-        }
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.4);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            cursor: pointer;
-        }
-        .carousel-dot:hover {
-            background-color: rgba(255, 255, 255, 0.8);
-            transform: scale(1.1);
-        }
-        .carousel-dot.active {
-            background-color: white;
-            transform: scale(1.2);
+            justify-content: center;
+            align-items: center;
         }
 
+        .perspective-viewport {
+            width: 100%;
+            height: 100%;
+            perspective: 1500px; /* Increased perspective for a deeper 3D effect */
+            position: relative;
+        }
+
+        .perspective-slider {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.8s var(--animation-easing);
+            /* The 'transform' (rotateY) will be set by JavaScript */
+        }
+
+        .perspective-slide {
+            position: absolute;
+            left: calc(50% - 28vw / 2); /* Center the slide */
+            top: calc(50% - 350px / 2); /* Center the slide */
+            width: 28vw; /* Use viewport-width for responsiveness */
+            max-width: 450px;
+            min-width: 300px;
+            height: auto;
+            aspect-ratio: 16 / 10;
+            border-radius: 1rem;
+            overflow: hidden;
+            backface-visibility: hidden;
+            transition: transform 0.8s var(--animation-easing), opacity 0.8s var(--animation-easing);
+            cursor: pointer;
+            opacity: 0.6;
+            transform-origin: center center;
+            /* The 'transform' (rotateY + translateZ) will be set by JavaScript */
+        }
+        
+        .perspective-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .perspective-slide.is-active {
+            opacity: 1;
+            transform: scale(1.1) !important; /* Make active slide slightly larger */
+            z-index: 10;
+        }
+        
+        .perspective-slide:not(.is-active):hover {
+            opacity: 0.8;
+            transform: scale(1.05) !important; /* Slight grow on hover for side slides */
+        }
+
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-nav-btn#travion-prev-btn {
+            left: 0px;
+        }
+        
+        .carousel-nav-btn#travion-next-btn {
+            right: 0px;
+        }
+        
+        @media (max-width: 768px) {
+            .perspective-carousel-container {
+                height: 400px;
+            }
+            .perspective-slide {
+                width: 50vw; /* Make slides wider on mobile */
+                min-width: 250px;
+            }
+             .carousel-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .carousel-nav-btn#travion-prev-btn {
+                left: -10px;
+            }
+            .carousel-nav-btn#travion-next-btn {
+                right: -10px;
+            }
+        }
+        
+        /* END: Travion 3D Perspective Carousel Styles */
 
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g, .travion-carousel-slider {
+            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g, .perspective-slider, .perspective-slide {
                 transition: none !important;  
                 animation: none !important;
             }
@@ -927,31 +994,44 @@
                         </div>
                     </section>
                     
+                    <!-- ================================================================= -->
                     <!-- MODIFIED Solution Section -->
+                    <!-- ================================================================= -->
                     <section class="project-section container mx-auto px-6">
                         <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: A Unified Platform</h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive web app that unifies all tasks—from managing bookings to tracking financials—into one role-based dashboard.</p>
                         
-                        <!-- NEW Auto-sliding Carousel -->
+                        <!-- NEW 3D Perspective Carousel -->
                         <div class="anim-reveal max-w-6xl mx-auto">
-                            <div id="travion-carousel" class="travion-carousel-container">
-                                <div class="travion-carousel-slider">
-                                    <div class="travion-carousel-slide">
-                                        <img src="assets/mockup19.webp" alt="Travion Dashboard UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Dashboard.png';">
-                                    </div>
-                                    <div class="travion-carousel-slide">
-                                        <img src="assets/mockup16.webp" alt="Travion Bookings Pipeline UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Pipeline.png';">
-                                    </div>
-                                    <div class="travion-carousel-slide">
-                                        <img src="assets/mockup20.webp" alt="Travion Create Booking Modal UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Modal.png';">
+                            <div id="travion-perspective-carousel" class="perspective-carousel-container">
+                                <div class="perspective-viewport">
+                                    <div class="perspective-slider">
+                                        <div class="perspective-slide">
+                                            <img src="assets/mockup19.webp" alt="Travion Dashboard UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Dashboard.png';">
+                                        </div>
+                                        <div class="perspective-slide">
+                                            <img src="assets/mockup16.webp" alt="Travion Bookings Pipeline UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Pipeline.png';">
+                                        </div>
+                                        <div class="perspective-slide">
+                                            <img src="assets/mockup20.webp" alt="Travion Create Booking Modal UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Modal.png';">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="carousel-dots">
-                                    <!-- Dots will be injected by JS -->
-                                </div>
+                                <button id="travion-prev-btn" class="carousel-nav-btn" aria-label="Previous slide">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button id="travion-next-btn" class="carousel-nav-btn" aria-label="Next slide">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
                             </div>
                         </div>
+                        <!-- END 3D Perspective Carousel -->
+
                     </section>
+                    <!-- ================================================================= -->
+                    <!-- END: MODIFIED Solution Section -->
+                    <!-- ================================================================= -->
+
 
                     <!-- NEW Feature Spotlight Section -->
                     <section class="project-section bg-black/10">
@@ -1006,7 +1086,7 @@
                                  <p class="text-gray-300">In a market built on trust, our most successful feature wasn't a tool, but the Trust Hub—a feature designed to digitally replicate and strengthen real-world relationships. This was the key to unlocking user adoption and delight.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -1049,10 +1129,10 @@
                             </h1>
                              <p class="text-xl md:text-2xl text-gray-200 mt-6 max-w-3xl mx-auto anim-hero-reveal" style="--delay: 0.5s;">Untangling complexity: Redesigning an internal CRM for peak efficiency.</p>
                             <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-left max-w-4xl mx-auto anim-hero-reveal" style="--delay: 0.7s;">
-                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">Lead Product Designer</p></div>
-                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">1 Year</p></div>
-                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">Internal CRM (Web & Mobile)</p></div>
-                                 <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Shopify, User Surveys</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">My Role</h3><p class="text-gray-200 text-sm">Lead Product Designer</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Timeline</h3><p class="text-gray-200 text-sm">1 Year</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Product</h3><p class="text-gray-200 text-sm">Internal CRM (Web & Mobile)</p></div>
+                                <div class="project-hero-detail-card"><h3 class="font-bold text-cyan-400">Tools</h3><p class="text-gray-200 text-sm">Figma, Shopify, User Surveys</p></div>
                             </div>
                         </div>
                         <div class="absolute bottom-10 z-30 w-full anim-hero-reveal scroll-indicator-container" style="--delay: 1s; will-change: transform, opacity;">
@@ -1130,7 +1210,7 @@
                                         <img src="https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Card+Sorting+&+Personas" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=User+Personas';" alt="User personas and card sorting results" loading="lazy" decoding="async">
                                     </div>
                                     <div class="phase-image-item">
-                                        <img src="https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Prototyping+&+Usability+Testing" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Prototype+Testing';" alt="Figma prototypes being tested" loading="lazy" decoding="async">
+                                        <img src="assets/ourshopee/ourshmockup02.webp" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/1e1f1f/aaaaaa?text=Prototype+Testing';" alt="Figma prototypes being tested" loading="lazy" decoding="async">
                                     </div>
                                 </div>
                             </div>
@@ -1142,7 +1222,7 @@
                         <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: A Role-Based CRM</h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, responsive, and role-based platform. Each user (Marketing, Sales, or HR) now gets a personalized dashboard with only the tools they need, dramatically simplifying workflows. The new mobile-first app empowers the sales team to manage customer relations on the go.</p>
                         <div class="rounded-lg overflow-hidden anim-reveal max-w-6xl mx-auto">
-                            <img src="https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Final+OurShopee+CRM+Dashboard+UI" onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Final+UI';" class="w-full h-full object-cover" alt="Final UI of the OurShopee CRM dashboard" loading="lazy" decoding="async">
+                            <img src="assets/ourshopee/ourshmockup01.webp" onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/1e1f1f/aaaaaa?text=Final+UI';" class="w-full h-full object-cover" alt="Final UI of the OurShopee CRM dashboard" loading="lazy" decoding="async">
                         </div>
                     </section>
                     
@@ -1189,7 +1269,7 @@
                                  <p class="text-gray-300">Before designing any UI, the card sorting and research helped untangle years of complex, overlapping workflows. A clear process is the prerequisite for a clear interface.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                  </main>
              </div>
         </div>
@@ -1288,7 +1368,7 @@
                                  <p class="text-gray-300">The biggest wins came from removing steps, clarifying language, and simplifying the user journey. A frictionless path to conversion is the most effective path.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -1379,7 +1459,7 @@
                                  <p class="text-gray-300">Meeting donors where they are—on their phones—was critical. A dedicated, optimized mobile experience is no longer a luxury for non-profits; it's essential for modern fundraising.</p>
                              </div>
                          </div>
-                     </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -1588,7 +1668,7 @@
                 gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
             });
 
-            document.querySelectorAll('a, button, .project-item').forEach(el => {
+            document.querySelectorAll('a, button, .project-item, .perspective-slide').forEach(el => {
                 el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
                 el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
             });
@@ -1940,12 +2020,12 @@
             // Initialize Scrollytelling specific to the project page
             if(pageElement.id === 'project-page-travion') {
                 initializeTravionScrollytelling(pageElement, triggers);
-                initializeTravionCarousel(pageElement, triggers); // NEW: Initialize Carousel
+                initializePerspectiveCarousel(pageElement); // MODIFIED: Call new carousel function
             }
              if(pageElement.id === 'project-page-ourshoppee') {
-                 // Check if the scrolly grid exists before initializing
+                   // Check if the scrolly grid exists before initializing
                  if (pageElement.querySelector('#ourshoppee-scrolly-grid')) {
-                      initializeOurShopeeScrollytelling(pageElement, triggers);
+                     initializeOurShopeeScrollytelling(pageElement, triggers);
                  } else {
                      // If no scrolly grid, ensure all content reveals normally
                      pageElement.querySelectorAll('.case-study-content > *').forEach(el => {
@@ -2104,77 +2184,90 @@
             });
         }
 
-         // --- NEW: Travion Carousel Logic ---
-        function initializeTravionCarousel(pageElement, triggers) {
-            const carousel = pageElement.querySelector('#travion-carousel');
+        // --- NEW: Travion 3D Perspective Carousel Logic ---
+        function initializePerspectiveCarousel(pageElement) {
+            const carousel = pageElement.querySelector('#travion-perspective-carousel');
             if (!carousel || prefersReducedMotion.matches) return;
 
-            const slider = carousel.querySelector('.travion-carousel-slider');
-            const slides = gsap.utils.toArray(carousel.querySelectorAll('.travion-carousel-slide'));
-            const dotsContainer = carousel.querySelector('.carousel-dots');
-            if (slides.length <= 1) return;
-
-            let currentSlide = 0;
-            let dots = [];
-            let autoPlayInterval;
-
-            // Create dots
-            slides.forEach((slide, index) => {
-                const dot = document.createElement('button');
-                dot.className = 'carousel-dot';
-                dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    goToSlide(index, true); // User initiated
-                });
-                dotsContainer.appendChild(dot);
-                dots.push(dot);
-            });
+            const slider = carousel.querySelector('.perspective-slider');
+            const slides = gsap.utils.toArray(carousel.querySelectorAll('.perspective-slide'));
+            const prevBtn = carousel.querySelector('#travion-prev-btn');
+            const nextBtn = carousel.querySelector('#travion-next-btn');
             
-            // Function to change slide
-            function goToSlide(index, userInitiated = false) {
-                if (index === currentSlide) return;
-                currentSlide = (index + slides.length) % slides.length; // Loop
+            if (!slider || slides.length === 0 || !prevBtn || !nextBtn) return;
+
+            let totalSlides = slides.length;
+            let angle = 360 / totalSlides;
+            let currentSlide = 0;
+            // Calculate a responsive radius, but clamp it.
+            let radius = Math.max(300, Math.min(350, window.innerWidth / 3)); 
+            
+            if(window.innerWidth < 768) {
+                 radius = Math.max(200, Math.min(250, window.innerWidth / 2.2));
+            }
+
+
+            // Set initial positions of slides in 3D space
+            slides.forEach((slide, i) => {
+                gsap.set(slide, {
+                    transform: `rotateY(${i * angle}deg) translateZ(${radius}px)`
+                });
+            });
+
+            // Function to update the carousel to a new slide
+            function updateCarousel(index) {
+                currentSlide = (index + totalSlides) % totalSlides;
+                const rotateAngle = -currentSlide * angle;
                 
                 gsap.to(slider, {
-                    xPercent: -100 * currentSlide,
+                    transform: `rotateY(${rotateAngle}deg)`,
                     duration: 0.8,
                     ease: 'power3.inOut'
                 });
 
-                // Update dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
+                // Update active state for opacity/scaling
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('is-active', i === currentSlide);
+                     // Re-apply individual transform to counteract parent rotation and keep it facing "out"
+                     // This is a bit complex, let's try a simpler opacity/scale method first.
+                     // The .is-active CSS handles the scaling.
                 });
-
-                // Reset autoplay if user clicked
-                if (userInitiated) {
-                    resetAutoPlay();
-                }
             }
 
-            // Autoplay logic
-            function startAutoPlay() {
-                autoPlayInterval = setInterval(() => {
-                    goToSlide(currentSlide + 1);
-                }, 5000); // Change slide every 5 seconds
-            }
+            // Add event listeners
+            prevBtn.addEventListener('click', () => updateCarousel(currentSlide - 1));
+            nextBtn.addEventListener('click', () => updateCarousel(currentSlide + 1));
 
-            function resetAutoPlay() {
-                clearInterval(autoPlayInterval);
-                startAutoPlay();
-            }
+            slides.forEach((slide, i) => {
+                slide.addEventListener('click', () => {
+                    if (i !== currentSlide) {
+                        updateCarousel(i);
+                    }
+                });
+            });
 
-            // Start autoplay when carousel is in view
-            triggers.push(ScrollTrigger.create({
-                trigger: carousel,
-                start: 'top bottom',
-                end: 'bottom top',
-                onEnter: startAutoPlay,
-                onLeave: () => clearInterval(autoPlayInterval),
-                onEnterBack: startAutoPlay,
-                onLeaveBack: () => clearInterval(autoPlayInterval)
-            }));
+            // Set initial state
+            updateCarousel(0);
+            
+            // Re-calculate radius on resize (debounce this)
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (pageElement.classList.contains('is-active')) {
+                        radius = Math.max(300, Math.min(350, window.innerWidth / 3));
+                         if(window.innerWidth < 768) {
+                             radius = Math.max(200, Math.min(250, window.innerWidth / 2.2));
+                        }
+                        slides.forEach((slide, i) => {
+                            gsap.set(slide, {
+                                transform: `rotateY(${i * angle}deg) translateZ(${radius}px)`
+                            });
+                        });
+                        updateCarousel(currentSlide); // Re-apply current rotation
+                    }
+                }, 250);
+            });
         }
 
 
@@ -2465,16 +2558,8 @@
                 marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
                 document.title = marqueeTitle; // Update the document title
             }
-        }, 300); // Adjust scroll speed (lower value = faster)                                                    
+        }, 300); // Adjust scroll speed (lower value = faster)                                        
     });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
