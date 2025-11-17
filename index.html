@@ -589,70 +589,83 @@
         }
 
         /* ================================================================= */
-        /* MODIFIED: Travion 3D Perspective Carousel Styles */
+        /* NEW: Modern Swipe Carousel Styles */
         /* ================================================================= */
-        .perspective-carousel-container {
+        .modern-carousel-container {
             position: relative;
             width: 100%;
-            max-width: 1000px; /* Increased max-width */
+            max-width: 100vw; /* Go full-width */
             margin: 2rem auto;
-            height: 600px; /* Give it a fixed height - INCREASED from 500px */
+        }
+
+        .modern-carousel-viewport {
+            overflow-x: auto;
+            /* Use scroll-snap for a nice swipe feel */
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scrollbar-width: none; /* Firefox */
+        }
+        .modern-carousel-viewport::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        .modern-carousel-track {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-wrap: nowrap;
+            padding-left: calc(50% - 45vw); /* Center the first slide */
+            padding-right: calc(50% - 45vw); /* Center the last slide */
+            gap: 1rem;
         }
 
-        .perspective-viewport {
-            width: 100%;
-            height: 100%;
-            perspective: 1200px; /* DECREASED from 1500px for a stronger 3D effect */
-            position: relative;
+        @media (min-width: 768px) {
+            .modern-carousel-track {
+                padding-left: calc(50% - 40vw); /* Center the first slide */
+                padding-right: calc(50% - 40vw); /* Center the last slide */
+                gap: 2rem;
+            }
         }
 
-        .perspective-slider {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            transition: transform 0.8s var(--animation-easing);
-            /* The 'transform' (rotateY) will be set by JavaScript */
-        }
-
-        .perspective-slide {
-            position: absolute;
-            left: calc(50% - 28vw / 2); /* Center the slide */
-            top: calc(50% - 350px / 2); /* Center the slide */
-            width: 30vw; /* Use viewport-width for responsiveness - INCREASED from 28vw */
-            max-width: 500px; /* INCREASED from 450px */
-            min-width: 320px; /* INCREASED from 300px */
-            height: auto;
-            aspect-ratio: 16 / 10;
+        .modern-carousel-slide {
+            flex: 0 0 90vw; /* 90% of viewport width */
+            max-width: 90vw;
+            scroll-snap-align: center;
             border-radius: 1rem;
             overflow: hidden;
-            backface-visibility: hidden;
-            transition: transform 0.8s var(--animation-easing), opacity 0.8s var(--animation-easing);
-            cursor: pointer;
-            opacity: 0.7; /* INCREASED from 0.6 */
-            transform-origin: center center;
-            /* The 'transform' (rotateY + translateZ) will be set by JavaScript */
+            background: #333;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.5s var(--animation-easing);
+            opacity: 0.7;
+        }
+
+        @media (min-width: 768px) {
+            .modern-carousel-slide {
+                flex: 0 0 80vw; /* 80% of viewport width on desktop */
+                max-width: 1000px; /* But don't get too big */
+            }
         }
         
-        .perspective-slide img {
+        .modern-carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-
-        .perspective-slide.is-active {
-            opacity: 1;
-            transform: scale(1.15) !important; /* Make active slide slightly larger - INCREASED from 1.1 */
-            z-index: 10;
-        }
         
-        .perspective-slide:not(.is-active):hover {
-            opacity: 0.8;
-            transform: scale(1.1) !important; /* Slight grow on hover for side slides - INCREASED from 1.05 */
+        /* This pseudo-element is used for JS to detect the "active" slide */
+        .modern-carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1px;
+            height: 1px;
+        }
+
+        .modern-carousel-slide.is-active {
+            transform: scale(1);
+            opacity: 1;
         }
 
         .carousel-nav-btn {
@@ -679,38 +692,59 @@
             transform: translateY(-50%) scale(1.1);
         }
         
+        .carousel-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+        
         .carousel-nav-btn#travion-prev-btn {
-            left: 0px;
+            left: 1rem;
         }
         
         .carousel-nav-btn#travion-next-btn {
-            right: 0px;
+            right: 1rem;
+        }
+
+        @media (min-width: 768px) {
+             .carousel-nav-btn#travion-prev-btn {
+                left: calc(50% - 40vw - 70px); /* Position outside the slide */
+                max-width: 1000px;
+            }
+            .carousel-nav-btn#travion-next-btn {
+                right: calc(50% - 40vw - 70px); /* Position outside the slide */
+                max-width: 1000px;
+            }
+            
+            /* Fallback for very large screens where max-width kicks in */
+            @media (min-width: 1250px) { /* 1000px / 0.8vw */
+                 .carousel-nav-btn#travion-prev-btn {
+                    left: calc(50% - 500px - 70px); /* 1000px / 2 */
+                }
+                .carousel-nav-btn#travion-next-btn {
+                    right: calc(50% - 500px - 70px);
+                }
+            }
         }
         
-        @media (max-width: 768px) {
-            .perspective-carousel-container {
-                height: 450px; /* INCREASED from 400px */
-            }
-            .perspective-slide {
-                width: 60vw; /* Make slides wider on mobile - INCREASED from 50vw */
-                min-width: 280px; /* INCREASED from 250px */
-            }
-             .carousel-nav-btn {
+        @media (max-width: 767px) {
+            .carousel-nav-btn {
                 width: 40px;
                 height: 40px;
             }
-            .carousel-nav-btn#travion-prev-btn {
-                left: -10px;
+            /* Adjust button positions slightly for mobile */
+             .carousel-nav-btn#travion-prev-btn {
+                left: 10px;
             }
             .carousel-nav-btn#travion-next-btn {
-                right: -10px;
+                right: 10px;
             }
         }
         
-        /* END: Travion 3D Perspective Carousel Styles */
-
+        /* END: Modern Swipe Carousel Styles */
+        
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g, .perspective-slider, .perspective-slide {
+            .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g, .perspective-slider, .perspective-slide, .modern-carousel-slide {
                 transition: none !important;  
                 animation: none !important;
             }
@@ -907,7 +941,7 @@
                     </div>
                     <div class="flex-1 flex justify-end">
                          <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                            <span>Contact Me</span>
+                             <span>Contact Me</span>
                         </a>
                     </div>
                 </div>
@@ -995,24 +1029,27 @@
                     </section>
                     
                     <!-- ================================================================= -->
-                    <!-- MODIFIED Solution Section -->
+                    <!-- MODIFIED Solution Section (with Swipe Carousel) -->
                     <!-- ================================================================= -->
                     <section class="project-section container mx-auto px-6">
                         <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: A Unified Platform</h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive web app that unifies all tasks—from managing bookings to tracking financials—into one role-based dashboard.</p>
                         
-                        <!-- NEW 3D Perspective Carousel -->
-                        <div class="anim-reveal max-w-6xl mx-auto">
-                            <div id="travion-perspective-carousel" class="perspective-carousel-container">
-                                <div class="perspective-viewport">
-                                    <div class="perspective-slider">
-                                        <div class="perspective-slide">
+                        <!-- NEW Modern Swipe Carousel -->
+                        <div class="anim-reveal w-full max-w-6xl mx-auto">
+                            <div id="travion-modern-carousel" class="modern-carousel-container">
+                                <div class="modern-carousel-viewport">
+                                    <div class="modern-carousel-track">
+                                        <!-- Slide 1 -->
+                                        <div class="modern-carousel-slide">
                                             <img src="assets/mockup19.webp" alt="Travion Dashboard UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Dashboard.png';">
                                         </div>
-                                        <div class="perspective-slide">
+                                        <!-- Slide 2 -->
+                                        <div class="modern-carousel-slide">
                                             <img src="assets/mockup16.webp" alt="Travion Bookings Pipeline UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Pipeline.png';">
                                         </div>
-                                        <div class="perspective-slide">
+                                        <!-- Slide 3 -->
+                                        <div class="modern-carousel-slide">
                                             <img src="assets/mockup20.webp" alt="Travion Create Booking Modal UI" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Modal.png';">
                                         </div>
                                     </div>
@@ -1025,7 +1062,7 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- END 3D Perspective Carousel -->
+                        <!-- END Modern Swipe Carousel -->
 
                     </section>
                     <!-- ================================================================= -->
@@ -1555,9 +1592,9 @@
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
-                           if (!isGoingBack) {
-                                lastScrollPos = window.scrollY || document.documentElement.scrollTop;
-                           }
+                                if (!isGoingBack) {
+                                     lastScrollPos = window.scrollY || document.documentElement.scrollTop;
+                                }
 
 
             const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
@@ -1668,7 +1705,7 @@
                 gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power2.out' });
             });
 
-            document.querySelectorAll('a, button, .project-item, .perspective-slide').forEach(el => {
+            document.querySelectorAll('a, button, .project-item, .perspective-slide, .modern-carousel-slide').forEach(el => {
                 el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.5, backgroundColor: 'white', duration: 0.3 }));
                 el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.3 }));
             });
@@ -2020,7 +2057,7 @@
             // Initialize Scrollytelling specific to the project page
             if(pageElement.id === 'project-page-travion') {
                 initializeTravionScrollytelling(pageElement, triggers);
-                initializePerspectiveCarousel(pageElement); // MODIFIED: Call new carousel function
+                initializeModernCarousel(pageElement); // MODIFIED: Call new carousel function
             }
              if(pageElement.id === 'project-page-ourshoppee') {
                  // Check if the scrolly grid exists before initializing
@@ -2184,88 +2221,91 @@
             });
         }
 
-        // --- NEW: Travion 3D Perspective Carousel Logic ---
-        function initializePerspectiveCarousel(pageElement) {
-            const carousel = pageElement.querySelector('#travion-perspective-carousel');
+        // --- NEW: Modern Swipe Carousel Logic ---
+        function initializeModernCarousel(pageElement) {
+            const carousel = pageElement.querySelector('#travion-modern-carousel');
             if (!carousel || prefersReducedMotion.matches) return;
 
-            const slider = carousel.querySelector('.perspective-slider');
-            const slides = gsap.utils.toArray(carousel.querySelectorAll('.perspective-slide'));
+            const viewport = carousel.querySelector('.modern-carousel-viewport');
+            const track = carousel.querySelector('.modern-carousel-track');
+            const slides = gsap.utils.toArray(carousel.querySelectorAll('.modern-carousel-slide'));
             const prevBtn = carousel.querySelector('#travion-prev-btn');
             const nextBtn = carousel.querySelector('#travion-next-btn');
             
-            if (!slider || slides.length === 0 || !prevBtn || !nextBtn) return;
-
-            let totalSlides = slides.length;
-            let angle = 360 / totalSlides;
-            let currentSlide = 0;
-            // Calculate a responsive radius, but clamp it.
-            let radius = Math.max(350, Math.min(400, window.innerWidth / 3)); /* ADJUSTED */
-            
-            if(window.innerWidth < 768) {
-                 radius = Math.max(220, Math.min(280, window.innerWidth / 2.2)); /* ADJUSTED */
+            if (!viewport || !track || slides.length === 0 || !prevBtn || !nextBtn) {
+                console.log('Carousel components not found');
+                return;
             }
 
+            let currentIndex = 0;
+            
+            // Function to scroll to a specific index
+            function goToSlide(index) {
+                if (index < 0 || index >= slides.length) return;
+                
+                const slide = slides[index];
+                // Calculate scroll amount to center the slide
+                const scrollAmount = slide.offsetLeft - track.offsetLeft - (viewport.offsetWidth - slide.offsetWidth) / 2;
 
-            // Set initial positions of slides in 3D space
-            slides.forEach((slide, i) => {
-                gsap.set(slide, {
-                    transform: `rotateY(${i * angle}deg) translateZ(${radius}px)`
+                viewport.scrollTo({
+                    left: scrollAmount,
+                    behavior: 'smooth'
                 });
+                
+                currentIndex = index;
+                updateNavButtons();
+            }
+
+            // Function to update nav button states
+            function updateNavButtons() {
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === slides.length - 1;
+                slides.forEach((s, i) => s.classList.toggle('is-active', i === currentIndex));
+            }
+            
+            // Event Listeners for buttons
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentIndex - 1);
             });
 
-            // Function to update the carousel to a new slide
-            function updateCarousel(index) {
-                currentSlide = (index + totalSlides) % totalSlides;
-                const rotateAngle = -currentSlide * angle;
-                
-                gsap.to(slider, {
-                    transform: `rotateY(${rotateAngle}deg)`,
-                    duration: 0.8,
-                    ease: 'power3.inOut'
-                });
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentIndex + 1);
+            });
 
-                // Update active state for opacity/scaling
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('is-active', i === currentSlide);
-                    // The .is-active CSS handles the scaling.
-                });
-            }
-
-            // Add event listeners
-            prevBtn.addEventListener('click', () => updateCarousel(currentSlide - 1));
-            nextBtn.addEventListener('click', () => updateCarousel(currentSlide + 1));
-
-            slides.forEach((slide, i) => {
-                slide.addEventListener('click', () => {
-                    if (i !== currentSlide) {
-                        updateCarousel(i);
+            // Update active slide based on scroll-snap (using IntersectionObserver)
+            // This syncs the buttons if the user swipes manually
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const intersectingSlide = entry.target;
+                        const newIndex = slides.indexOf(intersectingSlide);
+                        if (newIndex !== currentIndex) {
+                             currentIndex = newIndex;
+                             updateNavButtons();
+                        }
                     }
                 });
+            }, { 
+                root: viewport, // Observe intersections within the viewport
+                threshold: 0.75 // Trigger when 75% of the slide is visible
             });
 
-            // Set initial state
-            updateCarousel(0);
-            
-            // Re-calculate radius on resize (debounce this)
+            slides.forEach(slide => observer.observe(slide));
+
+            // Recalculate widths on resize
             let resizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
                     if (pageElement.classList.contains('is-active')) {
-                        radius = Math.max(350, Math.min(400, window.innerWidth / 3)); /* ADJUSTED */
-                         if(window.innerWidth < 768) {
-                             radius = Math.max(220, Math.min(280, window.innerWidth / 2.2)); /* ADJUSTED */
-                        }
-                        slides.forEach((slide, i) => {
-                            gsap.set(slide, {
-                                transform: `rotateY(${i * angle}deg) translateZ(${radius}px)`
-                            });
-                        });
-                        updateCarousel(currentSlide); // Re-apply current rotation
+                         // Re-center the current slide
+                         goToSlide(currentIndex);
                     }
                 }, 250);
             });
+
+            // Initial setup
+            goToSlide(0); // Start at the first slide
         }
 
 
@@ -2556,7 +2596,7 @@
                 marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
                 document.title = marqueeTitle; // Update the document title
             }
-        }, 300); // Adjust scroll speed (lower value = faster)                           
+        }, 300); // Adjust scroll speed (lower value = faster)                                  
     });
     </script>
 </body>
