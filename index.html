@@ -23,7 +23,7 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-    <!-- OPEN GRAPH / SOCIAL MEDIA (LinkedIn/Facebook/WhatsApp) -->
+    <!-- OPEN GRAPH / SOCIAL MEDIA -->
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="Mohamed Rinoj Hashim | Product Designer | Fintech & SaaS Specialist" />
     <meta property="og:description" content="Helping businesses in Dubai and KSA transform complex problems into intuitive designs. 5+ years exp in Fintech, E-Commerce, and Travel-Tech." />
@@ -65,10 +65,10 @@
         }
 
         html, body {
-            overflow-x: hidden; /* Essential to prevent horizontal scroll jitter */
             min-height: var(--app-height);
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE and Edge */
+            overscroll-behavior-y: none; /* Prevents bounce on Mac */
         }
         html::-webkit-scrollbar, body::-webkit-scrollbar {  
             display: none; /* Safari and Chrome */
@@ -396,15 +396,10 @@
             box-shadow: 0 20px 25px -5px rgba(34, 211, 238, 0.1), 0 10px 10px -5px rgba(34, 211, 238, 0.04);
         }
         
-        /* UPDATED STYLES for ALL project pages */
         .project-section {
             padding: 12vh 1.5rem; /* Standard padding */
         }
-         /* Specific adjustments for detailed case study sections */
-        .project-section.case-study-section {
-             padding: 8vh 1.5rem; /* Slightly less vertical padding for dense content */
-        }
-
+        
         .stat-card-project {
             background: rgba(34, 211, 238, 0.1);
             border: 1px solid rgba(34, 211, 238, 0.2);
@@ -454,7 +449,7 @@
             100% { transform: translate(-50%, 0); opacity: 1; }
         }
         
-        /* Scrollytelling adjustments */
+        /* Scrollytelling adjustments (if needed, otherwise keep as is) */
         .phase-image-container {
             position: relative;  
             height: 40vh;  
@@ -488,49 +483,68 @@
         }
         @media (min-width: 768px) {
             .phase-text-item {
-                min-height: 100vh; 
+             /* Adjust min-height based on content length if needed */
+                min-height: 100vh; /* Was 150vh, might be too much for less text */
                 padding: 0;  
             }
         }
 
+        /* Styles for the detailed case study text */
+        .case-study-content h3 {
+            @apply text-2xl font-bold text-cyan-400 mt-8 mb-4;
+        }
+         .case-study-content h4 {
+            @apply text-xl font-semibold text-white mt-6 mb-2;
+         }
+        .case-study-content p {
+            @apply text-lg text-gray-300 mb-4 leading-relaxed;
+        }
+        .case-study-content ul {
+            @apply list-disc list-inside text-lg text-gray-300 mb-4 pl-4 space-y-2;
+        }
+        .case-study-content blockquote {
+            @apply mt-6 border-l-2 border-cyan-400 pl-4 text-gray-300 italic;
+        }
+
         /* ================================================================= */
-        /* Modern Swipe Carousel Styles */
+        /* NEW: Modern Swipe Carousel Styles */
         /* ================================================================= */
         .modern-carousel-container {
             position: relative;
             width: 100%;
-            max-width: 100vw; 
+            max-width: 100vw; /* Go full-width */
             margin: 2rem auto;
         }
 
         .modern-carousel-viewport {
             overflow-x: auto;
+            /* Use scroll-snap for a nice swipe feel */
             scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scrollbar-width: none; /* Firefox */
         }
         .modern-carousel-viewport::-webkit-scrollbar {
-            display: none; 
+            display: none; /* Chrome, Safari */
         }
 
         .modern-carousel-track {
             display: flex;
             flex-wrap: nowrap;
-            padding-left: calc(50% - 45vw); 
-            padding-right: calc(50% - 45vw); 
+            padding-left: calc(50% - 45vw); /* Center the first slide */
+            padding-right: calc(50% - 45vw); /* Center the last slide */
             gap: 1rem;
         }
 
         @media (min-width: 768px) {
             .modern-carousel-track {
-                padding-left: calc(50% - 40vw);
-                padding-right: calc(50% - 40vw);
+                padding-left: calc(50% - 40vw); /* Center the first slide */
+                padding-right: calc(50% - 40vw); /* Center the last slide */
                 gap: 2rem;
             }
         }
 
         .modern-carousel-slide {
-            flex: 0 0 90vw; 
+            flex: 0 0 90vw; /* 90% of viewport width */
             max-width: 90vw;
             scroll-snap-align: center;
             border-radius: 1rem;
@@ -544,8 +558,8 @@
 
         @media (min-width: 768px) {
             .modern-carousel-slide {
-                flex: 0 0 80vw; 
-                max-width: 1000px; 
+                flex: 0 0 80vw; /* 80% of viewport width on desktop */
+                max-width: 1000px; /* But don't get too big */
             }
         }
         
@@ -556,6 +570,17 @@
             display: block;
         }
         
+        /* This pseudo-element is used for JS to detect the "active" slide */
+        .modern-carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1px;
+            height: 1px;
+        }
+
         .modern-carousel-slide.is-active {
             transform: scale(1);
             opacity: 1;
@@ -601,16 +626,18 @@
 
         @media (min-width: 768px) {
              .carousel-nav-btn#travion-prev-btn {
-                left: calc(50% - 40vw - 70px);
+                left: calc(50% - 40vw - 70px); /* Position outside the slide */
                 max-width: 1000px;
             }
             .carousel-nav-btn#travion-next-btn {
-                right: calc(50% - 40vw - 70px);
+                right: calc(50% - 40vw - 70px); /* Position outside the slide */
                 max-width: 1000px;
             }
-            @media (min-width: 1250px) {
+            
+            /* Fallback for very large screens where max-width kicks in */
+            @media (min-width: 1250px) { /* 1000px / 0.8vw */
                  .carousel-nav-btn#travion-prev-btn {
-                    left: calc(50% - 500px - 70px); 
+                    left: calc(50% - 500px - 70px); /* 1000px / 2 */
                 }
                 .carousel-nav-btn#travion-next-btn {
                     right: calc(50% - 500px - 70px);
@@ -623,6 +650,7 @@
                 width: 40px;
                 height: 40px;
             }
+            /* Adjust button positions slightly for mobile */
              .carousel-nav-btn#travion-prev-btn {
                 left: 10px;
             }
@@ -630,6 +658,8 @@
                 right: 10px;
             }
         }
+        
+        /* END: Modern Swipe Carousel Styles */
         
         @media (prefers-reduced-motion: reduce) {
             .reveal, .project-item, .marquee-content, .cursor, .preloader, .star-separator, .rotating-text-g, .perspective-slider, .perspective-slide, .modern-carousel-slide {
@@ -650,7 +680,7 @@
         <rect width="100%" height="100%" fill="var(--bg-color-project)" clip-path="url(#transition-clip)"></rect>
     </svg>
 
-    <!-- Global Elements -->
+    <!-- Global Elements (Reordered for z-index correctness) -->
     <div id="grain-overlay"></div>
     <div id="scrollbar-progress" class="fixed top-0 left-0 h-1.5 z-[60]" style="width: 0%; background-color: var(--accent-color);"></div>
     <canvas id="hero-gradient-background"></canvas>
@@ -670,6 +700,7 @@
                 <nav class="flex items-center space-x-4" aria-label="Primary Navigation">
                     <a href="#story" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">My Story</a>
                     <a href="#work" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Projects</a>
+                    <!-- Resume link updated from attached docx -->
                     <a href="assets/rinoj_hashim.pdf" target="_blank" rel="noopener noreferrer" class="nav-link-hover text-base font-medium px-3 py-1" style="color: var(--text-primary);">Resume</a>
                 </nav>
                 <a href="#contact" class="clean-cta cta-primary font-semibold px-5 py-[6px] rounded-full transition-all duration-300 whitespace-nowrap">Contact me</a>
@@ -688,10 +719,11 @@
         <!-- Homepage View -->
         <div id="homepage-view" class="page-view is-active">
             <main id="main-content" role="main">
-                <!-- Hero Section -->
+                <!-- Hero Section (UX Writing updated from Resume) -->
                 <section id="home" class="flex flex-col items-center justify-start text-center p-6 md:p-12 relative overflow-hidden">
                     <div id="hero-tagline" class="z-20 text-white px-6 pointer-events-none pt-20 md:pt-16">
                         <div class="max-w-6xl mx-auto">
+                             <!-- Visually hidden H1 for SEO, the visible one is styled below -->
                              <h1 class="sr-only">Mohamed Rinoj Hashim | Senior UX & Product Designer in Dubai, UAE & KSA. Specialized in B2B SaaS and Fintech.</h1>
                             <div class="text-3xl md:text-5xl font-bold leading-tight" aria-hidden="true">
                                 <span class="tagline-word">A Product Designer fueled by</span><br class="hidden md:inline"> <span class="tagline-word">Commitment, Passion & Lots of Coffee.</span>
@@ -708,23 +740,24 @@
                         </div>
                     </div>
 
-                     <div class="absolute bottom-0 left-0 right-0 z-10 pb-10 md:pb-0">
-                         <div class="name-marquee-container flex whitespace-nowrap items-center">
-                             <div class="marquee-content-wrapper flex-shrink-0 flex items-center">
-                                 <span class="text-[12vw] md:text-[6.5vw] text-white select-none px-6">
-                                      <span class="font-black">Mohamed Rinoj Hashim</span>
-                                      <span class="font-semibold"> | UX / Product Designer | Dubai, UAE | Fintech, E-Commerce & Travel-Tech</span>
-                                 </span>
-                                 <span class="px-4 inline-flex items-center justify-center">
-                                     <svg class="star-separator w-[6vw] md:w-[4vw] h-[6vw] md:h-[4vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
-                                 </span>
-                             </div>
+                      <div class="absolute bottom-0 left-0 right-0 z-10 pb-10 md:pb-0">
+                          <div class="name-marquee-container flex whitespace-nowrap items-center">
+                              <div class="marquee-content-wrapper flex-shrink-0 flex items-center">
+                                  <span class="text-[12vw] md:text-[6.5vw] text-white select-none px-6">
+                                       <span class="font-black">Mohamed Rinoj Hashim</span>
+                                       <span class="font-semibold"> | UX / Product Designer | Dubai, UAE | Fintech, E-Commerce & Travel-Tech</span>
+                                  </span>
+                                  
+                                  <span class="px-4 inline-flex items-center justify-center">
+                                      <svg class="star-separator w-[6vw] md:w-[4vw] h-[6vw] md:h-[4vw] text-white" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separator"><path d="M50 0L61.226 38.774L100 50L61.226 61.226L50 100L38.774 61.226L0 50L38.774 38.774L50 0Z"/></svg>
+                                  </span>
+                              </div>
                           </div>
-                     </div>
+                      </div>
                 </section>
                 
                 <div id="page-content">
-                    <!-- Story Section -->
+                    <!-- Story Section (UX Writing updated from Resume) -->
                     <section id="story" class="relative">
                         <div id="story-pin-container" class="w-full">
                             <div class="absolute top-0 left-0 right-0 pt-20 md:pt-40 z-10 pointer-events-none">
@@ -778,7 +811,7 @@
                         </div>
                     </section>
                     
-                    <!-- Footer Section -->
+                    <!-- Footer Section (Details updated from Resume) -->
                     <footer id="contact" class="min-h-[70vh] bg-[#1C1C1C] text-white flex items-center justify-center py-12 md:py-16">
                         <div class="container mx-auto px-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -811,7 +844,7 @@
         </div>
         
         <!-- ================================================================= -->
-        <!-- START: TRAVION PROJECT PAGE -->
+        <!-- START: TRAVION PROJECT PAGE (WITH NEW IMAGES) -->
         <!-- ================================================================= -->
         <div id="project-page-travion" class="page-view project-page-view">
             <header class="fixed top-0 left-0 right-0 z-[60] py-4 px-6 md:px-12">
@@ -914,23 +947,29 @@
                         </div>
                     </section>
                     
-                    <!-- Modern Swipe Carousel -->
+                    <!-- ================================================================= -->
+                    <!-- MODIFIED Solution Section (with Swipe Carousel) -->
+                    <!-- ================================================================= -->
                     <section class="project-section container mx-auto px-6">
                         <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center anim-reveal">The Solution: A Unified Platform</h2>
                         <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 text-center anim-reveal">The final design is a clean, powerful, and intuitive web app that unifies all tasks—from managing bookings to tracking financials—into one role-based dashboard.</p>
                         
+                        <!-- NEW Modern Swipe Carousel -->
                         <div class="anim-reveal w-full max-w-6xl mx-auto">
                             <div id="travion-modern-carousel" class="modern-carousel-container">
                                 <div class="modern-carousel-viewport">
                                     <div class="modern-carousel-track">
+                                        <!-- Slide 1 -->
                                         <div class="modern-carousel-slide">
-                                            <img src="assets/mockup19.webp" alt="Travion B2B SaaS Dashboard UI Design - Fintech UX" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/1200x750/1e1f1f/aaaaaa?text=Travion+Dashboard';">
+                                            <img src="assets/mockup19.webp" alt="Travion B2B SaaS Dashboard UI Design - Fintech UX" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Dashboard.png';">
                                         </div>
+                                        <!-- Slide 2 -->
                                         <div class="modern-carousel-slide">
-                                            <img src="assets/mockup16.webp" alt="Travion Bookings Pipeline UI - Sales Workflow Design" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/1200x750/1e1f1f/aaaaaa?text=Travion+Pipeline';">
+                                            <img src="assets/mockup16.webp" alt="Travion Bookings Pipeline UI - Sales Workflow Design" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Pipeline.png';">
                                         </div>
+                                        <!-- Slide 3 -->
                                         <div class="modern-carousel-slide">
-                                            <img src="assets/mockup20.webp" alt="Travion Create Booking Modal UI - User Interaction Design" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/1200x750/1e1f1f/aaaaaa?text=Travion+Modal';">
+                                            <img src="assets/mockup20.webp" alt="Travion Create Booking Modal UI - User Interaction Design" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-1200x750-1e1f1f-aaaaaa-text-Travion+Modal.png';">
                                         </div>
                                     </div>
                                 </div>
@@ -942,9 +981,15 @@
                                 </button>
                             </div>
                         </div>
-                    </section>
+                        <!-- END Modern Swipe Carousel -->
 
-                    <!-- Feature Spotlight Section -->
+                    </section>
+                    <!-- ================================================================= -->
+                    <!-- END: MODIFIED Solution Section -->
+                    <!-- ================================================================= -->
+
+
+                    <!-- NEW Feature Spotlight Section -->
                     <section class="project-section bg-black/10">
                         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
                             <div class="anim-reveal">
@@ -952,7 +997,7 @@
                                 <p class="text-xl md:text-2xl text-gray-200 leading-relaxed">A key insight was that 84% of agents used WhatsApp for business. They weren't tied to their desks. We built a mobile-first app that wasn't just a "lite" version, but a powerful tool to manage their entire workflow, from AI-powered opportunities to client management, from anywhere.</p>
                             </div>
                             <div class="anim-reveal" style="--delay: 0.2s;">
-                                <img src="assets/mockup8.webp" alt="Travion Mobile App UI for Travel Agents - Mobile UX Design" class="rounded-xl shadow-2xl w-full max-w-md mx-auto" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://placehold.co/600x1200/1e1f1f/aaaaaa?text=Travion+Mobile';">
+                                <img src="assets/mockup8.webp" alt="Travion Mobile App UI for Travel Agents - Mobile UX Design" class="rounded-xl shadow-2xl w-full max-w-md mx-auto" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https-placehold-co-600x1200-1e1f1f-aaaaaa-text-Travion+Mobile.png';">
                             </div>
                         </div>
                     </section>
@@ -1180,9 +1225,9 @@
                                   <p class="text-gray-300">Before designing any UI, the card sorting and research helped untangle years of complex, overlapping workflows. A clear process is the prerequisite for a clear interface.</p>
                               </div>
                           </div>
-                     </section>
-                 </main>
-             </div>
+                       </section>
+                  </main>
+              </div>
         </div>
         <!-- ================================================================= -->
         <!-- END: OURSHOPEE PROJECT PAGE -->
@@ -1202,7 +1247,7 @@
                      </div>
                      <div class="flex-1 flex justify-end">
                           <a href="#contact" class="go-to-contact text-sm font-semibold hidden md:flex items-center space-x-2 group bg-cyan-500 text-black px-5 py-2 rounded-full hover:bg-cyan-400 transition-colors duration-300 clean-cta">
-                             <span>Contact Me</span>
+                              <span>Contact Me</span>
                           </a>
                      </div>
                  </div>
@@ -1409,13 +1454,18 @@
     </div>
     
     <script>
-    // Register plugins immediately to ensure availability
+    // --- COMBINED & REFACTORED SCRIPT FOR SINGLE PAGE APP ---
+    
+    // FIX: Register plugins immediately.
+    // By the time this inline script at the end of <body> runs,
+    // the blocking scripts in <head> should have loaded.
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // Main initialization
     window.addEventListener('load', function() {
         history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
+
+        // GSAP plugins are already registered outside this listener
         
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         if (isTouchDevice) {
@@ -1425,7 +1475,6 @@
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let lastScrollPos = 0;
         let projectPageScrollTriggers = [];
-        let isHomepageActive = true; // Flag to control Three.js animation
 
         // --- Mobile Viewport Height Fix ---
         function setAppHeight() {
@@ -1433,7 +1482,10 @@
         }
         window.addEventListener('resize', () => {
             setAppHeight();
-            setTimeout(() => ScrollTrigger.refresh(), 100);
+            // Give GSAP a moment to catch up after resize
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 100);
         });
         setAppHeight();
 
@@ -1448,7 +1500,7 @@
         const transitionRect = transitionSvg.querySelector('rect');
 
 
-        // --- 1. PAGE TRANSITION LOGIC ---
+        // --- 1. PAGE TRANSITION LOGIC (REBUILT FOR SMOOTHNESS) ---
         function switchView(targetId, e) {
             const currentView = document.querySelector('.page-view.is-active');
             const targetView = document.getElementById(targetId);
@@ -1459,13 +1511,13 @@
             wrapper.classList.add('is-transitioning');
             
             const isGoingBack = targetId === 'homepage-view';
-            isHomepageActive = isGoingBack; // Update flag
+                                if (!isGoingBack) {
+                                    lastScrollPos = window.scrollY || document.documentElement.scrollTop;
+                                }
 
-            if (!isGoingBack) {
-                lastScrollPos = window.scrollY || document.documentElement.scrollTop;
-            }
 
             const diagonal = Math.hypot(window.innerWidth, window.innerHeight);
+
             let clickPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             if (e) {
                 clickPos.x = e.clientX;
@@ -1501,17 +1553,18 @@
 
                 if (isGoingBack) {
                     destroyProjectPageScrollTriggers();
+                    // Use a slight delay before scrolling to ensure the DOM is ready
                     gsap.delayedCall(0.01, () => {
                         window.scrollTo(0, lastScrollPos);
                     });
                     gsap.to([mainHeader, goToTopBtn], { autoAlpha: 1, duration: 0.4 });
                     ScrollTrigger.refresh();
-                    // Resume Three.js loop if possible
-                    if (typeof animateGradient === 'function') animateGradient();
                 } else {
                     gsap.set(window, { scrollTo: 0 });
                     gsap.set([mainHeader, goToTopBtn], { autoAlpha: 0 });
                     initializeProjectPageAnimations(targetView);
+                    // Force a refresh to ensure pins are calculated correctly
+                    gsap.delayedCall(0.1, () => ScrollTrigger.refresh());
                 }
             });
 
@@ -1527,51 +1580,45 @@
                 ease: 'power1.out'
             }, "<");
             
+            // Reset the opacity of the view we are leaving AFTER the transition is complete,
+            // so it's ready for the next time.
             tl.set(currentView, { opacity: 1 });
         }
         
         // --- 2. PRELOADER & INITIAL PAGE REVEAL ---
-        // Wrapped in try-catch to prevent sticky preloader on errors
-        try {
-            const preloader = document.querySelector('.preloader');
-            if (preloader) {
-                const preloaderLogo = document.querySelector('.preloader-logo');
-                const tagline = document.getElementById('hero-tagline');
-                const heroCTAs = document.getElementById('hero-ctas');
-                const marqueeContainer = document.querySelector('.name-marquee-container');
-                const taglineWords = gsap.utils.toArray('.tagline-word');
-                const ctaButtons = gsap.utils.toArray('#hero-ctas a');
-            
-                gsap.set([mainHeader, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
-                gsap.set([mainHeader, marqueeContainer], { y: 80 });
-                gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
-                gsap.set(ctaButtons, { opacity: 0, y: 20 });
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+            const preloaderLogo = document.querySelector('.preloader-logo');
+            const tagline = document.getElementById('hero-tagline');
+            const heroCTAs = document.getElementById('hero-ctas');
+            const marqueeContainer = document.querySelector('.name-marquee-container');
+            const taglineWords = gsap.utils.toArray('.tagline-word');
+            const ctaButtons = gsap.utils.toArray('#hero-ctas a');
+        
+            gsap.set([mainHeader, marqueeContainer, tagline, heroCTAs], { autoAlpha: 0 });
+            gsap.set([mainHeader, marqueeContainer], { y: 80 });
+            gsap.set(taglineWords, { opacity: 0, y: 20, rotationX: -30 });
+            gsap.set(ctaButtons, { opacity: 0, y: 20 });
 
-                gsap.to(preloaderLogo, { scale: 1.1, duration: 0.8, repeat: -1, yoyo: true, ease: 'power1.inOut' });
-                
-                const tl = gsap.timeline({
-                    onComplete: () => {
-                        initializeHomepageAnimations();
-                        preloadProjectImages();
-                        ScrollTrigger.refresh();
-                    }
-                });
+            gsap.to(preloaderLogo, { scale: 1.1, duration: 0.8, repeat: -1, yoyo: true, ease: 'power1.inOut' });
             
-                tl.to(preloader, { yPercent: -100, duration: 1.2, ease: 'power3.inOut', delay: 0.4 });
-                tl.to([mainHeader, marqueeContainer, tagline, heroCTAs], { autoAlpha: 1 }, "-=1.0");
-                tl.to([mainHeader, marqueeContainer], { y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.1 }, "-=1.0");
-                tl.to(taglineWords, { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.04, ease: 'power3.out' }, "-=0.8");
-                tl.to(ctaButtons, { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: 'power3.out' }, "-=0.6");
-                tl.call(() => { if(preloader) preloader.remove(); });
-            }
-        } catch (error) {
-            console.error("Preloader error:", error);
-            // Fallback removal
-            const pl = document.querySelector('.preloader');
-            if(pl) pl.style.display = 'none';
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    initializeHomepageAnimations();
+                    preloadProjectImages();
+                    ScrollTrigger.refresh();
+                }
+            });
+        
+            tl.to(preloader, { yPercent: -100, duration: 1.2, ease: 'power3.inOut', delay: 0.4 });
+            tl.to([mainHeader, marqueeContainer, tagline, heroCTAs], { autoAlpha: 1 }, "-=1.0");
+            tl.to([mainHeader, marqueeContainer], { y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.1 }, "-=1.0");
+            tl.to(taglineWords, { opacity: 1, y: 0, rotationX: 0, duration: 0.8, stagger: 0.04, ease: 'power3.out' }, "-=0.8");
+            tl.to(ctaButtons, { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: 'power3.out' }, "-=0.6");
+            tl.call(() => preloader.remove());
         }
 
-        // --- 3. GLOBAL INTERACTIVITY ---
+        // --- 3. GLOBAL INTERACTIVITY (CURSOR, GRAIN, ETC) ---
         if (isTouchDevice) {
             if (cursor) cursor.style.display = 'none';
         } else {
@@ -1647,6 +1694,7 @@
 
             setupStorySectionAnimation();
 
+            // Tools updated from Resume
             const tools = [
                 { name: 'Figma', logo: 'assets/tools/figma.png' },
                 { name: 'Adobe CC', logo: 'assets/tools/adobe.png' },
@@ -1684,13 +1732,17 @@
             if (!storySection) return;
             
             if (isTouchDevice) {
+                // --- MOBILE/TOUCH DEVICE LOGIC ---
                 const storyPinContainer = document.getElementById('story-pin-container');
+                
+                // Prevent this from running multiple times
                 if (storyPinContainer.dataset.layout === 'mobile') return;
                 storyPinContainer.dataset.layout = 'mobile';
         
                 const storyPanels = gsap.utils.toArray(".story-panel");
                 const storyTexts = gsap.utils.toArray(".story-text-item");
                 
+                // Hide original containers and set heights for natural flow
                 const originalHeader = storyPinContainer.querySelector('.absolute.top-0');
                 const originalTrack = storyPinContainer.querySelector('.absolute.bottom-0');
                 if (originalHeader) originalHeader.style.display = 'none';
@@ -1717,6 +1769,7 @@
                     image.style.transform = 'none';
                     image.classList.add('rounded-xl', 'mb-4', 'w-full');
                     
+                    // Make text visible and flow naturally
                     textEl.style.position = 'relative';
                     textEl.style.opacity = 1;
                     textEl.style.transform = 'none';
@@ -1731,7 +1784,10 @@
                 storyPinContainer.appendChild(mobileWrapper);
                 
             } else {
+                // --- DESKTOP (NON-TOUCH) DEVICE LOGIC ---
                 const storyPinContainer = document.getElementById('story-pin-container');
+        
+                // Prevent this from running multiple times
                 if (storyPinContainer.dataset.layout === 'desktop') return;
                 storyPinContainer.dataset.layout = 'desktop';
         
@@ -1765,9 +1821,6 @@
                         start: "top top",
                         end: "bottom bottom",
                         onUpdate: self => {
-                            // Performance optimization: only run if visible
-                            if(!isHomepageActive) return;
-                            
                             let centerPoint = window.innerWidth / 2;
                             let newActiveIndex = -1, smallestDistance = Infinity;
                             storyPanels.forEach((panel, index) => {
@@ -1795,12 +1848,10 @@
 
 
         // --- 5. DYNAMIC PROJECT INJECTION ---
-        // FIXED SYNTAX ERROR HERE: replaced dot with comma
         const projects = [
             { id: 'travion', title: 'Travion - B2B Platform', tags: ['B2B SaaS', 'UX Research', 'Product Design', 'CRM'], image: 'assets/mockup19.webp', href: '#'},
-            { id: 'ourshoppee', title: 'OurShopee - Internal CRM Platform', tags: ['Design System', 'Workflow Optimisation', 'CRM'], image: 'assets/ourshopee/ourshmockup01.webp', href: '#'},
-            { id: 'bankiom', title: 'Bankiom - Fintech Super App', tags: ['Fintech', 'Mobile App', 'Conversion'], image: 'https://images.unsplash.com/photo-1620714223084-86c9df242562?q=80&w=1770&auto=format&fit=crop', href: '#'},
-            { id: 'shanthib', title: 'Shanthi Bhavan - Donation App', tags: ['Non-Profit', 'Mobile Design'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1770&auto=format&fit=crop', href: '#'},
+            // FIXED: Replaced dot with comma in tags array
+            { id: 'ourshoppee', title: 'OurShopee - Internal CRM Platform', tags: ['Design System', 'Workflow Optimisation', 'CRM'], image: 'assets/ourshopee/thumbnail.png', href: '#'},
             { id: 'more', title: 'More Projects', tags: ['View on Behance'], image: 'https://images.unsplash.com/photo-1522199670076-2852f80289c3?q=80&w=2072&auto=format&fit=crop', href: 'https://www.behance.net/rinoj1020'}
         ];
         
@@ -1814,6 +1865,7 @@
         const projectsContainer = document.getElementById('projects-container');
         if (projectsContainer) {
             projects.forEach(p => {
+                // Check if it's a special 'more' link or a standard project
                 const isExternalLink = p.id === 'more';
                 const projectEl = isExternalLink ? document.createElement('a') : document.createElement('div');
                 projectEl.className = 'project-item relative';
@@ -1823,7 +1875,6 @@
                     projectEl.target = '_blank';
                     projectEl.rel = 'noopener noreferrer';
                 } else {
-                    // Matches HTML IDs: project-page-ourshoppee
                     projectEl.dataset.target = `project-page-${p.id}`;
                 }
 
@@ -1880,7 +1931,7 @@
             destroyProjectPageScrollTriggers(); 
             let triggers = [];
             
-            // General reveal animation
+            // General reveal animation for elements with .anim-reveal
             pageElement.querySelectorAll('.anim-reveal').forEach(el => {
                 let delay = parseFloat(el.style.getPropertyValue('--delay')) || 0;
                 triggers.push(gsap.from(el, {  
@@ -1890,17 +1941,19 @@
                 }));
             });
             
-            // Parallax effect
+            // Parallax effect for images with .image-pan
             pageElement.querySelectorAll('.image-pan').forEach(img => {
                 triggers.push(gsap.to(img, { scale: 1.15, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: 1.5 } }));
             });
 
-            // Number counting
+            // Number counting animation for elements with .stat-number
             pageElement.querySelectorAll('.stat-number').forEach(el => {
                 const endValue = parseInt(el.dataset.endValue);
+                 // Check if endValue is a valid number before proceeding
                 if (isNaN(endValue)) {
-                     gsap.set(el.closest('.anim-reveal') || el, { opacity: 1, y: 0 });
-                     return;
+                      // If data-end-value is not a number, ensure the element is visible
+                      gsap.set(el.closest('.anim-reveal') || el, { opacity: 1, y: 0 }); // Reveal parent or self immediately
+                      return; // Skip animation for non-numeric or missing data-end-value
                 }
 
                 let counter = { value: 0 };
@@ -1908,53 +1961,60 @@
                 const containsSpecial = specialChars.test(el.textContent);
                 let suffix = el.textContent.includes('%') ? '%' : '';
 
-                if (!containsSpecial || !isNaN(parseInt(el.textContent))) {
+                if (!containsSpecial || !isNaN(parseInt(el.textContent))) { // Only animate if it starts as a number (or 0%)
                     triggers.push(gsap.to(counter, {
                         value: endValue, duration: 2.5, ease: 'power2.out',
                         onUpdate: () => { el.textContent = Math.ceil(counter.value) + suffix; },
                         scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
                     }));
                 } else {
-                     gsap.set(el.closest('.anim-reveal') || el, { opacity: 1, y: 0 });
+                      // If it contains special non-numeric chars initially (like '< 5 min'), reveal it directly
+                      gsap.set(el.closest('.anim-reveal') || el, { opacity: 1, y: 0 });
                 }
             });
             
+            // Initialize Hero animations (title stagger, content fade-in, parallax)
             initializeStandardHeroAnimation(pageElement, triggers);  
 
-            // Project Specific Scrollytelling
+            // Initialize Scrollytelling specific to the project page
             if(pageElement.id === 'project-page-travion') {
                 initializeTravionScrollytelling(pageElement, triggers);
-                initializeModernCarousel(pageElement);
+                initializeModernCarousel(pageElement); // MODIFIED: Call new carousel function
             }
              if(pageElement.id === 'project-page-ourshoppee') {
-                if (pageElement.querySelector('#ourshoppee-scrolly-grid')) {
-                    initializeOurShopeeScrollytelling(pageElement, triggers);
-                } else {
-                    // Fallback if grid is missing
-                    pageElement.querySelectorAll('.case-study-content > *').forEach(el => {
-                        triggers.push(gsap.from(el, {
-                            opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
-                            scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
-                        }));
-                    });
-                }
-            }
+                 // Check if the scrolly grid exists before initializing
+               if (pageElement.querySelector('#ourshoppee-scrolly-grid')) {
+                   initializeOurShopeeScrollytelling(pageElement, triggers);
+               } else {
+                   // If no scrolly grid, ensure all content reveals normally
+                   pageElement.querySelectorAll('.case-study-content > *').forEach(el => {
+                       triggers.push(gsap.from(el, {
+                           opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
+                           scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                       }));
+                   });
+               }
+           }
 
-            projectPageScrollTriggers = triggers;
+
+            projectPageScrollTriggers = triggers; // Store triggers for cleanup
         }
 
         function initializeStandardHeroAnimation(pageElement, triggers) {
-            const heroSection = pageElement.querySelector('section:first-of-type');
+            const heroSection = pageElement.querySelector('section:first-of-type'); // Target the first section as hero
             if (!heroSection) return;
 
+             // Animate Hero Title spans
             gsap.fromTo(heroSection.querySelectorAll(".project-hero-title span"),  
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.05, delay: 0.4 }
             );
+            // Animate other hero elements like description and detail cards
             gsap.from(heroSection.querySelectorAll('.anim-hero-reveal'), {
                 y: 30, opacity: 0, duration: 1, ease: 'power3.out', stagger: 0.1, delay: 0.6
             });
             
+            // Apply parallax scroll effect if not reduced motion
             if (!prefersReducedMotion.matches) {
                 const heroContent = heroSection.querySelector('.hero-content-container');
                 const heroBg = heroSection.querySelector('.hero-bg-image');
@@ -1964,95 +2024,114 @@
                     scrollTrigger: {
                         trigger: heroSection,
                         start: 'top top',
-                        end: 'bottom top',
+                        end: 'bottom top', // End parallax when bottom of hero reaches top of viewport
                         scrub: true,
                     }
                 });
                 
+                // Parallax background image (move slower than scroll)
                 if (heroBg) tl.to(heroBg, { yPercent: 20, ease: 'none' }, 0);
+                 // Parallax hero content and scroll indicator (move faster and fade out)
                 if (heroContent && scrollIndicator) tl.to([heroContent, scrollIndicator], { yPercent: -50, autoAlpha: 0, ease: 'none' }, 0);
+
+                // Add the ScrollTrigger instance to the triggers array for cleanup
                 if(tl.scrollTrigger) triggers.push(tl.scrollTrigger);
             }
         }
         
-        // --- Scrollytelling Functions ---
-        // Generic function builder to avoid code duplication
-        function initScrolly(pageElement, wrapperId, triggers) {
-            const scrollyWrapper = pageElement.querySelector(wrapperId);
+        // --- Specific Scrollytelling for Travion ---
+        function initializeTravionScrollytelling(pageElement, triggers) {
+            const scrollyWrapper = pageElement.querySelector('#travion-scrolly-grid');
             if (!scrollyWrapper) return;
 
             const phaseImages = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-image-item'));
             const phaseTexts = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-text-item'));
-            const phaseContents = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-content'));
 
+            // Use matchMedia for responsive animations
             ScrollTrigger.matchMedia({
-                // Desktop
+                // Desktop layout: sticky image, text triggers image change
                 "(min-width: 768px)": function() {
                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
-                    gsap.set(imageContainer, { display: 'block' });
-                    gsap.set(phaseImages, { position: 'absolute' });
+                    
+                    // Ensure desktop styles are applied
+                    gsap.set(imageContainer, { display: 'block' }); // Make sure container is visible
+                    gsap.set(phaseImages, { position: 'absolute' }); // Position images absolutely within container
 
+                     // Pin the image container while scrolling through the text sections
+                     // FIX: Use DOM element reference instead of class string
                     triggers.push(ScrollTrigger.create({
-                        trigger: ".phase-image-container",  
-                        start: "top 20vh",
-                        endTrigger: wrapperId,
-                        end: "bottom bottom-=20vh",
+                        trigger: imageContainer,  
+                        start: "top 20vh", // Start pinning when top hits 20% from viewport top
+                        endTrigger: "#travion-scrolly-grid", // End pinning at the bottom of the grid
+                        end: "bottom bottom-=20vh", // End pinning 20% before the bottom
                         pin: true,
-                        pinSpacing: false
+                        pinSpacing: false // Prevent extra space after pinning
                     }));
 
+                    // Animate image transitions based on text scroll position
                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
-                        gsap.set(phaseImages, { autoAlpha: 0 });
-                        gsap.set(phaseImages[0], { autoAlpha: 1 });
+                        gsap.set(phaseImages, { autoAlpha: 0 }); // Hide all images initially
+                        gsap.set(phaseImages[0], { autoAlpha: 1 }); // Show the first image
 
+                        // Create a ScrollTrigger for each text section
                         phaseTexts.forEach((text, i) => {
                             const trigger = ScrollTrigger.create({
                                 trigger: text,
-                                start: "top center",
-                                end: "bottom center",
+                                start: "top center", // Activate when the top of the text hits the center
+                                end: "bottom center", // Deactivate when the bottom of the text hits the center
                                 onToggle: self => {
                                     if (self.isActive) {
+                                        // Fade out all images, then fade in the corresponding one
                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
                                         gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
                                     }
                                 },
+                                // Handle scrolling back up: show the previous image
                                 onLeaveBack: () => {
-                                    if(i > 0) {
+                                    if(i > 0) { // Ensure we don't go before the first image
                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
                                         gsap.to(phaseImages[i-1], { autoAlpha: 1, duration: 0.3 });
                                     }
                                 }
                             });
-                            triggers.push(trigger);
+                            triggers.push(trigger); // Add trigger for cleanup
                         });
                     }
-                    
-                    phaseContents.forEach(content => {
+                     // Add reveal animation for the text content on desktop
+                    gsap.utils.toArray('#travion-text-wrapper .phase-content').forEach(content => {
                          triggers.push(gsap.from(content, {
                              y: 50, opacity: 0, duration: 1, ease: 'power3.out',
                              scrollTrigger: { trigger: content.parentElement, start: 'top 85%', toggleActions: 'play none none none' }
-                          }));
+                         }));
                     });
                 },
-                // Mobile
+                // Mobile layout: normal scroll, images appear within text flow
                 "(max-width: 767px)": function() {
+                     // Hide the sticky image container on mobile
                      const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
                      if(imageContainer) imageContainer.style.display = 'none';
 
+                     // Move images into their respective text sections and apply reveal animations
                      if (phaseImages.length > 0 && phaseTexts.length > 0) {
                          phaseTexts.forEach((textItem, i) => {
                              const imageItem = phaseImages[i];
+                             // Check if image exists and hasn't already been moved
                              if (imageItem && textItem && !textItem.contains(imageItem.querySelector('img'))) {
+                                 // Style the image item container for mobile flow
                                  gsap.set(imageItem, {
                                      autoAlpha: 1, position: 'relative', display: 'block',
                                      width: '100%', height: 'auto', aspectRatio: '5/3',
                                      marginTop: '2.5rem', marginBottom: '2.5rem'
                                  });
+                                 // Insert image *before* the text content
                                  const contentDiv = textItem.querySelector('.phase-content');
-                                 if (contentDiv) contentDiv.parentNode.insertBefore(imageItem, contentDiv);
-                                 else textItem.appendChild(imageItem);
+                                 if (contentDiv) {
+                                     contentDiv.parentNode.insertBefore(imageItem, contentDiv);
+                                 } else {
+                                     textItem.appendChild(imageItem); // Fallback
+                                 }
                              }
-                             
+                             // Add reveal animations for mobile content (text + image)
                              gsap.utils.toArray(textItem.querySelectorAll('.phase-content > *, .phase-image-item')).forEach(el => {
                                  triggers.push(gsap.from(el, {
                                      y: 50, opacity: 0, duration: 1, ease: 'power3.out',
@@ -2065,14 +2144,7 @@
             });
         }
 
-        function initializeTravionScrollytelling(pageElement, triggers) {
-            initScrolly(pageElement, '#travion-scrolly-grid', triggers);
-        }
-        
-        function initializeOurShopeeScrollytelling(pageElement, triggers) {
-            initScrolly(pageElement, '#ourshoppee-scrolly-grid', triggers);
-        }
-
+        // --- NEW: Modern Swipe Carousel Logic ---
         function initializeModernCarousel(pageElement) {
             const carousel = pageElement.querySelector('#travion-modern-carousel');
             if (!carousel || prefersReducedMotion.matches) return;
@@ -2083,52 +2155,202 @@
             const prevBtn = carousel.querySelector('#travion-prev-btn');
             const nextBtn = carousel.querySelector('#travion-next-btn');
             
-            if (!viewport || !track || slides.length === 0 || !prevBtn || !nextBtn) return;
+            if (!viewport || !track || slides.length === 0 || !prevBtn || !nextBtn) {
+                console.log('Carousel components not found');
+                return;
+            }
 
             let currentIndex = 0;
             
+            // Function to scroll to a specific index
             function goToSlide(index) {
                 if (index < 0 || index >= slides.length) return;
+                
                 const slide = slides[index];
+                // Calculate scroll amount to center the slide
                 const scrollAmount = slide.offsetLeft - track.offsetLeft - (viewport.offsetWidth - slide.offsetWidth) / 2;
-                viewport.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+
+                viewport.scrollTo({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+                
                 currentIndex = index;
                 updateNavButtons();
             }
 
+            // Function to update nav button states
             function updateNavButtons() {
                 prevBtn.disabled = currentIndex === 0;
                 nextBtn.disabled = currentIndex === slides.length - 1;
                 slides.forEach((s, i) => s.classList.toggle('is-active', i === currentIndex));
             }
             
-            prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
-            nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+            // Event Listeners for buttons
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentIndex - 1);
+            });
 
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentIndex + 1);
+            });
+
+            // Update active slide based on scroll-snap (using IntersectionObserver)
+            // This syncs the buttons if the user swipes manually
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const newIndex = slides.indexOf(entry.target);
+                        const intersectingSlide = entry.target;
+                        const newIndex = slides.indexOf(intersectingSlide);
                         if (newIndex !== currentIndex) {
                              currentIndex = newIndex;
                              updateNavButtons();
                         }
                     }
                 });
-            }, { root: viewport, threshold: 0.75 });
+            }, { 
+                root: viewport, // Observe intersections within the viewport
+                threshold: 0.75 // Trigger when 75% of the slide is visible
+            });
 
             slides.forEach(slide => observer.observe(slide));
-            goToSlide(0);
+
+            // Recalculate widths on resize
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (pageElement.classList.contains('is-active')) {
+                         // Re-center the current slide
+                         goToSlide(currentIndex);
+                    }
+                }, 250);
+            });
+
+            // Initial setup
+            goToSlide(0); // Start at the first slide
         }
+
+
+         // --- Specific Scrollytelling for OurShopee ---
+         function initializeOurShopeeScrollytelling(pageElement, triggers) {
+             // This function is identical to initializeTravionScrollytelling but targets OurShopee IDs
+             const scrollyWrapper = pageElement.querySelector('#ourshoppee-scrolly-grid');
+             if (!scrollyWrapper) return; // Exit if the grid isn't found
+
+             const phaseImages = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-image-item'));
+             const phaseTexts = gsap.utils.toArray(scrollyWrapper.querySelectorAll('.phase-text-item'));
+
+             ScrollTrigger.matchMedia({
+                 // Desktop layout: sticky image
+                 "(min-width: 768px)": function() {
+                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
+                     gsap.set(imageContainer, { display: 'block' });
+                     gsap.set(phaseImages, { position: 'absolute' });
+
+                     // FIX: Use DOM element reference 'imageContainer' instead of class string ".phase-image-container"
+                     // This prevents GSAP from selecting the wrong container (like Travion's) which causes the lag.
+                     triggers.push(ScrollTrigger.create({
+                         trigger: imageContainer, 
+                         start: "top 20vh",
+                         endTrigger: "#ourshoppee-scrolly-grid",
+                         end: "bottom bottom-=20vh",
+                         pin: true,
+                         pinSpacing: false
+                     }));
+
+                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                         gsap.set(phaseImages, { autoAlpha: 0 });
+                         gsap.set(phaseImages[0], { autoAlpha: 1 });
+
+                         phaseTexts.forEach((text, i) => {
+                             const trigger = ScrollTrigger.create({
+                                 trigger: text,
+                                 start: "top center",
+                                 end: "bottom center",
+                                 onToggle: self => {
+                                     if (self.isActive) {
+                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                         gsap.to(phaseImages[i], { autoAlpha: 1, duration: 0.3 });
+                                     }
+                                 },
+                                 onLeaveBack: () => {
+                                     if (i > 0) {
+                                         gsap.to(phaseImages, { autoAlpha: 0, duration: 0.3 });
+                                         gsap.to(phaseImages[i - 1], { autoAlpha: 1, duration: 0.3 });
+                                     }
+                                 }
+                             });
+                             triggers.push(trigger);
+                         });
+                     }
+                      // Add reveal animation for the text content on desktop
+                     gsap.utils.toArray('#ourshoppee-text-wrapper .phase-content').forEach(content => {
+                         triggers.push(gsap.from(content, {
+                             y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+                             scrollTrigger: { trigger: content.parentElement, start: 'top 85%', toggleActions: 'play none none none' }
+                         }));
+                     });
+                 },
+                 // Mobile layout: normal scroll
+                 "(max-width: 767px)": function() {
+                     const imageContainer = scrollyWrapper.querySelector('.phase-image-container');
+                     if(imageContainer) imageContainer.style.display = 'none'; // Hide the sticky container
+
+                     if (phaseImages.length > 0 && phaseTexts.length > 0) {
+                         phaseTexts.forEach((textItem, i) => {
+                             const imageItem = phaseImages[i];
+                             if (imageItem && textItem && !textItem.contains(imageItem.querySelector('img'))) {
+                                 gsap.set(imageItem, {
+                                     autoAlpha: 1, position: 'relative', display: 'block',
+                                     width: '100%', height: 'auto', aspectRatio: '5/3',
+                                     marginTop: '2.5rem', marginBottom: '2.5rem'
+                                 });
+                                 const contentDiv = textItem.querySelector('.phase-content');
+                                 if (contentDiv) {
+                                     contentDiv.parentNode.insertBefore(imageItem, contentDiv);
+                                 } else {
+                                     textItem.appendChild(imageItem);  
+                                 }
+                             }
+                             // Add reveal animations for mobile content
+                             gsap.utils.toArray(textItem.querySelectorAll('.phase-content > *, .phase-image-item')).forEach(el => {
+                                 triggers.push(gsap.from(el, {
+                                     y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+                                     scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+                                 }));
+                             });
+                         });
+                     }
+                 }
+             });
+         }
+
 
         function destroyProjectPageScrollTriggers() {
             projectPageScrollTriggers.forEach(st => {
-                if (st instanceof ScrollTrigger) st.kill();
-                else if (st.scrollTrigger) { st.scrollTrigger.kill(); st.kill(); }
-                else if(st.kill) st.kill();
+                 // Check if it's a ScrollTrigger instance or a GSAP animation/timeline
+                if (st instanceof ScrollTrigger) {
+                    st.kill();
+                 } else if (st.scrollTrigger) { // It's a GSAP animation with an associated ScrollTrigger
+                      st.scrollTrigger.kill();
+                      st.kill(); // Kill the animation itself
+                 } else if(st.kill) { // It's a GSAP animation without a separate ScrollTrigger instance variable
+                      st.kill();
+                 }
             });
-            projectPageScrollTriggers = [];
+            projectPageScrollTriggers = []; // Clear the array
+
+            // Extra check to kill any orphaned ScrollTriggers within inactive project pages
+            ScrollTrigger.getAll().forEach(t => {
+                if(t.trigger && t.trigger.closest && t.trigger.closest('.project-page-view:not(.is-active)')) {
+                    t.kill();
+                }
+            });
+            // Refresh ScrollTrigger after cleanup might be needed if layout shifts occurred
+            // ScrollTrigger.refresh(); // Use cautiously, might cause jumps if not needed
         }
+
 
         // --- 7. MISC & EVENT LISTENERS ---
         document.querySelectorAll('.back-to-home, .back-to-home-logo').forEach(btn => {
@@ -2142,30 +2364,39 @@
             btn.addEventListener('click', e => {
                 e.preventDefault();
                 switchView('homepage-view', e);  
+                // Delay scroll until after transition
                 setTimeout(() => {
                     const contactSection = document.getElementById('contact');
-                    if(contactSection) gsap.to(window, { scrollTo: { y: contactSection, offsetY: 70 }, duration: 1.5, ease: 'power3.inOut' });
-                }, 600);
+                    if(contactSection) {
+                         gsap.to(window, { scrollTo: { y: contactSection, offsetY: 70 }, duration: 1.5, ease: 'power3.inOut' });
+                    }
+                }, 600); // Adjust delay to match transition time
             });
         });
 
+        // Go to Top Button visibility
         ScrollTrigger.create({
-            start: 200, end: "max",
+            start: 200, // Show button after scrolling 200px
+            end: "max",
             toggleClass: { targets: goToTopBtn, className: "is-active" }
         });
+        // Go to Top Button click action
         goToTopBtn.addEventListener('click', () => {
             gsap.to(window, { scrollTo: 0, duration: 1.5, ease: 'power3.inOut' });
         });
 
+        // Magnetic effect for specific items on non-touch devices
         if (!isTouchDevice) {
             document.querySelectorAll('.magnetic-item').forEach(el => {
                 el.addEventListener('mousemove', (e) => {
                     const rect = el.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
+                    // Apply magnetic pull effect
                     gsap.to(el, { x: x * 0.4, y: y * 0.4, duration: 0.8, ease: 'power3.out' });
                 });
                 el.addEventListener('mouseleave', () => {
+                    // Return element to original position smoothly
                     gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.3)' });
                 });
             });
@@ -2178,8 +2409,9 @@
         const closeButton = document.getElementById('mobile-close-button');
 
         function openMobileMenu() {
-            mobileMenu.classList.remove('hidden');
-            gsap.to(mobileMenuPanel, { x: 0, duration: 0.5, ease: 'power3.out' });
+            mobileMenu.classList.remove('hidden'); // Show overlay
+            gsap.to(mobileMenuPanel, { x: 0, duration: 0.5, ease: 'power3.out' }); // Slide panel in
+            // Animate nav links appearing
             gsap.fromTo('.mobile-nav-link, .mobile-nav-link-cta',  
                 { opacity: 0, x: 50 },
                 { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, delay: 0.2, ease: 'power3.out' }
@@ -2187,41 +2419,56 @@
         }
 
         function closeMobileMenu() {
+             // Animate nav links disappearing first (optional, for smoother feel)
              gsap.to('.mobile-nav-link, .mobile-nav-link-cta', {
                  opacity: 0, x: 50, duration: 0.3, stagger: 0.05, ease: 'power3.in'
              });
+             // Slide panel out
             gsap.to(mobileMenuPanel, {  
-                x: '100%', duration: 0.5, ease: 'power3.in', delay: 0.1,
+                x: '100%', duration: 0.5, ease: 'power3.in', delay: 0.1, // Slight delay after links start fading
                 onComplete: () => {
-                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.add('hidden'); // Hide overlay after animation
+                     // Reset link positions for next open
                     gsap.set('.mobile-nav-link, .mobile-nav-link-cta', { opacity: 0, x: 50 });
                 }
             });
         }
+         // Event Listeners for mobile menu
         openButton.addEventListener('click', openMobileMenu);
         closeButton.addEventListener('click', closeMobileMenu);
-        mobileMenu.addEventListener('click', (e) => { if (e.target === mobileMenu) closeMobileMenu(); });
+        // Close menu if clicking outside the panel
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) closeMobileMenu();
+        });
+        // Close menu when a nav link is clicked (for single-page navigation)
          document.querySelectorAll('.mobile-nav-link, .mobile-nav-link-cta').forEach(link => {
              link.addEventListener('click', closeMobileMenu);
          });
 
+
         // --- THREE.JS GRADIENT BACKGROUND ---
         let scene, camera, renderer, material;
         const gradientCanvas = document.getElementById('hero-gradient-background');
+        // Initialize only if canvas exists and no preference for reduced motion
         if(gradientCanvas && !prefersReducedMotion.matches) {
             function initGradientBackground() {
                 scene = new THREE.Scene();
+                // Orthographic camera covers the entire screen space
                 camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
                 renderer = new THREE.WebGLRenderer({ canvas: gradientCanvas, antialias: true, alpha: true });
+                // A simple plane geometry that fills the screen
                 const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                // Shader material for custom gradient effect
                 material = new THREE.ShaderMaterial({
                     uniforms: {
-                        u_time: { value: 0 },
-                        u_resolution: { value: new THREE.Vector2() },
-                        u_color1: { value: new THREE.Color(0x0047AB) },
-                        u_color2: { value: new THREE.Color(0x00008B) },
+                        u_time: { value: 0 }, // Time uniform for animation
+                        u_resolution: { value: new THREE.Vector2() }, // Screen resolution
+                        u_color1: { value: new THREE.Color(0x0047AB) }, // Start color (Blue)
+                        u_color2: { value: new THREE.Color(0x00008B) }, // End color (Darker Blue)
                     },
+                     // Vertex shader positions the vertices
                     vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position, 1.0); }`,
+                     // Fragment shader calculates the color for each pixel
                     fragmentShader: `
                         varying vec2 vUv; 
                         uniform float u_time; 
@@ -2229,44 +2476,52 @@
                         uniform vec3 u_color2; 
                         void main() { 
                             vec2 p = vUv; 
+                            // Create a vertical blend factor with a subtle sine wave distortion based on time and x-position
                             float blend = p.y + sin(u_time * 0.1 + p.x * 2.0) * 0.1; 
+                            // Mix the two colors based on the blend factor
                             vec3 color = mix(u_color1, u_color2, blend); 
                             gl_FragColor = vec4(color, 1.0); 
                         }`
                 });
                 const mesh = new THREE.Mesh(geometry, material);
-                scene.add(mesh);
-                onWindowResizeGradient();
-                window.addEventListener('resize', onWindowResizeGradient);
-                animateGradient();
+                scene.add(mesh); // Add the plane to the scene
+                onWindowResizeGradient(); // Set initial size
+                window.addEventListener('resize', onWindowResizeGradient); // Adjust size on resize
+                animateGradient(); // Start the animation loop
             }
 
+            // Animation loop function
             function animateGradient() {
-                // PERFORMANCE FIX: Pause animation if not on homepage to reduce lag on project pages
-                if (isHomepageActive && material) {
+                if (material) {
+                     // Update time uniform for shader animation
                     material.uniforms.u_time.value += 0.01;  
-                    renderer.render(scene, camera);
+                    renderer.render(scene, camera); // Render the scene
                 }
-                requestAnimationFrame(animateGradient);
+                requestAnimationFrame(animateGradient); // Request next frame
             }
 
+             // Handle window resize for the gradient canvas
             function onWindowResizeGradient() {
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize(window.innerWidth, window.innerHeight); // Update renderer size
+                 // Set pixel ratio for sharp rendering on high-DPI displays
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                 // Update shader resolution uniform
                 if (material) material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
             }
-            initGradientBackground();
+            initGradientBackground(); // Initialize the gradient
         }
-        
         // --- TITLE MARQUEE ---
         const originalTitle = document.title;
-        let marqueeTitle = originalTitle + " ••• ";
+        let marqueeTitle = originalTitle + " ••• "; // Add separator
+        
         setInterval(() => {
+            // Only animate the title if the tab is visible
             if (!document.hidden) {  
+                 // Rotate the title string
                 marqueeTitle = marqueeTitle.substring(1) + marqueeTitle.substring(0, 1);
-                document.title = marqueeTitle;
+                document.title = marqueeTitle; // Update the document title
             }
-        }, 300);
+        }, 300); // Adjust scroll speed (lower value = faster)                                  
     });
     </script>
 </body>
